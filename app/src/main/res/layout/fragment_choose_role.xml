@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.profile.ChooseRoleFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ui.profile.ChooseRoleFragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_register"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:textColor="@color/primary_text"
+            android:textSize="20sp"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:layout_marginHorizontal="@dimen/dimen_24"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subtitle_login"
+            android:fontFamily="@font/poppins_regular"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:layout_marginHorizontal="@dimen/dimen_24" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/wrap_recruiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_choose_role_unactive"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wrap_worker"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recruiter"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dimen_20"/>
+
+
+                <ImageView
+                    android:id="@+id/img_recruiter"
+                    android:layout_width="@dimen/dimen_160"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/illustration_recruiter" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrap_worker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_choose_role_unactive"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/wrap_recruiter"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/worker"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dimen_20"/>
+
+                <ImageView
+                    android:id="@+id/img_worker"
+                    android:layout_width="@dimen/dimen_160"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/illustration_worker" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_54"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:includeFontPadding="false"
+            android:text="@string/lanjutkan"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="@dimen/dimen_10"
+            android:stateListAnimator="@null"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:layout_marginHorizontal="@dimen/dimen_24"
+            android:layout_marginBottom="@dimen/dimen_40"/>
+
+
+    </LinearLayout>
+</ScrollView>

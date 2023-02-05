@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Custom -->
+    <color name="primary_600">#150B3D</color>
+    <color name="primary_500">#130160</color>
+    <color name="primary_400">#246BFD</color>
+
+    <color name="secondary_200">#FF9228</color>
+
+    <color name="primary_text">#212121</color>
+
+    <color name="secondary_300">#F9F9F9</color>
+
+    <color name="red_400">#E73F3F</color>
+
+    <color name="green_100">#C8E6C9</color>
+    <color name="green_400">#66BB6A</color>
+    <color name="green_700">#388E3C</color>
+
+    <color name="blue_100">#BBDEFB</color>
+    <color name="blue_200">#90CAF9</color>
+    <color name="blue_700">#1976D2</color>
+
+    <color name="grey_300">#DBDBDB</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_400">#A1A0A3</color>
+    <color name="grey_700">#616161</color>
+
+    <color name="secondary_text">#424242</color>
+    <color name="secondary_100">#9E9E9E</color>
+
+    <color name="neutral_100">#99ABC6</color>
+    <color name="text_primary_300">#0D0140</color>
+    <color name="text_secondary_300">#524B6B</color>
+    <color name="text_neutral_300">#AAA6B9</color>
+
+</resources>

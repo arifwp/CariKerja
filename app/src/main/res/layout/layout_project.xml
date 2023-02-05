@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dimen_6">
+
+    <TextView
+        android:id="@+id/project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/example_job_title"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/primary_text"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/example_role"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:textColor="@color/secondary_text"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/project_name"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/wrap_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/role"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/date_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/example_date_start"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            android:textColor="@color/secondary_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:fontFamily="@font/poppins_regular"
+            android:includeFontPadding="false"
+            android:textColor="@color/secondary_text"
+            android:layout_marginStart="@dimen/dimen_6"/>
+
+        <TextView
+            android:id="@+id/date_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/example_date_start"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            android:textColor="@color/secondary_text"
+            android:layout_marginStart="@dimen/dimen_6"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/wrap_date"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/job_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem_ipsum"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            android:textColor="@color/secondary_text"
+            android:maxLines="3"/>
+
+        <Button
+            android:id="@+id/btn_read_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_more"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

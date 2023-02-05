@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "188535027873",
+    "project_id": "carikerja-53ab8",
+    "storage_bucket": "carikerja-53ab8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188535027873:android:6fa608ff6969e5e22658e0",
+        "android_client_info": {
+          "package_name": "com.amikom.carikerja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188535027873-l90pfp0gvbil7amen3j2n4ejh83p2jlo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWzA6224ySa90sWqMpMIebqTztJc2Iolo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188535027873-l90pfp0gvbil7amen3j2n4ejh83p2jlo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

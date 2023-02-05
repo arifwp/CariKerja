@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:minHeight="?attr/actionBarSize">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ic_back"
+                        android:layout_width="@dimen/dimen_50"
+                        android:layout_height="@dimen/dimen_30"
+                        android:src="@drawable/ic_back"
+                        android:foreground="?android:attr/actionBarItemBackground"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/title_toolbar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:textColor="@color/primary_text"
+                        android:textSize="16sp"
+                        android:includeFontPadding="false"
+                        android:layout_toEndOf="@+id/ic_back"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_centerVertical="true" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dimen_24"
+            android:layout_marginHorizontal="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account"
+                android:includeFontPadding="false"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/secondary_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_lock"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_password"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/deactivate_my_account"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/general"
+                android:includeFontPadding="false"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/secondary_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_notifications"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_notifications"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_group"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invite_friends"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_privacy"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/privacy_and_policy"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_priority"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_and_condition"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/primary_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rate_us"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                android:includeFontPadding="false"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/secondary_text" />
+
+            <LinearLayout
+                android:id="@+id/wrap_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_logout"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/red_400" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logout"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/red_400"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

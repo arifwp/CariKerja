@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/splash_screen_fragment">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.amikom.carikerja.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_home_to_settings_fragment"
+            app:destination="@id/settings_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.amikom.carikerja.ui.work.WorkFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_work" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_settings_fragment"
+            app:destination="@id/settings_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.amikom.carikerja.ui.profile.ProfileFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_contact_information_fragment"
+            app:destination="@id/contact_information_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_biodata_fragment"
+            app:destination="@id/biodata_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_settings_fragment"
+            app:destination="@id/settings_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_summary_fragment"
+            app:destination="@id/summary_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_work_experience_fragment"
+            app:destination="@id/work_experience_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_education_fragment"
+            app:destination="@id/education_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_project_fragment"
+            app:destination="@id/project_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_certificate_fragment"
+            app:destination="@id/certificate_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/splash_screen_fragment"
+        android:name="com.amikom.carikerja.ui.SplashScreenFragment"
+        android:label="@string/splash_screen"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/action_splash_screen_fragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splash_screen_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_screen_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splash_screen_fragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_splash_screen_fragment_to_choose_role_fragment"
+            app:destination="@id/choose_role_fragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splash_screen_fragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.amikom.carikerja.ui.authentication.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_fragment_to_register_fragment"
+            app:destination="@id/register_fragment" />
+        <action
+            android:id="@+id/action_login_fragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_fragment_to_choose_role_fragment"
+            app:destination="@id/choose_role_fragment"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_fragment_to_forgot_password_fragment"
+            app:destination="@id/forgot_password_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="com.amikom.carikerja.ui.authentication.RegisterFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_register_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/biodata_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.biodata.BiodataFragment"
+        android:label="@string/biodata"
+        tools:layout="@layout/fragment_biodata" />
+
+    <fragment
+        android:id="@+id/choose_role_fragment"
+        android:name="com.amikom.carikerja.ui.profile.ChooseRoleFragment"
+        android:label="@string/choose_role"
+        tools:layout="@layout/fragment_choose_role" >
+        <action
+            android:id="@+id/action_choose_role_fragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/choose_role_fragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgot_password_fragment"
+        android:name="com.amikom.carikerja.ui.authentication.ForgotPasswordFragment"
+        android:label="@string/forgot_password"
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgot_password_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.amikom.carikerja.ui.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settings_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/contact_information_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.contact_information.ContactInformationFragment"
+        android:label="@string/contact_information"
+        tools:layout="@layout/fragment_contact_information" />
+
+    <fragment
+        android:id="@+id/summary_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.summary.SummaryFragment"
+        android:label="@string/summary"
+        tools:layout="@layout/fragment_summary" />
+
+    <fragment
+        android:id="@+id/work_experience_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.work_experience.WorkExperienceFragment"
+        android:label="@string/work_experience"
+        tools:layout="@layout/fragment_add_work_experience" >
+        <action
+            android:id="@+id/action_work_experience_fragment_to_add_work_experience_fragment"
+            app:destination="@id/add_work_experience_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_work_experience_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.work_experience.AddWorkExperienceFragment"
+        android:label="@string/add_work_experience"
+        tools:layout="@layout/fragment_add_work_experience" />
+
+    <fragment
+        android:id="@+id/education_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.education.EducationFragment"
+        android:label="@string/education"
+        tools:layout="@layout/fragment_education" >
+        <action
+            android:id="@+id/action_education_fragment_to_add_education_fragment"
+            app:destination="@id/add_education_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_education_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.education.AddEducationFragment"
+        android:label="@string/add_education"
+        tools:layout="@layout/fragment_add_education" />
+
+    <fragment
+        android:id="@+id/project_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.project.ProjectFragment"
+        android:label="@string/project"
+        tools:layout="@layout/fragment_project" >
+        <action
+            android:id="@+id/action_project_fragment_to_add_project_fragment"
+            app:destination="@id/add_project_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_project_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.project.AddProjectFragment"
+        android:label="@string/add_project"
+        tools:layout="@layout/fragment_add_project" />
+
+    <fragment
+        android:id="@+id/certificate_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.certificate.CertificateFragment"
+        android:label="@string/certification_and_license"
+        tools:layout="@layout/layout_certificate" >
+        <action
+            android:id="@+id/action_certificate_fragment_to_add_certificate_fragment"
+            app:destination="@id/add_certificate_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_certificate_fragment"
+        android:name="com.amikom.carikerja.ui.profile.profile_details.certificate.AddCertificateFragment"
+        android:label="@string/add_certificate"
+        tools:layout="@layout/fragment_add_certificate">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="certificate_name"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="publishing_organization"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateStart"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="expiration_date"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="credential_id"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="credential_url"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+</navigation>
