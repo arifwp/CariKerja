@@ -143,7 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/forgot_password_login"
-        android:textColor="@color/text_primary_300"
+        android:textColor="@color/primary_text"
         android:layout_marginTop="@dimen/dimen_12"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="@+id/wrap_password"

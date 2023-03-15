@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import android.support.annotation.Nullable
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.amikom.carikerja.R
@@ -16,7 +15,7 @@ object SharedPrefManager {
         return context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
     }
 
-    @Nullable
+//    @Nullable
     fun getEncryptedSpf(context: Context?): SharedPreferences? {
         return try {
             // Tentukan Spek Keygen nya terlebih dahulu

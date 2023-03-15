@@ -48,7 +48,7 @@
     <string name="example_job">UI/UX Designer</string>
     <string name="example_username">Siti Paijo</string>
     <string name="example_job_address">Kebontutup, Ketaon, Banyudono, Boyolali</string>
-    <string name="example_salary">Rp 400.000 - Rp 600.000</string>
+    <string name="example_salary">400.000 - Rp 600.000</string>
     <string name="open">Terbuka</string>
     <string name="remote">Jarak Jauh</string>
     <string name="example_work_duration">3 Hari</string>
@@ -115,11 +115,65 @@
     <string name="certificate_url">URL Sertifikat</string>
     <string name="add_certificate">Tambah Sertifikat</string>
     <string name="delete_this_data">Hapus data sertifikat</string>
+    <string name="hello">Hei,</string>
+    <string name="available_balance">Saldo anda yang tersedia</string>
+    <string name="your_wallet">Dompet anda</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="welcome">Selamat datang!</string>
+    <string name="send">Kirim</string>
+    <string name="post_job">Posting pekerjaan</string>
+    <string name="post">Posting</string>
+    <string name="job_position">Posisi pekerjaan</string>
+    <string name="job_location">Lokasi pekerjaan</string>
+    <string name="job_employee_type">Tipe karyawan</string>
+    <string name="job_description">Deskripsi pekerjaan</string>
+    <string name="example_job_position">Sales rokok</string>
+    <string name="add_job">Posting Pekerjaan</string>
+    <string name="job">Pekerjaan</string>
+    <string name="add_post_job">Tambah Postingan Pekerjaan</string>
+    <string name="insert_balance">Maksimal isi saldo (Min Rp. 10.000.000)</string>
+    <string name="rp">Rp</string>
+    <string name="instanly_add_amount">Menambahkan jumlah secara instan</string>
+    <string name="jumlah_saldo">Jumlah</string>
+    <string name="amount_20000">20.000</string>
+    <string name="amount_50000">50.000</string>
+    <string name="payment_summary">Ringkasan pembayaran</string>
+    <string name="admin_fee">Biaya admin</string>
+    <string name="total">Total</string>
+    <string name="salary">Gaji</string>
+    <string name="optional">(Opsional)</string>
+    <string name="applied">Pelamar</string>
+    <string name="day">Hari</string>
+    <string name="empty_history">Riwayat anda masih kosong</string>
+    <string name="empty_history_desc">Temukan pekerjaan sesuai dengan preferensi dan melamar dengan mudah</string>
+    <string name="empty_history_post_job_desc">Temukan pekerja yang sesuai dengan kriteria yang anda cari dengan mudah</string>
+    <string name="search_work">Cari pekerjaan</string>
+    <string name="what_is_your_expertise">Apa keahlian anda?</string>
+    <string name="subtitle_choose_skills">Pilih keahlian anda (anda bisa memilih lebih dari 1 keahlian)</string>
+    <string name="example_skills">Managemen dan Konsultasi</string>
+    <string name="skills">Skills</string>
+    <string name="publish_job">Publish Pekerjaan</string>
+    <string name="hint_search_work">Cari nama pekerjaan</string>
+    <string name="hint_search_city">Cari nama kota</string>
+    <string name="detail_job">Detail Pekerjaan</string>
+    <string name="apply">Lamar</string>
+    <string name="example_total_day">90 Hari</string>
+    <string name="job_address">Lokasi Pekerjaan</string>
 
     <string-array name="employee_type">
         <item>Magang</item>
         <item>Kontrak</item>
         <item>Part-Time</item>
+    </string-array>
+
+    <string-array name="list_skills">
+        <!--        <item>Managemen dan Konsultasi</item>-->
+        <item>Informasi Teknologi dan Perangkat Lunak</item>
+        <item>Media, Desain, Kreatif</item>
+        <item>Sales dan Marketing</item>
+        <item>Konstruksi dan Bangunan</item>
+        <!--        <item>Retail</item>-->
+        <item>Lainnya</item>
     </string-array>
 
 </resources>

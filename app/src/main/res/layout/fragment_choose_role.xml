@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".ui.profile.ChooseRoleFragment">
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/subtitle_login"
             android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/secondary_text"
             android:textAlignment="center"
             android:layout_marginTop="@dimen/dimen_2"
             android:layout_marginHorizontal="@dimen/dimen_24" />

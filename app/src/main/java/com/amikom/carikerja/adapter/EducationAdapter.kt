@@ -25,8 +25,13 @@ class EducationAdapter(private var dataEdu: List<EducationDetails>) : RecyclerVi
             dateStart.text = item.dateStart
             dateEnd.text = item.dateEnd
             jobDescription.text = item.description
+            btnEdit.setOnClickListener {
+                listenerEducationEdit?.btnOnClickEducation(item)
+            }
         }
     }
+
+    var listenerEducationEdit: btnEducationEdit? = null
 
     override fun getItemCount(): Int = dataEdu.size
 
@@ -36,4 +41,8 @@ class EducationAdapter(private var dataEdu: List<EducationDetails>) : RecyclerVi
     }
 
 
+}
+
+interface btnEducationEdit {
+    fun btnOnClickEducation(data: EducationDetails)
 }

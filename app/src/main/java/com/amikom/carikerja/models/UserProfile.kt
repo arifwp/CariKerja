@@ -10,5 +10,8 @@ data class UserProfile(
     var dob: String? = null,
     var address: String? = null,
     var summary: String?= null,
-    var dataWorkExperience: WorkExperience? = null
+    var dataWorkExperience: Exp? = null,
+    var certificate: CertificateDetails? = null,
+    var project: ProjectDetails? = null,
+    var education: EducationDetails? = null
 )

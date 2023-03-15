@@ -1,22 +1,27 @@
 package com.amikom.carikerja.ui.authentication
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.FragmentLoginBinding
 import com.amikom.carikerja.models.BaseResponse
+import com.amikom.carikerja.ui.MainActivity
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.AuthenticationViewModel
 import com.amikom.carikerja.viewmodels.ProfileViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -25,7 +30,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private val authenticationViewModel : AuthenticationViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
-    private val TAG = "LoginFragmentLog"
+    private val TAG = "LoginFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +48,11 @@ class LoginFragment : Fragment() {
         val btnLogin = binding.btnLogin
         btnLogin.setOnClickListener {
             validateLogin()
+        }
+
+        val btnForgotPassword = binding.tvForgotPassword
+        btnForgotPassword.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
         }
 
         val btnToRegister = binding.tvSignUp
@@ -100,12 +110,68 @@ class LoginFragment : Fragment() {
                     textMessage("Berhasil masuk")
                     if (it.data.isNullOrEmpty()){
                         goToChooseRolePage()
-                    } else if (it.data == "exist"){
-                        goToHomePage()
+                    } else if (it.data.isNotEmpty()){
+                        Log.d(TAG, "checkHasRoleOrNot: ${it.data}")
+                        val userRole = it.data
+                        val navView = requireActivity().findViewById<BottomNavigationView>(com.amikom.carikerja.R.id.nav_view)
+                        when{
+                            userRole.toString() == "recruiter" -> {
+                                navView.menu.removeItem(com.amikom.carikerja.R.id.navigation_history_work)
+                            }
+                            userRole.toString() == "worker" -> {
+                                navView.menu.removeItem(com.amikom.carikerja.R.id.navigation_history_post_job_work)
+                            }
+                        }
+
+                        SharedPreferences.saveRole(requireContext(), it.data.toString())
+                        checkHasSkillsOrNot(uid.toString())
                     }
                 }
                 is BaseResponse.Error -> textMessage(it.msg.toString())
+                else -> {}
             }
+        }
+    }
+
+    private fun checkHasSkillsOrNot(uid: String){
+        profileViewModel.checkSkills(uid)
+        profileViewModel.checkSkillsResponse.observe(viewLifecycleOwner){
+            when(it){
+                is BaseResponse.Loading -> {}
+                is BaseResponse.Success -> {
+                    if (it.data == false){
+                        goToChooseSkillsPage()
+
+                    } else if (it.data == true){
+//                        restartApp()
+                        goToHomePage()
+                    }
+                }
+                is BaseResponse.Error -> {
+                    textMessage(it.msg.toString())
+                }
+                else -> {}
+            }
+        }
+    }
+
+    private fun restartApp(){
+
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+
+//        val ctx: Context = getApplicationContext()
+//        val pm: PackageManager = ctx.packageManager
+//        val intent = pm.getLaunchIntentForPackage(ctx.packageName)
+//        val mainIntent = Intent.makeRestartActivityTask(intent!!.component)
+//        ctx.startActivity(mainIntent)
+//        Runtime.getRuntime().exit(0)
+    }
+
+    private fun goToChooseSkillsPage(){
+        if (findNavController().currentDestination?.id == R.id.login_fragment){
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChooseSkillsFragment())
         }
     }
 

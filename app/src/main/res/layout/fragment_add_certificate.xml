@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".ui.profile.profile_details.certificate.AddCertificateFragment">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +35,7 @@
                         android:id="@+id/ic_back"
                         android:layout_width="@dimen/dimen_50"
                         android:layout_height="@dimen/dimen_30"
-                        android:src="@drawable/ic_back"
+                        android:src="@drawable/ic_back_button"
                         android:foreground="?android:attr/actionBarItemBackground"
                         android:layout_centerVertical="true"
                         android:layout_alignParentStart="true"/>
@@ -102,7 +101,6 @@
                 android:hint="@string/example_certificate_name"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_books"
-                android:drawableTint="@color/primary_text"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dimen_6"
                 android:paddingVertical="@dimen/dimen_10"
@@ -136,7 +134,6 @@
                 android:hint="@string/example_publishing_organization"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_turned_in"
-                android:drawableTint="@color/primary_text"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dimen_6"
                 android:paddingVertical="@dimen/dimen_10"
@@ -173,7 +170,6 @@
                     android:background="@drawable/bg_ed"
                     android:drawableStart="@drawable/ic_date"
                     android:drawablePadding="@dimen/dimen_6"
-                    android:drawableTint="@color/primary_text"
                     android:focusable="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/example_date"
@@ -208,7 +204,6 @@
                     android:background="@drawable/bg_ed"
                     android:drawableStart="@drawable/ic_date"
                     android:drawablePadding="@dimen/dimen_6"
-                    android:drawableTint="@color/primary_text"
                     android:focusable="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/example_date"
@@ -248,7 +243,6 @@
                 android:hint="@string/example_certificate_id"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_menu_book"
-                android:drawableTint="@color/primary_text"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dimen_6"
                 android:paddingVertical="@dimen/dimen_10"
@@ -282,7 +276,6 @@
                 android:hint="@string/example_certificate_url"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_computer"
-                android:drawableTint="@color/primary_text"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dimen_6"
                 android:paddingVertical="@dimen/dimen_10"

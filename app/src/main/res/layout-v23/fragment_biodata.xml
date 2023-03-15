@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.profile.profile_details.biodata.BiodataFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_16"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/primary_500">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -25,73 +24,85 @@
                 android:id="@+id/toolbar_homepage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/primary_500"
                 android:minHeight="?attr/actionBarSize">
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/ic_back"
-                        android:layout_width="@dimen/dimen_50"
-                        android:layout_height="@dimen/dimen_30"
-                        android:src="@drawable/ic_back"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_back_button"
                         android:foreground="?android:attr/actionBarItemBackground"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="@color/white" />
 
                     <TextView
                         android:id="@+id/title_toolbar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/title_profile"
+                        android:text="@string/biodata"
                         android:fontFamily="@font/poppins_semi_bold"
-                        android:textColor="@color/primary_text"
-                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
                         android:includeFontPadding="false"
-                        android:layout_toEndOf="@+id/ic_back"
-                        android:layout_marginStart="@dimen/dimen_10"
-                        android:layout_centerVertical="true" />
+                        app:layout_constraintStart_toEndOf="@id/ic_back"
+                        android:layout_marginStart="@dimen/dimen_4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_submit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_80"
+                        android:layout_height="@dimen/dimen_32"
                         android:fontFamily="@font/poppins_semi_bold"
                         android:text="@string/save"
+                        android:textColor="@color/primary_500"
+                        android:textSize="12sp"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
-                        app:cornerRadius="@dimen/dimen_10"
+                        app:cornerRadius="@dimen/dimen_30"
                         android:padding="@dimen/dimen_0"
+                        android:backgroundTint="@color/white"
                         android:includeFontPadding="false"
                         android:stateListAnimator="@null"
-                        android:layout_marginTop="@dimen/dimen_24"
                         android:layout_marginHorizontal="@dimen/dimen_24"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+        android:id="@+id/wrap_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_bottom"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar">
+
         <FrameLayout android:id="@+id/image_logo"
-            android:layout_width="@dimen/dimen_120"
-            android:layout_height="@dimen/dimen_120"
+            android:layout_width="@dimen/dimen_160"
+            android:layout_height="@dimen/dimen_160"
             android:layout_marginTop="@dimen/dimen_24"
             android:layout_gravity="center">
 
-            <ImageView
-                android:id="@+id/iv_upload_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom|center_horizontal"
-                android:scaleType="centerCrop"
-                android:visibility="visible"
-                app:shapeAppearanceOverlay="@style/roundedImageView"
-                app:srcCompat="@drawable/dummy_avatar"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_image"
+                android:layout_width="@dimen/dimen_160"
+                android:layout_height="@dimen/dimen_160"
+                tools:src="@drawable/illustration_forgot_password"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"/>
 
             <ImageView
                 android:id="@+id/iv_camera"
@@ -161,7 +172,6 @@
                 android:hint="@string/example_date"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_date"
-                android:drawableTint="@color/primary_text"
                 android:inputType="date"
                 android:focusable="false"
                 android:drawablePadding="@dimen/dimen_6"
@@ -170,6 +180,46 @@
                 android:background="@drawable/bg_ed" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wrap_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_24"
+            app:layout_constraintTop_toBottomOf="@+id/illustration_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="@string/address"
+                android:textColor="@color/primary_text" />
+
+            <EditText
+                android:id="@+id/ed_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_32"
+                android:fontFamily="@font/poppins_regular"
+                android:includeFontPadding="false"
+                android:textSize="14sp"
+                android:gravity="top|start"
+                android:hint="@string/example_job_address"
+                android:textColor="@color/primary_text"
+                android:drawableStart="@drawable/ic_location"
+                android:inputType="textMultiLine"
+                android:drawablePadding="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_10"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:background="@drawable/bg_ed" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     </LinearLayout>
 

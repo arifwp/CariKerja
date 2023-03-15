@@ -7,30 +7,62 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.amikom.carikerja.ui.home.HomeFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_home_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
-        <action
             android:id="@+id/action_navigation_home_to_settings_fragment"
             app:destination="@id/settings_fragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_biodata_fragment"
+            app:destination="@id/biodata_fragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_transfer_fragment"
+            app:destination="@id/transfer_fragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_topup_fragment"
+            app:destination="@id/topup_fragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.amikom.carikerja.ui.work.WorkFragment"
+        android:id="@+id/navigation_work"
+        android:name="com.amikom.carikerja.ui.bottom_nav.work.WorkFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_work" >
         <action
             android:id="@+id/action_navigation_dashboard_to_settings_fragment"
             app:destination="@id/settings_fragment" />
+        <action
+            android:id="@+id/action_navigation_work_to_add_post_job_fragment"
+            app:destination="@id/add_post_job_fragment" />
+        <action
+            android:id="@+id/action_navigation_work_to_detail_job_fragment"
+            app:destination="@id/detail_job_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_history_work"
+        android:name="com.amikom.carikerja.ui.bottom_nav.history_work.HistoryWorkFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history_work" >
+        <action
+            android:id="@+id/action_navigation_history_work_to_navigation_work"
+            app:destination="@id/navigation_work" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_history_post_job_work"
+        android:name="com.amikom.carikerja.ui.bottom_nav.history_work.HistoryPostJobFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history_post_job" >
+        <action
+            android:id="@+id/action_navigation_history_post_job_work_to_add_post_job_fragment"
+            app:destination="@id/add_post_job_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.amikom.carikerja.ui.profile.ProfileFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.ProfileFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -82,6 +114,12 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/splash_screen_fragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_splash_screen_fragment_to_choose_skills_fragment"
+            app:destination="@id/choose_skills_fragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splash_screen_fragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -105,6 +143,9 @@
         <action
             android:id="@+id/action_login_fragment_to_forgot_password_fragment"
             app:destination="@id/forgot_password_fragment" />
+        <action
+            android:id="@+id/action_login_fragment_to_choose_skills_fragment"
+            app:destination="@id/choose_skills_fragment" />
     </fragment>
 
     <fragment
@@ -119,19 +160,51 @@
 
     <fragment
         android:id="@+id/biodata_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.biodata.BiodataFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.biodata.BiodataFragment"
         android:label="@string/biodata"
-        tools:layout="@layout/fragment_biodata" />
+        tools:layout="@layout/fragment_biodata">
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dob"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="address"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/choose_role_fragment"
-        android:name="com.amikom.carikerja.ui.profile.ChooseRoleFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.ChooseRoleFragment"
         android:label="@string/choose_role"
         tools:layout="@layout/fragment_choose_role" >
         <action
             android:id="@+id/action_choose_role_fragment_to_navigation_home"
             app:destination="@id/navigation_home"
             app:popUpTo="@id/choose_role_fragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_choose_role_fragment_to_choose_skills_fragment"
+            app:destination="@id/choose_skills_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/choose_skills_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.ChooseListSkillsFragment"
+        android:label="@string/skills"
+        tools:layout="@layout/fragment_choose_list_skills" >
+        <action
+            android:id="@+id/action_choose_skills_fragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true"/>
     </fragment>
 
@@ -159,19 +232,19 @@
 
     <fragment
         android:id="@+id/contact_information_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.contact_information.ContactInformationFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.contact_information.ContactInformationFragment"
         android:label="@string/contact_information"
         tools:layout="@layout/fragment_contact_information" />
 
     <fragment
         android:id="@+id/summary_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.summary.SummaryFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.summary.SummaryFragment"
         android:label="@string/summary"
         tools:layout="@layout/fragment_summary" />
 
     <fragment
         android:id="@+id/work_experience_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.work_experience.WorkExperienceFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.work_experience.WorkExperienceFragment"
         android:label="@string/work_experience"
         tools:layout="@layout/fragment_add_work_experience" >
         <action
@@ -181,13 +254,47 @@
 
     <fragment
         android:id="@+id/add_work_experience_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.work_experience.AddWorkExperienceFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.work_experience.AddWorkExperienceFragment"
         android:label="@string/add_work_experience"
-        tools:layout="@layout/fragment_add_work_experience" />
+        tools:layout="@layout/fragment_add_work_experience">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_tiitle"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="company"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateStart"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateEnd"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_description"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="employee_type"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_address"
+            app:argType="string"
+            app:nullable="true"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/education_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.education.EducationFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.education.EducationFragment"
         android:label="@string/education"
         tools:layout="@layout/fragment_education" >
         <action
@@ -197,13 +304,42 @@
 
     <fragment
         android:id="@+id/add_education_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.education.AddEducationFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.education.AddEducationFragment"
         android:label="@string/add_education"
-        tools:layout="@layout/fragment_add_education" />
+        tools:layout="@layout/fragment_add_education">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="institution"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="degree"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="field_of_study"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateStart"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateEnd"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="description"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/project_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.project.ProjectFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.project.ProjectFragment"
         android:label="@string/project"
         tools:layout="@layout/fragment_project" >
         <action
@@ -213,13 +349,38 @@
 
     <fragment
         android:id="@+id/add_project_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.project.AddProjectFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.project.AddProjectFragment"
         android:label="@string/add_project"
-        tools:layout="@layout/fragment_add_project" />
+        tools:layout="@layout/fragment_add_project">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="project_name"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="role"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateStart"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateEnd"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="description"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
 
     <fragment
         android:id="@+id/certificate_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.certificate.CertificateFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.certificate.CertificateFragment"
         android:label="@string/certification_and_license"
         tools:layout="@layout/layout_certificate" >
         <action
@@ -229,7 +390,7 @@
 
     <fragment
         android:id="@+id/add_certificate_fragment"
-        android:name="com.amikom.carikerja.ui.profile.profile_details.certificate.AddCertificateFragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.certificate.AddCertificateFragment"
         android:label="@string/add_certificate"
         tools:layout="@layout/fragment_add_certificate">
         <argument
@@ -262,6 +423,87 @@
             app:nullable="true"/>
         <argument
             android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/transfer_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.home.TransferFragment"
+        android:label="@string/transfer"
+        tools:layout="@layout/fragment_transfer" />
+
+    <fragment
+        android:id="@+id/topup_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.home.TopUpFragment"
+        android:label="@string/top_up"
+        tools:layout="@layout/fragment_top_up" />
+
+    <fragment
+        android:id="@+id/add_post_job_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.work.post_job.AddPostJobFragment"
+        android:label="@string/add_post_job"
+        tools:layout="@layout/fragment_add_post_job" />
+
+    <fragment
+        android:id="@+id/detail_job_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.work.DetailJobFragment"
+        android:label="@string/detail_job"
+        tools:layout="@layout/fragment_detail_job">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="uid"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_title"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="person_who_post"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="image_url"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateStart"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateEnd"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="total_day"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_description"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_category"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="employee_type"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_address"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="salary"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="post_time"
             app:argType="string"
             app:nullable="true"/>
     </fragment>

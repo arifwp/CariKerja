@@ -270,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/already_have_account"
                 android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/text_secondary_300"
+                android:textColor="@color/primary_text"
                 android:layout_gravity="center_vertical"/>
 
             <TextView

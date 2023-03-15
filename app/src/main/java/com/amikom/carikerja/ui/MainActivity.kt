@@ -1,20 +1,29 @@
 package com.amikom.carikerja.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.setPadding
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.ActivityMainBinding
+import com.amikom.carikerja.models.BaseResponse
+import com.amikom.carikerja.utils.SharedPreferences
+import com.amikom.carikerja.viewmodels.ProfileViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val profileViewModel: ProfileViewModel by viewModels()
+    private var role: String? = null
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +31,50 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val uid = SharedPreferences.getUid(this)
+
         val navView: BottomNavigationView = binding.navView
+
+        val userLogout = intent.getStringExtra("USER_LOGOUT")
+        Log.d(TAG, "onCreateUSER_LOGOUT: $userLogout")
+        if (userLogout != null){
+            if(android.os.Build.VERSION.SDK_INT >= 21)
+            {
+                finishAndRemoveTask();
+            }
+            else
+            {
+                finish();
+            }
+        }
+
+        val userRole = SharedPreferences.getRole(this)
+        Log.d(TAG, "onCreateRoleMain: $userRole")
+
+        if (userRole != null){
+            profileViewModel.getRole(uid.toString())
+            profileViewModel.getRoleResponse.observe(this){
+                it?.getContentIfNotHandled().let {
+                    when(it){
+                        is BaseResponse.Loading -> {}
+                        is BaseResponse.Success -> {
+                            val userRole = it.data
+                            Log.d(TAG, "onCreateRole: $userRole")
+                            when{
+                                userRole.toString() == "recruiter" -> {
+                                    navView.menu.removeItem(R.id.navigation_history_work)
+                                }
+                                userRole.toString() == "worker" -> {
+                                    navView.menu.removeItem(R.id.navigation_history_post_job_work)
+                                }
+                            }
+                        }
+                        is BaseResponse.Error -> {}
+                        else -> {}
+                    }
+                }
+            }
+        }
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
@@ -44,7 +96,11 @@ class MainActivity : AppCompatActivity() {
                 destination.id == R.id.project_fragment ||
                 destination.id == R.id.add_project_fragment ||
                 destination.id == R.id.certificate_fragment ||
-                destination.id == R.id.add_certificate_fragment
+                destination.id == R.id.add_certificate_fragment ||
+                destination.id == R.id.topup_fragment ||
+                destination.id == R.id.transfer_fragment ||
+                destination.id == R.id.choose_role_fragment ||
+                destination.id == R.id.choose_skills_fragment
             ) {
                 navView.visibility = View.GONE
             } else {
@@ -53,4 +109,5 @@ class MainActivity : AppCompatActivity() {
         }
         navView.setupWithNavController(navController)
     }
+
 }

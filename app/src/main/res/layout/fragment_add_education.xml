@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.profile.profile_details.education.AddEducationFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +34,7 @@
                         android:id="@+id/ic_back"
                         android:layout_width="@dimen/dimen_50"
                         android:layout_height="@dimen/dimen_30"
-                        android:src="@drawable/ic_back"
+                        android:src="@drawable/ic_back_button"
                         android:foreground="?android:attr/actionBarItemBackground"
                         android:layout_centerVertical="true"
                         android:layout_alignParentStart="true"/>
@@ -101,7 +100,6 @@
                 android:hint="@string/example_job_title"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_school_building"
-                android:drawableTint="@color/primary_text"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dimen_6"
                 android:paddingVertical="@dimen/dimen_10"
@@ -135,7 +133,6 @@
                 android:hint="@string/example_degree"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_school"
-                android:drawableTint="@color/primary_text"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dimen_6"
                 android:paddingVertical="@dimen/dimen_10"
@@ -169,7 +166,6 @@
                 android:hint="@string/example_field_of_study"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_books"
-                android:drawableTint="@color/primary_text"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dimen_6"
                 android:paddingVertical="@dimen/dimen_10"
@@ -206,7 +202,6 @@
                     android:background="@drawable/bg_ed"
                     android:drawableStart="@drawable/ic_date"
                     android:drawablePadding="@dimen/dimen_6"
-                    android:drawableTint="@color/primary_text"
                     android:focusable="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/example_date"
@@ -241,7 +236,6 @@
                     android:background="@drawable/bg_ed"
                     android:drawableStart="@drawable/ic_date"
                     android:drawablePadding="@dimen/dimen_6"
-                    android:drawableTint="@color/primary_text"
                     android:focusable="false"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/example_date"
@@ -261,7 +255,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="@dimen/dimen_24"
-            android:layout_marginTop="@dimen/dimen_24">
+            android:layout_marginTop="@dimen/dimen_24"
+            android:layout_marginBottom="@dimen/dimen_24">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -283,7 +278,6 @@
                 android:maxLength="200"
                 android:textColor="@color/primary_text"
                 android:drawableStart="@drawable/ic_description"
-                android:drawableTint="@color/primary_text"
                 android:inputType="textMultiLine"
                 android:drawablePadding="@dimen/dimen_10"
                 android:paddingVertical="@dimen/dimen_10"
@@ -291,6 +285,20 @@
                 android:background="@drawable/bg_ed" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/delete_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_this_data"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:textColor="@color/red_400"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginBottom="@dimen/dimen_24" />
 
     </LinearLayout>
 

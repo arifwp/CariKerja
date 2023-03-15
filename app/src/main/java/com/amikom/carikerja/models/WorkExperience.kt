@@ -5,6 +5,7 @@ data class WorkExperience(
 )
 
 data class Exp(
+    var id: String? = null,
     var job_title: String? = null,
     var company: String? = null,
     var dateStart: String? = null,

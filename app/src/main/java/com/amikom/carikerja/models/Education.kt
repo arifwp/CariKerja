@@ -5,6 +5,7 @@ data class Education (
 )
 
 data class EducationDetails(
+    var id: String? = null,
     var institution: String? = null,
     var degree: String? = null,
     var field_of_study: String? = null,

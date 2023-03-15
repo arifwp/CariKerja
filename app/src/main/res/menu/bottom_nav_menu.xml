@@ -7,9 +7,19 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_work"
         android:icon="@drawable/ic_work_selector"
         android:title="@string/title_work" />
+
+    <item
+        android:id="@+id/navigation_history_work"
+        android:icon="@drawable/ic_history"
+        android:title="@string/history" />
+
+    <item
+        android:id="@+id/navigation_history_post_job_work"
+        android:icon="@drawable/ic_history"
+        android:title="@string/history" />
 
     <item
         android:id="@+id/navigation_profile"

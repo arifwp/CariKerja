@@ -8,13 +8,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.profile.ProfileFragment">
+        tools:context=".ui.profile.ProfileFragment"
+        android:background="@color/primary_200">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="0dp"
+            android:background="@color/primary_200"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -23,21 +25,19 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:minHeight="?attr/actionBarSize">
+                android:minHeight="?attr/actionBarSize"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetRight="0dp"
+                android:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/circle_logo"
-                        android:layout_width="@dimen/dimen_50"
-                        android:layout_height="@dimen/dimen_30"
-                        android:src="@drawable/circle_logo"
-                        android:foreground="?android:attr/actionBarItemBackground"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true"/>
 
                     <TextView
                         android:id="@+id/title_toolbar"
@@ -45,12 +45,11 @@
                         android:layout_height="wrap_content"
                         android:text="@string/title_profile"
                         android:fontFamily="@font/poppins_semi_bold"
-                        android:textColor="@color/primary_text"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:includeFontPadding="false"
-                        android:layout_toEndOf="@+id/circle_logo"
-                        android:layout_marginStart="@dimen/dimen_10"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"/>
 
                 </RelativeLayout>
 
@@ -58,286 +57,362 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <RelativeLayout
-            android:id="@+id/wrap_user_profile"
+        <LinearLayout
+            android:id="@+id/wrap_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dimen_24"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/app_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:background="@drawable/bg_bottom"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_image"
-                android:layout_width="@dimen/dimen_60"
-                android:layout_height="@dimen/dimen_60"
-                tools:src="@drawable/dummy_avatar"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/wrap_user_profile"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/dimen_12"
-                android:layout_toEndOf="@id/user_image">
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:layout_marginHorizontal="@dimen/dimen_24">
 
-                <TextView
-                    android:id="@+id/user_name"
+                <LinearLayout
+                    android:id="@+id/wrap_image_logo"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <FrameLayout
+                        android:id="@+id/image_logo"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_100">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/user_image"
+                            android:layout_width="@dimen/dimen_100"
+                            android:layout_height="@dimen/dimen_100"
+                            tools:src="@drawable/illustration_forgot_password"/>
+
+                        <ImageView
+                            android:id="@+id/iv_camera"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="bottom|right"
+                            app:srcCompat="@drawable/ic_edit"/>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@string/example_name"
-                    android:textColor="@color/primary_text"
-                    android:fontFamily="@font/poppins_semi_bold"
-                    android:textSize="18sp"
-                    android:includeFontPadding="false"/>
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    app:layout_constraintTop_toBottomOf="@+id/wrap_image_logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
-                <TextView
-                    android:id="@+id/current_position"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/example_job_address"
-                    android:maxEms="8"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:visibility="visible"
-                    android:textColor="@color/secondary_text"
-                    android:fontFamily="@font/poppins_regular"
-                    android:includeFontPadding="false"
-                    android:layout_marginTop="@dimen/dimen_4" />
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/example_name"
+                        android:textColor="@color/primary_text"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:textSize="18sp"
+                        android:includeFontPadding="false"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                        android:id="@+id/current_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/example_job_address"
+                        android:maxEms="8"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:visibility="visible"
+                        android:textColor="@color/secondary_text"
+                        android:fontFamily="@font/poppins_regular"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        android:layout_gravity="center_horizontal"/>
 
 
-            </LinearLayout>
+                </LinearLayout>
 
-            <ImageView
-                android:id="@+id/btn_edit"
-                android:layout_width="@dimen/dimen_24"
-                android:layout_height="@dimen/dimen_24"
-                android:src="@drawable/ic_edit"
-                app:tint="@color/secondary_200"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_contact_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_marginEnd="@dimen/dimen_12"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
+                android:layout_marginTop="@dimen/dimen_24"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_user_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_contact_information"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contact_information"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
 
-        <RelativeLayout
-            android:id="@+id/wrap_contact_information"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_14"
-            android:background="@drawable/bg_profile_desc"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/dimen_24"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/wrap_user_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
 
-            <TextView
-                android:id="@+id/tv_contact_information"
-                android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_summary"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_information"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textColor="@color/primary_text"
-                android:includeFontPadding="false"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"/>
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_contact_information"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_suummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/summary"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_work_exp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:tint="@color/primary_text"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_summary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/work_experience"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
 
-        <RelativeLayout
-            android:id="@+id/wrap_summary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_14"
-            android:background="@drawable/bg_profile_desc"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/dimen_12"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/wrap_contact_information"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
 
-            <TextView
-                android:id="@+id/tv_suummary"
-                android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_education"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/summary"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textColor="@color/primary_text"
-                android:includeFontPadding="false"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"/>
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_work_exp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/education"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_project"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:tint="@color/primary_text"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_education"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/project"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
 
-        <RelativeLayout
-            android:id="@+id/wrap_work_exp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_14"
-            android:background="@drawable/bg_profile_desc"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/dimen_12"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/wrap_summary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
 
-            <TextView
-                android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_certification"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/work_experience"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textColor="@color/primary_text"
-                android:includeFontPadding="false"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"/>
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_project"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:tint="@color/primary_text"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/certification_and_license"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
 
-        </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
 
-        <RelativeLayout
-            android:id="@+id/wrap_education"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_14"
-            android:background="@drawable/bg_profile_desc"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/dimen_12"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/wrap_work_exp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/education"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textColor="@color/primary_text"
-                android:includeFontPadding="false"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"/>
+                </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:tint="@color/primary_text"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
+            </RelativeLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/wrap_project"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_14"
-            android:background="@drawable/bg_profile_desc"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/dimen_12"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/wrap_education"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/project"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textColor="@color/primary_text"
-                android:includeFontPadding="false"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:tint="@color/primary_text"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/wrap_certification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_14"
-            android:background="@drawable/bg_profile_desc"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginTop="@dimen/dimen_12"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/wrap_project"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/certification_and_license"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textColor="@color/primary_text"
-                android:includeFontPadding="false"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:tint="@color/primary_text"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,19 +1,17 @@
 package com.amikom.carikerja.viewmodels
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
-import com.amikom.carikerja.models.BaseResponse
-import com.amikom.carikerja.models.UserProfile
+import com.amikom.carikerja.models.*
 import com.amikom.carikerja.utils.SingleLiveEvent
+import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @HiltViewModel
@@ -24,9 +22,7 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel(), LifecycleObserver {
 
     private val TAG = "ProfileViewModel"
-    private var storageReference: StorageReference = storage.reference
-    private lateinit var reference: DatabaseReference
-    var authCurrentUser = FirebaseAuth.getInstance().currentUser
+    private var dataWorkExp: MutableList<Exp>? = null
 
     private val _updateRoleResponse = MutableLiveData<BaseResponse<String>>()
     val updateRoleResponse: LiveData<BaseResponse<String>> = _updateRoleResponse
@@ -34,14 +30,125 @@ class ProfileViewModel @Inject constructor(
     private val _checkRoleResponse = MutableLiveData<BaseResponse<String>>()
     val checkRoleResponse: LiveData<BaseResponse<String>> = _checkRoleResponse
 
-    private val _checkProfileCompletenessResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>>()
-    val checkProfileCompletenessResponse: LiveData<SingleLiveEvent<BaseResponse<String>>> = _checkProfileCompletenessResponse
+    private val _checkSkillsResponse = MutableLiveData<BaseResponse<Boolean>>()
+    val checkSkillsResponse: LiveData<BaseResponse<Boolean>> = _checkSkillsResponse
 
-    private val _getProfileResponse = MutableLiveData<BaseResponse<UserProfile>>()
-    val getProfileResponse: LiveData<BaseResponse<UserProfile>> = _getProfileResponse
+    private val _checkProfileCompletenessResponse = MutableLiveData<BaseResponse<String>>()
+    val checkProfileCompletenessResponse: LiveData<BaseResponse<String>> = _checkProfileCompletenessResponse
 
-    private val _editProfileResponse = MutableLiveData<BaseResponse<Any>>()
-    val editProfileResponse: LiveData<BaseResponse<Any>> = _editProfileResponse
+    private val _getProfileResponse = MutableLiveData<SingleLiveEvent<BaseResponse<UserProfile>>>()
+    val getProfileResponse: MutableLiveData<SingleLiveEvent<BaseResponse<UserProfile>>> = _getProfileResponse
+
+    private val _insertSkillResponse = MutableLiveData<BaseResponse<String>>()
+    val insertSkillResponse: LiveData<BaseResponse<String>> = _insertSkillResponse
+
+    private val _getSkillResponse = MutableLiveData<BaseResponse<MutableList<JobCategory>>>()
+    val getSkillResponse: LiveData<BaseResponse<MutableList<JobCategory>>> = _getSkillResponse
+
+    private val _getRoleResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>?>()
+    val getRoleResponse: MutableLiveData<SingleLiveEvent<BaseResponse<String>>?> = _getRoleResponse
+
+    private val _getUserSkillsResponse = MutableLiveData<BaseResponse<MutableList<SkillsDetail>>>()
+    val getUserSkillsResponse: LiveData<BaseResponse<MutableList<SkillsDetail>>> = _getUserSkillsResponse
+
+    fun getUserSkills(uid: String){
+        viewModelScope.launch {
+            try {
+                val ref = database.reference.child("Users").child(uid).child("skills")
+                val dataSkillsList: MutableList<SkillsDetail> = ArrayList()
+                ref.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        dataSkillsList.clear()
+                        for (childSnapshot in snapshot.children){
+//                            val data: SkillsDetail? = childSnapshot.getValue(SkillsDetail::class.java)
+//                            if (data != null) {
+//                                dataSkillsList.add(data)
+//                            }
+                            _getUserSkillsResponse.postValue(BaseResponse.Success(dataSkillsList))
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getUserSkillsResponse.postValue(BaseResponse.Error(error.message.toString()))
+                    }
+
+                })
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getUserSkillsResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
+
+    fun getRole(uid: String){
+        viewModelScope.launch {
+            try {
+                val ref = database.reference.child("Users").child(uid)
+                ref.addValueEventListener(object :ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val role = snapshot.child("role").getValue(String::class.java).toString()
+                        Log.d(TAG, "onCreateRole: $role")
+                        _getRoleResponse.postValue(SingleLiveEvent(BaseResponse.Success(role)))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getRoleResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                    }
+
+                })
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getRoleResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
+            }
+        }
+    }
+
+    fun getSkill(uid: String){
+        viewModelScope.launch {
+            try {
+
+                val ref = database.reference.child("Job Category")
+                val jobCategoryList: MutableList<JobCategory> = ArrayList()
+                ref.addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        jobCategoryList.clear()
+                        for (childSnapshot in snapshot.children){
+                            val jobCategory: JobCategory? = childSnapshot.getValue(JobCategory::class.java)
+                            if (jobCategory != null){
+                                jobCategoryList.add(jobCategory)
+                            }
+                            _getSkillResponse.postValue(BaseResponse.Success(jobCategoryList))
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getSkillResponse.postValue(BaseResponse.Error(error.message.toString()))
+                    }
+
+                })
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getSkillResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
+
+    fun insertSkill(uid: String, skills: ArrayList<String>){
+        viewModelScope.launch {
+            try {
+                database.reference.child("Users").child(uid).child("skills").setValue(skills)
+                    .addOnSuccessListener {
+                        _insertSkillResponse.postValue(BaseResponse.Success("Berhasil menambahkan keahlian"))
+                    }.addOnFailureListener {
+                        _insertSkillResponse.postValue(BaseResponse.Error(it.message.toString()))
+                    }
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _insertSkillResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
 
     fun updateRole(uid: String, role: String){
         viewModelScope.launch {
@@ -69,7 +176,9 @@ class ProfileViewModel @Inject constructor(
                 ref.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.hasChild("role")){
-                            _checkRoleResponse.postValue(BaseResponse.Success("exist"))
+                            val role = snapshot.child("role").getValue(String::class.java).toString()
+                            _checkRoleResponse.postValue(BaseResponse.Success(role))
+//                            _checkRoleResponse.postValue(BaseResponse.Success(true))
                         } else {
                             _checkRoleResponse.postValue(BaseResponse.Success(""))
                         }
@@ -89,20 +198,46 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun checkSkills(uid: String){
+        viewModelScope.launch{
+            try {
+                val ref = database.reference.child("Users").child(uid)
+                ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.hasChild("skills")){
+                            _checkSkillsResponse.postValue(BaseResponse.Success(true))
+                        } else {
+                            _checkSkillsResponse.postValue(BaseResponse.Success(false))
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        val error = error.toString().split(":").toTypedArray()
+                        _checkSkillsResponse.postValue(BaseResponse.Error(error[1]))
+                    }
+
+                })
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _checkSkillsResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
+
     fun checkProfileCompleteness(uid: String){
         viewModelScope.launch {
             try {
                 val ref = database.reference.child("Users").child(uid)
                 ref.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.hasChild("avatar")){
-                            _checkProfileCompletenessResponse.postValue(SingleLiveEvent(BaseResponse.Success("avatar_exists")))
-                        } else if (snapshot.hasChild("bod")){
-                            _checkProfileCompletenessResponse.postValue(SingleLiveEvent(BaseResponse.Success("bod_exists")))
+                        if (snapshot.hasChild("imageUrl")){
+                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("imageUrl_exists"))
+                        } else if (snapshot.hasChild("dob")){
+                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("dob_exists"))
                         } else if (snapshot.hasChild("address")){
-                            _checkProfileCompletenessResponse.postValue(SingleLiveEvent(BaseResponse.Success("address_exists")))
+                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("address_exists"))
                         } else {
-                            _checkProfileCompletenessResponse.postValue(SingleLiveEvent(BaseResponse.Success("")))
+                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success(""))
                         }
                     }
 
@@ -113,7 +248,7 @@ class ProfileViewModel @Inject constructor(
                 })
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
-                _checkProfileCompletenessResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
+                _checkProfileCompletenessResponse.postValue(BaseResponse.Error(error[1]))
             }
         }
     }
@@ -122,6 +257,8 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val ref = database.reference.child("Users").child(uid)
+                val dataProjectList: MutableList<ProjectDetails> = ArrayList()
+
                 ref.addValueEventListener(object :ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val phone = snapshot.child("phone").getValue(String::class.java).toString()
@@ -132,6 +269,10 @@ class ProfileViewModel @Inject constructor(
                         val dob = snapshot.child("dob").getValue(String::class.java).toString()
                         val address = snapshot.child("address").getValue(String::class.java).toString()
                         val summary = snapshot.child("summary").getValue(String::class.java).toString()
+                        val workExp = snapshot.child("work_experience").getValue(Exp::class.java)
+                        val certificate = snapshot.child("certificate").getValue(CertificateDetails::class.java)
+                        val project = snapshot.child("project").getValue(ProjectDetails::class.java)
+                        val education = snapshot.child("education").getValue(EducationDetails::class.java)
 
                         val userProfile = UserProfile(
                             uid = uid,
@@ -142,71 +283,20 @@ class ProfileViewModel @Inject constructor(
                             phone = phone,
                             dob = dob,
                             address = address,
-                            summary = summary,
+                            summary = summary
                         )
 
-                        _getProfileResponse.postValue(BaseResponse.Success(userProfile))
+                        _getProfileResponse.postValue(SingleLiveEvent(BaseResponse.Success(userProfile)))
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        _getProfileResponse.postValue(BaseResponse.Error(error.message.toString()))
+                        _getProfileResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
                     }
 
                 })
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
-                _getProfileResponse.postValue(BaseResponse.Error(error[1]))
-            }
-        }
-    }
-
-    fun editProfile(uid: String, imageUrl: Uri){
-        viewModelScope.launch {
-            try {
-                val ref = database.reference.child("Users").child(uid)
-                ref.addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-
-                        if (snapshot.hasChild("imageUrl")){
-                            val referenceStorage = storage.reference.child("Profile").child(Date().time.toString())
-                            referenceStorage.putFile(imageUrl).addOnSuccessListener {
-                                referenceStorage.downloadUrl.addOnSuccessListener { url ->
-                                    val childUpdates = hashMapOf<String, Any>(
-                                        "imageUrl" to url.toString()
-                                    )
-                                    database.reference.child("Users").child(uid).updateChildren(childUpdates)
-                                    _editProfileResponse.postValue(BaseResponse.Success("Profil anda berhasil diperbarui"))
-                                }.addOnFailureListener {
-                                    _editProfileResponse.postValue(BaseResponse.Error(it.message.toString()))
-                                }
-                            }.addOnFailureListener{
-                                _editProfileResponse.postValue(BaseResponse.Error(it.message.toString()))
-                            }
-
-                        } else {
-
-                            val referenceStorage = storage.reference.child("Profile").child(Date().time.toString())
-                            referenceStorage.putFile(imageUrl).addOnSuccessListener {
-                                referenceStorage.downloadUrl.addOnSuccessListener {
-                                    database.reference.child("Users").child(uid).child("imageUrl").setValue(it.toString())
-                                    _editProfileResponse.postValue(BaseResponse.Success("Profil anda berhasil diperbarui"))
-                                }.addOnFailureListener {
-                                    _editProfileResponse.postValue(BaseResponse.Error(it.message.toString()))
-                                }
-                            }.addOnFailureListener {
-                                _editProfileResponse.postValue(BaseResponse.Error(it.message.toString()))
-                            }
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        _editProfileResponse.postValue(BaseResponse.Error(error.message.toString()))
-                    }
-
-                })
-            } catch (e: java.lang.Exception) {
-                val error = e.toString().split(":").toTypedArray()
-                _editProfileResponse.postValue(BaseResponse.Error(error[1]))
+                _getProfileResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
             }
         }
     }

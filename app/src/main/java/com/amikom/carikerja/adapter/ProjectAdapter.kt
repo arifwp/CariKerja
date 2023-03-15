@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.databinding.LayoutProjectBinding
 import com.amikom.carikerja.models.EducationDetails
+import com.amikom.carikerja.models.Exp
 import com.amikom.carikerja.models.ProjectDetails
 
 class ProjectAdapter(private var dataProject: List<ProjectDetails>) : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
@@ -24,8 +25,13 @@ class ProjectAdapter(private var dataProject: List<ProjectDetails>) : RecyclerVi
             dateStart.text = item.dateStart
             dateEnd.text = item.dateEnd
             jobDescription.text = item.description
+            btnEdit.setOnClickListener {
+                listenerEditProject?.btnOnClickEdit(item)
+            }
         }
     }
+
+    var listenerEditProject: btnEditProjectListener? = null
 
     override fun getItemCount(): Int = dataProject.size
 
@@ -34,4 +40,8 @@ class ProjectAdapter(private var dataProject: List<ProjectDetails>) : RecyclerVi
         notifyDataSetChanged()
     }
 
+}
+
+interface btnEditProjectListener {
+    fun btnOnClickEdit(data: ProjectDetails)
 }
