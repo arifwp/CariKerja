@@ -16,7 +16,7 @@ import com.amikom.carikerja.adapter.SkillsAdapter
 import com.amikom.carikerja.adapter.chooseSkillsListener
 import com.amikom.carikerja.databinding.FragmentChooseListSkillsBinding
 import com.amikom.carikerja.models.BaseResponse
-import com.amikom.carikerja.ui.authentication.LoginFragmentDirections
+import com.amikom.carikerja.models.SkillsDetail
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -79,7 +79,7 @@ class ChooseListSkillsFragment : Fragment(), chooseSkillsListener {
         }
     }
 
-    override fun btnOnClickChooseSkills(data: ArrayList<String>, position: Int) {
+    override fun btnOnClickChooseSkills(data: ArrayList<SkillsDetail>, position: Int) {
         Log.d(TAG, "btnOnClickChooseSkills: ${skillsAdapter.getSelected()}")
         Log.d(TAG, "btnOnClickChooseSkillsData: $data")
 

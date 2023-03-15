@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.amikom.carikerja.models.*
 import com.amikom.carikerja.utils.SingleLiveEvent
-import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -60,10 +59,10 @@ class ProfileViewModel @Inject constructor(
                     override fun onDataChange(snapshot: DataSnapshot) {
                         dataSkillsList.clear()
                         for (childSnapshot in snapshot.children){
-//                            val data: SkillsDetail? = childSnapshot.getValue(SkillsDetail::class.java)
-//                            if (data != null) {
-//                                dataSkillsList.add(data)
-//                            }
+                            val data: SkillsDetail? = childSnapshot.getValue(SkillsDetail::class.java)
+                            if (data != null) {
+                                dataSkillsList.add(data)
+                            }
                             _getUserSkillsResponse.postValue(BaseResponse.Success(dataSkillsList))
                         }
                     }
@@ -134,7 +133,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun insertSkill(uid: String, skills: ArrayList<String>){
+    fun insertSkill(uid: String, skills: ArrayList<SkillsDetail>){
         viewModelScope.launch {
             try {
                 database.reference.child("Users").child(uid).child("skills").setValue(skills)

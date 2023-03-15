@@ -6,14 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.LayoutSkillsBinding
-import com.amikom.carikerja.models.CertificateDetailString
-import com.amikom.carikerja.models.Exp
 import com.amikom.carikerja.models.JobCategory
+import com.amikom.carikerja.models.SkillsDetail
 
 class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerView.Adapter<SkillsAdapter.SkillsViewHolder>() {
 
 //    private lateinit var dataSkills: Array<String>
-    var selectedList: ArrayList<String> = ArrayList()
+    var selectedList: ArrayList<SkillsDetail> = ArrayList()
 
     inner class SkillsViewHolder(val binding: LayoutSkillsBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -30,10 +29,18 @@ class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerVi
                 if (isCheckd){
                     skillsItem.setBackgroundResource(R.drawable.bg_choose_skills_active)
                     skillsItem.setTextColor(Color.parseColor("#FFFFFF"))
-                    selectedList.add(item.name.toString())
+                    selectedList.add(SkillsDetail(
+                        id = item.id,
+                        skill_name = item.name.toString()
+                    ))
                     notifyDataSetChanged()
                 } else if (!isCheckd){
-                    selectedList.remove(item.name.toString())
+                    selectedList.remove(
+                        SkillsDetail(
+                        id = item.id,
+                        skill_name = item.name.toString()
+                    )
+                    )
                     skillsItem.setTextColor(Color.parseColor("#2A2A2A"))
                     notifyDataSetChanged()
                     skillsItem.setBackgroundResource(R.drawable.bg_choose_skills_unactive)
@@ -45,7 +52,7 @@ class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerVi
         }
     }
 
-    fun getSelected(): ArrayList<String> {
+    fun getSelected(): ArrayList<SkillsDetail> {
         return selectedList
     }
 
@@ -61,5 +68,5 @@ class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerVi
 }
 
 interface chooseSkillsListener {
-    fun btnOnClickChooseSkills(data: ArrayList<String>, position: Int)
+    fun btnOnClickChooseSkills(data: ArrayList<SkillsDetail>, position: Int)
 }

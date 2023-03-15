@@ -301,7 +301,7 @@ class DetailJobFragment : Fragment() {
                         certificate = certificateApplicant,
                         project = projectApplicant,
                         education = educationApplicant,
-                        skills = null
+                        skills = it.data
                     )
                     Log.d(TAG, "observeGetUserSkills: ${it.data}")
                     Log.d(TAG, "observeAfterAdd: $applicant")
