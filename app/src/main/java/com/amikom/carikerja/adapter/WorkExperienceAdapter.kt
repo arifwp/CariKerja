@@ -1,10 +1,10 @@
 package com.amikom.carikerja.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.databinding.LayoutWorkExperienceBinding
-import com.amikom.carikerja.models.CertificateDetailString
 import com.amikom.carikerja.models.Exp
 
 class WorkExperienceAdapter(private var workExp: List<Exp>) : RecyclerView.Adapter<WorkExperienceAdapter.WorkExpViewHolder>() {
@@ -18,6 +18,7 @@ class WorkExperienceAdapter(private var workExp: List<Exp>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: WorkExpViewHolder, position: Int) {
         val item = workExp[position]
+        Log.d("SkillBottomAdapter", "onBindViewHolderWorkExp: $item")
         with(holder.binding){
             btnEdit.setOnClickListener {
                 listenerWorkExp?.btnOnClickExp(item)
@@ -36,8 +37,10 @@ class WorkExperienceAdapter(private var workExp: List<Exp>) : RecyclerView.Adapt
 
     override fun getItemCount(): Int = workExp.size
 
-    fun setWorkExpData(workExpList: List<Exp>) {
-        this.workExp = workExpList
+    fun setWorkExpData(workExpList: List<Exp>?) {
+        if (workExpList != null) {
+            this.workExp = workExpList
+        }
         notifyDataSetChanged()
     }
 

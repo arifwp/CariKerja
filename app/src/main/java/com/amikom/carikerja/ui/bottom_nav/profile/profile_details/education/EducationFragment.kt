@@ -69,7 +69,6 @@ class EducationFragment : Fragment(), btnEducationEdit {
     }
 
     override fun btnOnClickEducation(data: EducationDetails) {
-        Log.d(TAG, "btnOnClickEducation: ${data.id}")
         findNavController().navigate(EducationFragmentDirections.actionEducationFragmentToAddEducationFragment(
             data.id,
             data.institution,

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.adapter.WorkExperienceAdapter
-import com.amikom.carikerja.adapter.btnClickClickListener
 import com.amikom.carikerja.adapter.btnWorkExpClickClickListener
 import com.amikom.carikerja.databinding.FragmentWorkExperienceBinding
 import com.amikom.carikerja.models.BaseResponse
