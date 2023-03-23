@@ -519,10 +519,30 @@
             android:background="@color/grey_300" />
 
         <LinearLayout
+            android:id="@+id/wrap_text_applied"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/already_applied_this_job"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wrap_btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="visible"
             android:padding="@dimen/dimen_24">
 
             <TextView
@@ -542,6 +562,8 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 app:cornerRadius="@dimen/dimen_10"
+                android:backgroundTint="@color/primary_500"
+                android:textColor="@color/white"
                 android:stateListAnimator="@null"
                 android:layout_marginTop="@dimen/dimen_12"/>
 

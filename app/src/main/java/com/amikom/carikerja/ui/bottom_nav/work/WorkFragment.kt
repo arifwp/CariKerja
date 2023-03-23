@@ -17,6 +17,7 @@ import com.amikom.carikerja.databinding.FragmentWorkBinding
 import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.ui.bottom_nav.work.post_job.JobViewModel
 import com.amikom.carikerja.utils.SharedPreferences
+import com.amikom.carikerja.viewmodels.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,9 +27,12 @@ class WorkFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var jobAdapter: JobAdapter
     private val jobViewModel: JobViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
     private var TAG = "WorkFragment"
     private var uid: String? = null
     private var userRole: String? = null
+    private var nameRecruiter: String? = null
+    private var imgUrlRecruiter: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,16 +51,14 @@ class WorkFragment : Fragment() {
         initiateRv()
         uid = SharedPreferences.getUid(requireContext())
         userRole = SharedPreferences.getRole(requireContext())
-        Log.d(TAG, "onViewCreated: $userRole")
         when{
             userRole == "recruiter" -> binding.fab.visibility = View.VISIBLE
             userRole == "worker" -> binding.fab.visibility = View.GONE
             else -> binding.fab.visibility = View.GONE
         }
+
         jobViewModel.getJob(uid.toString())
 
-        val searchJob = binding.searchJob
-        val searchCity = binding.searchCity
         binding.searchJob.setIconifiedByDefault(false)
         binding.searchCity.setIconifiedByDefault(false)
 
@@ -67,16 +69,32 @@ class WorkFragment : Fragment() {
 
     }
 
+
     private fun observe() {
         jobViewModel.getJobResponse.observe(viewLifecycleOwner){
             when(it){
                 is BaseResponse.Loading -> {}
                 is BaseResponse.Success -> {
                     jobAdapter.setJobData(it.data)
-                    Log.d(TAG, "observe: ${it.data}")
                 }
                 is BaseResponse.Error -> textMessage(it.msg.toString())
                 else -> {}
+            }
+        }
+
+        profileViewModel.getProfileResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled().let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        Log.d(TAG, "initiateRvName: ${it.data.name}")
+                        Log.d(TAG, "initiateRvImage: ${it.data.imageUrl}")
+                        nameRecruiter = it.data.name
+                        imgUrlRecruiter = it.data.imageUrl
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                    else -> {}
+                }
             }
         }
     }

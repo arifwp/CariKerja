@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.databinding.LayoutRvSkillsBinding
 import com.amikom.carikerja.models.SkillsDetail
 
-class SkillBottomSheetAdapter(private var skill: ArrayList<String>) : RecyclerView.Adapter<SkillBottomSheetAdapter.SkillViewHolder>() {
+class SkillBottomSheetAdapter(private var skill: List<SkillsDetail>) : RecyclerView.Adapter<SkillBottomSheetAdapter.SkillViewHolder>() {
 
     inner class SkillViewHolder(val binding: LayoutRvSkillsBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -20,13 +20,13 @@ class SkillBottomSheetAdapter(private var skill: ArrayList<String>) : RecyclerVi
         val item = skill[position]
         Log.d("SkillBottomAdapter", "onBindViewHolder: $item")
         with(holder.binding){
-            tvSkills.text = item.toString()
+            tvSkills.text = item.skill_name
         }
     }
 
     override fun getItemCount(): Int = skill.size
 
-    fun setSkillData(skillList: ArrayList<String>){
+    fun setSkillData(skillList: List<SkillsDetail>){
         this.skill = skillList
         notifyDataSetChanged()
     }

@@ -4,18 +4,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.LayoutJobBinding
+import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.models.JobDetails
 import com.amikom.carikerja.ui.bottom_nav.work.WorkFragmentDirections
 import com.amikom.carikerja.utils.TimeShow
+import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.squareup.picasso.Picasso
 import java.util.*
 
 
-class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
+class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<JobAdapter.JobViewHolder>(){
+
+    private val TAG = "JobAdapter"
 
     inner class JobViewHolder(val binding : LayoutJobBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -97,5 +102,10 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
         notifyDataSetChanged()
     }
 
+    fun setUserInfo(dataUser: List<String>){
 
+        var user = this.dataJob.map { it.person_who_post }
+        user = dataUser
+        notifyDataSetChanged()
+    }
 }

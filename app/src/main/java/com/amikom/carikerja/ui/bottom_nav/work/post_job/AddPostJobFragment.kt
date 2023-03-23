@@ -2,6 +2,7 @@ package com.amikom.carikerja.ui.bottom_nav.work.post_job
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.FragmentAddPostJobBinding
 import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.models.JobDetails
+import com.amikom.carikerja.models.PublishedJob
 import com.amikom.carikerja.utils.SharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -29,6 +31,7 @@ class AddPostJobFragment : Fragment() {
     private var uid: String? = null
     private var countDays: String? = null
     private var currentDateTime: String? = null
+    private var publishedJob: PublishedJob? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +49,10 @@ class AddPostJobFragment : Fragment() {
         uid = SharedPreferences.getUid(requireContext())
         observe()
         initiateInputComponent()
+
+        publishedJob = PublishedJob(
+            id_job = null
+        )
 
         val btnSubmit = binding.btnSubmit
         btnSubmit.setOnClickListener {
@@ -115,20 +122,23 @@ class AddPostJobFragment : Fragment() {
         }
 
         if (jobTitle.isNotEmpty() || dateStart.isNotEmpty() || dateEnd.isNotEmpty()){
-            jobViewModel.addJob(uid.toString(), job)
+            jobViewModel.addJob(uid.toString(), job, publishedJob)
         }
 
     }
 
     private fun observe() {
         jobViewModel.addJobResponse.observe(viewLifecycleOwner){
-            when(it){
-                is BaseResponse.Loading -> {}
-                is BaseResponse.Success -> {
-                    textMessage(it.data.toString())
-                    findNavController().popBackStack()
+            it.getContentIfNotHandled().let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        textMessage(it.data.toString())
+                        findNavController().popBackStack()
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                    else -> {}
                 }
-                is BaseResponse.Error -> textMessage(it.msg.toString())
             }
         }
     }

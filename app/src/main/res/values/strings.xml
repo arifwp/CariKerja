@@ -160,6 +160,7 @@
     <string name="example_total_day">90 Hari</string>
     <string name="job_address">Lokasi Pekerjaan</string>
     <string name="sure_for_applicant">Apakah anda yakin ingin melamar dengan profile yang sudah anda isi?</string>
+    <string name="already_applied_this_job">Anda sudah melamar pekerjaan ini</string>
 
     <string-array name="employee_type">
         <item>Magang</item>

@@ -148,13 +148,15 @@ class BiodataFragment : Fragment() {
 
         biodataViewModel.editProfile(uid = uid.toString(), selectedImage, name, dob, address)
         biodataViewModel.editProfileResponse.observe(viewLifecycleOwner){
-            when(it){
-                is BaseResponse.Loading -> {}
-                is BaseResponse.Success -> {
-                    textMessage(it.data.toString())
+            it.getContentIfNotHandled().let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        textMessage(it.data.toString())
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                    else -> {}
                 }
-                is BaseResponse.Error -> textMessage(it.msg.toString())
-                else -> {}
             }
         }
     }

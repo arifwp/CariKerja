@@ -1,7 +1,9 @@
 package com.amikom.carikerja.models
 
 data class Applicant(
+    var id_job: String? = null,
     var uid: String? = null,
+    var id_applicant: String? = null,
     var imageUrl: String? = null,
     var name: String? = null,
     var email: String? = null,
