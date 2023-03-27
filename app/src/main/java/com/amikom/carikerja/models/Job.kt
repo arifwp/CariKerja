@@ -32,5 +32,6 @@ data class JobDetails(
         var employee_type: String? = null,
         var job_address: String? = null,
         var salary: String? = null,
-        var post_time: String? = null
+        var post_time: String? = null,
+        var job_status: String? = null
 )

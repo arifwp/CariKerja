@@ -47,7 +47,7 @@
     <string name="rekomendasi">Rekomendasi Pekerjaan</string>
     <string name="example_job">UI/UX Designer</string>
     <string name="example_username">Siti Paijo</string>
-    <string name="example_job_address">Kebontutup, Ketaon, Banyudono, Boyolali</string>
+    <string name="example_job_address">Ngaglik, Sleman, Yogyakarta</string>
     <string name="example_salary">400.000 - Rp 600.000</string>
     <string name="open">Terbuka</string>
     <string name="remote">Jarak Jauh</string>
@@ -164,6 +164,8 @@
     <string name="total_applicant">Total Pelamar</string>
     <string name="list_applicant">List Pelamar</string>
     <string name="choose_applicant_desc">Apakah anda ingin memilih pekerja ini untuk bekerja di lowongan yang anda publish?</string>
+    <string name="example_applicant_status">Ditolak</string>
+    <string name="cant_add_applicant">Anda sudah memilih pelamar untuk pekerjaan ini</string>
 
     <string-array name="employee_type">
         <item>Magang</item>

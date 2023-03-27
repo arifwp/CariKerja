@@ -1,17 +1,18 @@
 package com.amikom.carikerja.adapter
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.LayoutListApplicantBinding
 import com.amikom.carikerja.models.Applicant
-import com.amikom.carikerja.models.JobDetails
-import com.amikom.carikerja.ui.bottom_nav.work.BottomSheetFragment
 import com.squareup.picasso.Picasso
 
-class ListApplicantAdapter(private var dataApplicant: List<Applicant>) : RecyclerView.Adapter<ListApplicantAdapter.ListApplicantViewHolder>() {
+class ListApplicantAdapter(private val context: Context, private var dataApplicant: List<Applicant>) : RecyclerView.Adapter<ListApplicantAdapter.ListApplicantViewHolder>() {
 
     inner class ListApplicantViewHolder(val binding: LayoutListApplicantBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -40,6 +41,20 @@ class ListApplicantAdapter(private var dataApplicant: List<Applicant>) : Recycle
                 .load("${item.imageUrl}")
                 .error(R.drawable.dummy_avatar)
                 .into(userImage)
+
+            if (item.status == "rejected"){
+                wrapApplicantStatus.backgroundTintList = ContextCompat.getColorStateList(context,R.color.red_100);
+                applicantStatus.setTextColor(ContextCompat.getColor(context, R.color.red_400))
+                applicantStatus.text = "Ditolak"
+            } else if (item.status == "accepted"){
+                wrapApplicantStatus.backgroundTintList = ContextCompat.getColorStateList(context,R.color.green_100);
+                applicantStatus.setTextColor(ContextCompat.getColor(context, R.color.green_700))
+                applicantStatus.text = "Diterima"
+            } else if (item.status == "on_review"){
+                wrapApplicantStatus.backgroundTintList = ContextCompat.getColorStateList(context,R.color.yellow_100);
+                applicantStatus.setTextColor(ContextCompat.getColor(context, R.color.yellow_700))
+                applicantStatus.text = "Sedang ditinjau"
+            }
         }
 
 

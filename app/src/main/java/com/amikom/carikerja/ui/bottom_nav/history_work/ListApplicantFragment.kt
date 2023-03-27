@@ -71,7 +71,7 @@ class ListApplicantFragment : Fragment(), showBottomSheet {
 
     private fun initiateRv() {
         val recyclerViewApplicant: RecyclerView = requireView().findViewById(R.id.rv_list_applicant)
-        listApplicantAdapter = ListApplicantAdapter(ArrayList())
+        listApplicantAdapter = ListApplicantAdapter(requireContext(), ArrayList())
         listApplicantAdapter.listenerBtnItem = this
         recyclerViewApplicant.apply {
             setHasFixedSize(true)

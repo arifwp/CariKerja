@@ -84,7 +84,7 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         uid = SharedPreferences.getUid(requireContext())
         id_jobBtm = DetailJobFragment.id_job.id_job
         observe()
@@ -113,10 +113,11 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
                 educationViewModel.getEducation(uidWorker.toString())
                 profileViewModel.getUserSkills(uidWorker.toString())
                 jobViewModel.getIdApplicant(id_jobBtm.toString(), uidWorker.toString())
+                jobViewModel.getJobStatus(id_jobBtm.toString())
                 historyJobViewModel.getListIdApplicantByPublishedJob(uid.toString(), id_jobBtm.toString())
-                binding.wrapChooseApplicant.visibility = View.VISIBLE
-                binding.wrapBtnSubmit.visibility = View.GONE
-                listenerBtnChooseApplicant()
+
+
+
             }
         }
 
@@ -138,12 +139,9 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
         binding.btnChoooseApplicant.setOnClickListener {
 
             val n = jobByRecruiter?.size ?: error("Tidak ada pelamar")
-            val firstElement = jobByRecruiter?.get(0)
-            val lastElement = jobByRecruiter?.get(n - 1)
 
             if (n > 0){
-                Log.d(TAG, "listenerBtnChooseApplicant_value N: $n")
-                jobViewModel.chooseApplicant(id_jobBtm, id_applicant, firstElement, lastElement)
+                jobViewModel.chooseApplicant(id_jobBtm, id_applicant)
             } else {
                 textMessage("Tidak ada pelamar yang melamar pekerjaan ini")
             }
@@ -431,6 +429,35 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
                     is BaseResponse.Success -> {
                         val id = it.data.joinToString { it.toString() }
                         id_applicant = id.toString()
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                }
+            }
+        }
+
+        jobViewModel.getJobStatusResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success ->{
+                        when{
+                            it.data == "open" -> {
+                                binding.wrapChooseApplicant.visibility = View.VISIBLE
+                                binding.wrapBtnSubmit.visibility = View.GONE
+                                binding.wrapBtnJobStatus.visibility = View.GONE
+                                listenerBtnChooseApplicant()
+                            }
+                            it.data == "closed" -> {
+                                binding.wrapChooseApplicant.visibility = View.GONE
+                                binding.wrapBtnSubmit.visibility = View.GONE
+                                binding.wrapBtnJobStatus.visibility = View.VISIBLE
+                            }
+                            else -> {
+                                binding.wrapChooseApplicant.visibility = View.GONE
+                                binding.wrapBtnSubmit.visibility = View.GONE
+                                binding.wrapBtnJobStatus.visibility = View.VISIBLE
+                            }
+                        }
                     }
                     is BaseResponse.Error -> textMessage(it.msg.toString())
                 }

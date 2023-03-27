@@ -33,6 +33,7 @@
 
     <color name="secondary_300">#F9F9F9</color>
 
+    <color name="red_100">#FFCCBC</color>
     <color name="red_400">#E73F3F</color>
 
     <color name="green_100">#C8E6C9</color>
@@ -48,6 +49,9 @@
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_400">#A1A0A3</color>
     <color name="grey_700">#616161</color>
+
+    <color name="yellow_100">#FFF9C4</color>
+    <color name="yellow_700">#FBC02D</color>
 
 
     <color name="secondary_100">#9E9E9E</color>

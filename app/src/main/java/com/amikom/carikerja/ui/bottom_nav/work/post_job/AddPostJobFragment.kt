@@ -109,20 +109,28 @@ class AddPostJobFragment : Fragment() {
             post_time = currentDateTime
         )
 
-        if (jobTitle.isEmpty()){
-            binding.edJobTitle.error = "Masukkan judul pekerjaan yang ingin anda cari"
-        }
+//        if (jobTitle.isEmpty()){
+//            binding.edJobTitle.error = "Masukkan judul pekerjaan yang ingin anda cari"
+//        }
+//
+//        if (dateStart.isEmpty()){
+//            binding.edDateStart.error = "Masukkan tanggal dimulainya pekerjaan"
+//        }
+//
+//        if (dateEnd.isEmpty()){
+//            binding.edDateEnd.error = "Masukkan tanggal berakhirnya pekerjaan"
+//        }
+//
+//        if (jobTitle.isNotEmpty() || dateStart.isNotEmpty() || dateEnd.isNotEmpty()){
+//            jobViewModel.addJob(uid.toString(), job, publishedJob)
+//        }
 
-        if (dateStart.isEmpty()){
-            binding.edDateStart.error = "Masukkan tanggal dimulainya pekerjaan"
-        }
-
-        if (dateEnd.isEmpty()){
-            binding.edDateEnd.error = "Masukkan tanggal berakhirnya pekerjaan"
-        }
-
-        if (jobTitle.isNotEmpty() || dateStart.isNotEmpty() || dateEnd.isNotEmpty()){
-            jobViewModel.addJob(uid.toString(), job, publishedJob)
+        when {
+            jobTitle.isEmpty() -> binding.edJobTitle.error = "Masukkan judul pekerjaan"
+            dateStart.isEmpty() -> binding.edDateStart.error = "Masukkan tanggal dimulainya pekerjaan"
+            dateEnd.isEmpty() -> binding.edDateEnd.error = "Masukkan tanggal berakhirnya pekerjaan"
+            jobAdress.isEmpty() -> binding.edLocation.error = "Masukkan alamat lokasi pekerjaan"
+            else -> jobViewModel.addJob(uid.toString(), job, publishedJob)
         }
 
     }

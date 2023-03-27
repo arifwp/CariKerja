@@ -130,7 +130,6 @@ class DetailJobFragment : Fragment() {
                                 when(it){
                                     is BaseResponse.Loading -> {}
                                     is BaseResponse.Success -> {
-                                        Log.d(TAG, "observeTotalApplicant: ${it.data}")
                                         binding.tvTotalApplicant.text = it.data.toString()
                                         if (it.data != 0){
                                             binding.wrapTotalApplicant.setOnClickListener {

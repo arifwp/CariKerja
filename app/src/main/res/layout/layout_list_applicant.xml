@@ -9,33 +9,30 @@
     android:backgroundTint="@color/grey_100"
     android:elevation="@dimen/dimen_6">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dimen_12"
-        android:paddingBottom="@dimen/dimen_32"
-        android:paddingStart="@dimen/dimen_12"
-        android:orientation="horizontal">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_image"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="@dimen/dimen_60"
+            tools:src="@drawable/dummy_avatar"
+            android:layout_marginStart="@dimen/dimen_12"
+            android:layout_marginTop="@dimen/dimen_12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_image"
-                android:layout_width="@dimen/dimen_60"
-                android:layout_height="@dimen/dimen_60"
-                tools:src="@drawable/dummy_avatar" />
-
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/wrap_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="@dimen/dimen_12"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="@id/user_image"
+            app:layout_constraintBottom_toBottomOf="@id/user_image"
+            app:layout_constraintStart_toEndOf="@id/user_image">
 
             <TextView
                 android:id="@+id/tv_user_name"
@@ -58,6 +55,35 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/wrap_applicant_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_applicant_status"
+            android:backgroundTint="@color/yellow_100"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dimen_12"
+            android:paddingTop="@dimen/dimen_6"
+            android:paddingEnd="@dimen/dimen_12"
+            android:paddingBottom="@dimen/dimen_6"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:layout_marginBottom="@dimen/dimen_12"
+            app:layout_constraintTop_toBottomOf="@id/wrap_user_info"
+            app:layout_constraintStart_toStartOf="@id/wrap_user_info"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/applicant_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:includeFontPadding="false"
+                tools:text="@string/example_applicant_status"
+                android:textColor="@color/yellow_700"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

@@ -3,6 +3,7 @@ package com.amikom.carikerja.ui.bottom_nav.work.post_job
 import android.util.Log
 import androidx.lifecycle.*
 import com.amikom.carikerja.models.*
+import com.amikom.carikerja.ui.bottom_nav.work.BottomSheetFragment
 import com.amikom.carikerja.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -47,44 +48,80 @@ class JobViewModel @Inject constructor(
     private val _chooseApplicantResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>>()
     val chooseApplicantResponse: LiveData<SingleLiveEvent<BaseResponse<String>>> = _chooseApplicantResponse
 
-    fun chooseApplicant(
-        id_job: String?,
-        id_applicant: String?,
-        firstElement: String?,
-        lastElement: String?
-    ){
+    private val _getJobStatusResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>>()
+    val getJobStatusResponse: LiveData<SingleLiveEvent<BaseResponse<String>>> = _getJobStatusResponse
+
+    fun getJobStatus(id_job: String?){
+        viewModelScope.launch {
+            try {
+
+                val ref = database.reference.child("Jobs").child(id_job.toString())
+                ref.addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val jobStatusValue = snapshot.child("job_status").getValue(String::class.java).toString()
+                        _getJobStatusResponse.postValue(SingleLiveEvent(BaseResponse.Success(jobStatusValue)))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getJobStatusResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                    }
+
+                })
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getJobStatusResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
+            }
+        }
+    }
+
+    fun chooseApplicant(id_job: String?, id_applicant: String?){
         viewModelScope.launch {
             try {
 
                 val statusUpdates = hashMapOf<String, Any?>(
-                    "status" to "diterima"
+                    "status" to "accepted"
                 )
 
-                val queryApplicant = database.reference.child("Jobs").child(id_job.toString()).child("applicant")
-                queryApplicant.orderByChild("status").equalTo("on_review").addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        for (childSnapshot in snapshot.children){
-                            queryApplicant.child(childSnapshot.key.toString()).child("status").setValue("rejected").addOnSuccessListener {
+                val jobStatus = hashMapOf<String, Any?>(
+                    "job_status" to "closed"
+                )
+
+                // query update job status
+                val queryJob = database.reference.child("Jobs").child(id_job.toString())
+                queryJob.updateChildren(jobStatus).addOnSuccessListener {
 
 
-                                val ref = database.reference.child("Jobs").child(id_job.toString()).child("applicant").child(id_applicant.toString())
-                                ref.updateChildren(statusUpdates).addOnSuccessListener {
-                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil memilih pekerja")))
-                                }.addOnFailureListener {
-                                    Log.d(TAG, "chooseApplicantIt: ${it.message}")
-                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
+                    // query update status on_review to rejected
+                    val queryApplicant = database.reference.child("Jobs").child(id_job.toString()).child("applicant")
+                    queryApplicant.orderByChild("status").equalTo("on_review").addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (childSnapshot in snapshot.children){
+                                queryApplicant.child(childSnapshot.key.toString()).child("status").setValue("rejected").addOnSuccessListener {
+
+
+                                    // query update status rejected to diterima
+                                    val ref = database.reference.child("Jobs").child(id_job.toString()).child("applicant").child(id_applicant.toString())
+                                    ref.updateChildren(statusUpdates).addOnSuccessListener {
+                                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil memilih pekerja")))
+                                    }.addOnFailureListener {
+                                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
+                                    }
+
+
                                 }
-
-
                             }
                         }
-                    }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
-                    }
+                        override fun onCancelled(error: DatabaseError) {
+                            _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                        }
 
-                })
+                    })
+
+                }.addOnFailureListener {
+                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
+                }
 
 
             } catch (e: java.lang.Exception) {
@@ -259,6 +296,7 @@ class JobViewModel @Inject constructor(
                         jobDetails.uid = uid
                         jobDetails.person_who_post = name
                         jobDetails.image_url = imageUrl
+                        jobDetails.job_status = "open"
                         ref.setValue(jobDetails).addOnSuccessListener {
                             _addJobResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil posting pekerjaan")))
                         }.addOnFailureListener {

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/wrap_btn"
-        android:paddingBottom="@dimen/dimen_12"
+        android:layout_marginBottom="@dimen/dimen_12"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/wrap_btn"
         app:layout_constraintStart_toStartOf="parent"
@@ -565,6 +565,24 @@
                 android:textColor="@color/white"
                 android:stateListAnimator="@null"
                 android:layout_marginTop="@dimen/dimen_12"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wrap_btn_job_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cant_add_applicant"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
 
         </LinearLayout>
 
