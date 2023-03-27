@@ -15,6 +15,7 @@ import com.amikom.carikerja.adapter.SkillBottomSheetAdapter
 import com.amikom.carikerja.adapter.WorkExperienceAdapter
 import com.amikom.carikerja.databinding.BottomSheetApplicantBinding
 import com.amikom.carikerja.models.*
+import com.amikom.carikerja.ui.bottom_nav.history_work.HistoryJobViewModel
 import com.amikom.carikerja.ui.bottom_nav.profile.profile_details.certificate.CertificateViewModel
 import com.amikom.carikerja.ui.bottom_nav.profile.profile_details.education.EducationViewModel
 import com.amikom.carikerja.ui.bottom_nav.profile.profile_details.project.ProjectViewModel
@@ -25,10 +26,11 @@ import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import hilt_aggregated_deps._com_amikom_carikerja_ui_bottom_nav_work_DetailJobFragment_GeneratedInjector
 
 @AndroidEntryPoint
-class BottomSheetFragment : BottomSheetDialogFragment() {
+class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
+
+    private var uidWorker = uid_worker
 
     private var _binding: BottomSheetApplicantBinding? = null
     private val binding get() = _binding!!
@@ -39,6 +41,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private val projectViewModel: ProjectViewModel by viewModels()
     private val educationViewModel: EducationViewModel by viewModels()
     private val jobViewModel: JobViewModel by viewModels()
+    private val historyJobViewModel: HistoryJobViewModel by viewModels()
     private lateinit var skillBottomSheetAdapter: SkillBottomSheetAdapter
     private lateinit var workExperienceAdapter: WorkExperienceAdapter
     private lateinit var educationAdapter: EducationAdapter
@@ -48,6 +51,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private var uid: String? = null
     private var id_jobBtm: String? = null
     private var uidApplicant:String? = null
+    private var id_applicant: String? = null
     private var imageUrlApplicant:String? = null
     private var nameApplicant:String? = null
     private var emailApplicant:String? = null
@@ -61,6 +65,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private var projectApplicant: MutableList<ProjectDetails>? = null
     private var educationApplicant: MutableList<EducationDetails>? = null
     private var skillsApplicant: MutableList<SkillsDetail>? = null
+    private var jobByRecruiter: ArrayList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,49 +88,64 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         uid = SharedPreferences.getUid(requireContext())
         id_jobBtm = DetailJobFragment.id_job.id_job
         observe()
-        listener()
+
         initiateRvSkill()
         initiateRvWorkExp()
         initiateRvEducation()
 
-        profileViewModel.getProfile(uid.toString())
-        workExperienceViewModel.getWorkExp(uid.toString())
-        certificateViewModel.getCertificate(uid.toString())
-        projectViewModel.getProject(uid.toString())
-        educationViewModel.getEducation(uid.toString())
-        profileViewModel.getUserSkills(uid.toString())
-        jobViewModel.getUserIdJob(uid.toString())
+        when{
+            uidWorker.isNullOrEmpty() -> {
+                profileViewModel.getProfile(uid.toString())
+                workExperienceViewModel.getWorkExp(uid.toString())
+                certificateViewModel.getCertificate(uid.toString())
+                projectViewModel.getProject(uid.toString())
+                educationViewModel.getEducation(uid.toString())
+                profileViewModel.getUserSkills(uid.toString())
+                jobViewModel.getUserIdJob(uid.toString())
+                binding.wrapBtnSubmit.visibility = View.VISIBLE
+                listenerBtnSubmit()
+            }
+            else -> {
+                profileViewModel.getProfile(uidWorker.toString())
+                workExperienceViewModel.getWorkExp(uidWorker.toString())
+                certificateViewModel.getCertificate(uidWorker.toString())
+                projectViewModel.getProject(uidWorker.toString())
+                educationViewModel.getEducation(uidWorker.toString())
+                profileViewModel.getUserSkills(uidWorker.toString())
+                jobViewModel.getIdApplicant(id_jobBtm.toString(), uidWorker.toString())
+                historyJobViewModel.getListIdApplicantByPublishedJob(uid.toString(), id_jobBtm.toString())
+                binding.wrapChooseApplicant.visibility = View.VISIBLE
+                binding.wrapBtnSubmit.visibility = View.GONE
+                listenerBtnChooseApplicant()
+            }
+        }
 
 
 
 
     }
 
-    private fun listener(){
-//        binding.btnSubmit.setOnClickListener {
-//            jobViewModel.getUserIdJob(uid.toString())
-//            jobViewModel.getUserIdJobResponse.observe(viewLifecycleOwner){
-//                it.getContentIfNotHandled().let {
-//                    when(it){
-//                        is BaseResponse.Loading -> {}
-//                        is BaseResponse.Success -> {
-//                            Log.d(TAG, "observe: ${it.data}")
-//                            if (it.data.contains(id_jobBtm)){
-//                                textMessage("Anda sudah melamar pekerjaan ini")
-//                            } else {
-//                                jobViewModel.addApplicant(uid.toString(), applicant, historyJob)
-//                            }
-//                        }
-//                        is BaseResponse.Error -> textMessage(it.msg.toString())
-//                        else -> {}
-//                    }
-//                }
-//            }
-//        }
+    private fun listenerBtnSubmit(){
 
         binding.btnSubmit.setOnClickListener {
             if (applicant != null){
                 jobViewModel.addApplicant(uid.toString(), applicant, historyJob)
+            }
+        }
+    }
+
+    private fun listenerBtnChooseApplicant(){
+        binding.btnChoooseApplicant.setOnClickListener {
+
+            val n = jobByRecruiter?.size ?: error("Tidak ada pelamar")
+            val firstElement = jobByRecruiter?.get(0)
+            val lastElement = jobByRecruiter?.get(n - 1)
+
+            if (n > 0){
+                Log.d(TAG, "listenerBtnChooseApplicant_value N: $n")
+                jobViewModel.chooseApplicant(id_jobBtm, id_applicant, firstElement, lastElement)
+            } else {
+                textMessage("Tidak ada pelamar yang melamar pekerjaan ini")
             }
         }
     }
@@ -179,7 +199,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                             dataWorkExperience = null,
                             certificate = null,
                             project = null,
-                            education = null
+                            education = null,
+                            skills = null,
+                            status = null
                         )
                     }
                     is BaseResponse.Error -> textMessage(it.msg.toString())
@@ -210,7 +232,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                             dataWorkExperience = it.data,
                             certificate = null,
                             project = null,
-                            education = null
+                            education = null,
+                            skills = null,
+                            status = null
                         )
                     }
                     is BaseResponse.Error -> textMessage(it.msg.toString())
@@ -239,7 +263,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                         dataWorkExperience = dataWorkExperienceApplicant,
                         certificate = it.data,
                         project = null,
-                        education = null
+                        education = null,
+                        skills = null,
+                        status = null
                     )
                 }
                 is BaseResponse.Error -> textMessage(it.msg.toString())
@@ -266,7 +292,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                         dataWorkExperience = dataWorkExperienceApplicant,
                         certificate = certificateApplicant,
                         project = it.data,
-                        education = null
+                        education = null,
+                        skills = null,
+                        status = null
                     )
                 }
                 is BaseResponse.Error -> textMessage(it.msg.toString())
@@ -296,7 +324,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                             dataWorkExperience = dataWorkExperienceApplicant,
                             certificate = certificateApplicant,
                             project = projectApplicant,
-                            education = it.data
+                            education = it.data,
+                            skills = null,
+                            status = null
                         )
                     }
                     is BaseResponse.Error -> textMessage(it.msg.toString())
@@ -326,7 +356,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                         certificate = certificateApplicant,
                         project = projectApplicant,
                         education = educationApplicant,
-                        skills = it.data
+                        skills = it.data,
+                        status = null
                     )
                     historyJob = HistoryJob(
                         id_job = id_jobBtm
@@ -344,7 +375,10 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     dialog?.dismiss()
                     textMessage(it.data.toString())
                 }
-                is BaseResponse.Error -> textMessage(it.msg.toString())
+                is BaseResponse.Error -> {
+                    dialog?.dismiss()
+                    textMessage(it.msg.toString())
+                }
             }
         }
 
@@ -353,7 +387,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 when(it){
                     is BaseResponse.Loading -> {}
                     is BaseResponse.Success -> {
-                        Log.d(TAG, "observe: ${it.data}")
                         when{
                             it.data.isNullOrEmpty() -> {
                                 binding.wrapBtnSubmit.visibility = View.VISIBLE
@@ -372,6 +405,45 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     is BaseResponse.Error -> textMessage(it.msg.toString())
                     else -> {}
                 }
+            }
+        }
+
+        jobViewModel.chooseApplicantResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        dialog?.dismiss()
+                        textMessage(it.data)
+                    }
+                    is BaseResponse.Error -> {
+                        dialog?.dismiss()
+                        textMessage(it.msg.toString())
+                    }
+                }
+            }
+        }
+
+        jobViewModel.getIdApplicantResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        val id = it.data.joinToString { it.toString() }
+                        id_applicant = id.toString()
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                }
+            }
+        }
+
+        historyJobViewModel.getListIdApplicantByPublishedJobResponse.observe(viewLifecycleOwner){
+            when(it){
+                is BaseResponse.Loading -> {}
+                is BaseResponse.Success ->{
+                    jobByRecruiter = it.data
+                }
+                is BaseResponse.Error -> textMessage(it.msg.toString())
             }
         }
 

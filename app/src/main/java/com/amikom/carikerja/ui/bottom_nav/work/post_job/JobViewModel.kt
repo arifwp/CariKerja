@@ -1,5 +1,6 @@
 package com.amikom.carikerja.ui.bottom_nav.work.post_job
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.amikom.carikerja.models.*
 import com.amikom.carikerja.utils.SingleLiveEvent
@@ -20,7 +21,7 @@ class JobViewModel @Inject constructor(
     private val database: FirebaseDatabase
 ) : ViewModel(), LifecycleObserver {
 
-    private val TAG = "PostJobViewModel"
+    private val TAG = "JobViewModel"
 
     private val _addJobResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>>()
     val addJobResponse: LiveData<SingleLiveEvent<BaseResponse<String>>> = _addJobResponse
@@ -34,13 +35,105 @@ class JobViewModel @Inject constructor(
     private val _getUserIdJobResponse = MutableLiveData<SingleLiveEvent<BaseResponse<MutableList<String>>>>()
     val getUserIdJobResponse: LiveData<SingleLiveEvent<BaseResponse<MutableList<String>>>> = _getUserIdJobResponse
 
+    private val _getPublishedJobByRecruiterUidResponse = MutableLiveData<SingleLiveEvent<BaseResponse<MutableList<JobDetails>>>>()
+    val getPublishedJobByRecruiterUidResponse: LiveData<SingleLiveEvent<BaseResponse<MutableList<JobDetails>>>> = _getPublishedJobByRecruiterUidResponse
 
+    private val _getTotalApplicantResponse = MutableLiveData<BaseResponse<Int>>()
+    val getTotalApplicantResponse: LiveData<BaseResponse<Int>> = _getTotalApplicantResponse
+
+    private val _getIdApplicantResponse = MutableLiveData<SingleLiveEvent<BaseResponse<MutableList<String>>>>()
+    val getIdApplicantResponse: LiveData<SingleLiveEvent<BaseResponse<MutableList<String>>>> = _getIdApplicantResponse
+
+    private val _chooseApplicantResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>>()
+    val chooseApplicantResponse: LiveData<SingleLiveEvent<BaseResponse<String>>> = _chooseApplicantResponse
+
+    fun chooseApplicant(
+        id_job: String?,
+        id_applicant: String?,
+        firstElement: String?,
+        lastElement: String?
+    ){
+        viewModelScope.launch {
+            try {
+
+                val statusUpdates = hashMapOf<String, Any?>(
+                    "status" to "diterima"
+                )
+
+                val queryApplicant = database.reference.child("Jobs").child(id_job.toString()).child("applicant")
+                queryApplicant.orderByChild("status").equalTo("on_review").addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (childSnapshot in snapshot.children){
+                            queryApplicant.child(childSnapshot.key.toString()).child("status").setValue("rejected").addOnSuccessListener {
+
+
+                                val ref = database.reference.child("Jobs").child(id_job.toString()).child("applicant").child(id_applicant.toString())
+                                ref.updateChildren(statusUpdates).addOnSuccessListener {
+                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil memilih pekerja")))
+                                }.addOnFailureListener {
+                                    Log.d(TAG, "chooseApplicantIt: ${it.message}")
+                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
+                                }
+
+
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                    }
+
+                })
+
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
+            }
+        }
+    }
+
+    fun getIdApplicant(idJob: String, uid_worker: String){
+        viewModelScope.launch {
+            try {
+
+                val ref = database.reference.child("Jobs").child(idJob).child("applicant").orderByChild("uid").equalTo(uid_worker)
+                val idApplicantList: MutableList<String> = ArrayList()
+                ref.addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        idApplicantList.clear()
+                        for (childSnapshot in snapshot.children){
+                            val id = childSnapshot.child("id_applicant").getValue(String::class.java).toString()
+
+//                            val applicant: String? = childSnapshot.getValue(Applicant::class.java)?.id_applicant
+
+                            if (id != null){
+                                idApplicantList.add(id)
+                            }
+                            _getIdApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Success(idApplicantList)))
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getIdApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                    }
+
+                })
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getIdApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
+            }
+        }
+    }
 
     fun addApplicant(uid: String, applicant: Applicant?, historyJob: HistoryJob?){
         viewModelScope.launch {
             try {
-                val ref = database.reference.child("Jobs").child(applicant?.id_job.toString()).push()
+                val ref = database.reference.child("Jobs").child(applicant?.id_job.toString()).child("applicant").push()
                 applicant?.id_applicant = ref.key
+                applicant?.status = "on_review"
 
 
                 val queryUser = database.reference.child("Users").child(uid.toString()).child("history_job").push()
@@ -58,6 +151,59 @@ class JobViewModel @Inject constructor(
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
                 _addApplicantResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
+
+    fun getTotalApplicant(uid: String, id_published_job: String){
+        viewModelScope.launch {
+            try {
+                val ref = database.reference.child("Jobs").child(id_published_job).child("applicant")
+                ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        _getTotalApplicantResponse.postValue(BaseResponse.Success(snapshot.childrenCount.toInt()))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getTotalApplicantResponse.postValue(BaseResponse.Error(error.message.toString()))
+                    }
+
+                })
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getTotalApplicantResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
+
+    fun getPublishedJobByRecruiterUid(uid: String){
+        viewModelScope.launch {
+            try {
+
+                val ref = database.reference.child("Jobs").orderByChild("uid").equalTo(uid)
+                val publishedJobList: MutableList<JobDetails> = ArrayList()
+                ref.addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        publishedJobList.clear()
+                        for (childSnapshot in snapshot.children){
+                            val publishedJob: JobDetails? = childSnapshot.getValue(JobDetails::class.java)
+                            if (publishedJob != null){
+                                publishedJobList.add(publishedJob)
+                            }
+                            _getPublishedJobByRecruiterUidResponse.postValue(SingleLiveEvent(BaseResponse.Success(publishedJobList)))
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getPublishedJobByRecruiterUidResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                    }
+
+                })
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getPublishedJobByRecruiterUidResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
             }
         }
     }

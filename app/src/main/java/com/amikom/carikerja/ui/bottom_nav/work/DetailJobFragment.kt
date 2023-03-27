@@ -64,7 +64,7 @@ class DetailJobFragment : Fragment() {
         uid = SharedPreferences.getUid(requireContext())
         userRole = SharedPreferences.getRole(requireContext())
 
-        jobViewModel.getUserIdJob(uid.toString())
+
 
         observe()
 
@@ -74,8 +74,14 @@ class DetailJobFragment : Fragment() {
         }
 
         when{
-            userRole == "worker" -> binding.wrapBtnApply.visibility = View.VISIBLE
-            userRole == "recruiter" -> binding.wrapBtnApply.visibility = View.GONE
+            userRole == "worker" -> {
+                jobViewModel.getUserIdJob(uid.toString())
+                binding.wrapBtnSubmit.visibility = View.VISIBLE
+            }
+            userRole == "recruiter" -> {
+                jobViewModel.getPublishedJobByRecruiterUid(uid.toString())
+                binding.wrapBtnApply.visibility = View.GONE
+            }
             else -> binding.wrapBtnApply.visibility = View.GONE
         }
 
@@ -90,7 +96,6 @@ class DetailJobFragment : Fragment() {
                 when(it){
                     is BaseResponse.Loading -> {}
                     is BaseResponse.Success -> {
-                        Log.d(TAG, "observe: ${it.data}")
                         when{
                             it.data.isNullOrEmpty() -> {
                                 binding.wrapBtnSubmit.visibility = View.VISIBLE
@@ -106,7 +111,44 @@ class DetailJobFragment : Fragment() {
                             }
                         }
                     }
-                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                    is BaseResponse.Error -> {
+                        textMessage(it.msg.toString())
+                    }
+                    else -> {}
+                }
+            }
+        }
+
+        jobViewModel.getPublishedJobByRecruiterUidResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled().let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        if (it.data.map { it.id }.contains(args.id)){
+                            jobViewModel.getTotalApplicant(uid.toString(), args.id.toString())
+                            jobViewModel.getTotalApplicantResponse.observe(viewLifecycleOwner){
+                                when(it){
+                                    is BaseResponse.Loading -> {}
+                                    is BaseResponse.Success -> {
+                                        Log.d(TAG, "observeTotalApplicant: ${it.data}")
+                                        binding.tvTotalApplicant.text = it.data.toString()
+                                        if (it.data != 0){
+                                            binding.wrapTotalApplicant.setOnClickListener {
+                                                findNavController().navigate(DetailJobFragmentDirections.actionDetailJobFragmentToListApplicantFragment(args.id))
+                                            }
+                                        }
+                                    }
+                                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                                }
+                            }
+                            binding.wrapTotalApplicant.visibility = View.VISIBLE
+                        } else {
+                            binding.wrapTotalApplicant.visibility = View.GONE
+                        }
+                    }
+                    is BaseResponse.Error -> {
+                        textMessage(it.msg.toString())
+                    }
                     else -> {}
                 }
             }
@@ -161,7 +203,7 @@ class DetailJobFragment : Fragment() {
     }
 
     private fun showBottomSheetDialogFragment() {
-        val bottomSheetFragment = BottomSheetFragment()
+        val bottomSheetFragment = BottomSheetFragment(null)
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 

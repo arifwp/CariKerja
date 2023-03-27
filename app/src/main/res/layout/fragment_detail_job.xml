@@ -65,6 +65,63 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
+            <RelativeLayout
+                android:id="@+id/wrap_total_applicant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:layout_marginHorizontal="@dimen/dimen_12"
+                app:layout_constraintTop_toBottomOf="@id/app_bar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_total_applicant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/example_total_day"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_applicant"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_marginStart="@dimen/dimen_4"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/tv_total_applicant"/>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_image"
                 android:layout_width="@dimen/dimen_60"
@@ -72,7 +129,7 @@
                 tools:src="@drawable/illustration_recruiter"
                 android:layout_marginStart="@dimen/dimen_12"
                 android:layout_marginTop="@dimen/dimen_24"
-                app:layout_constraintTop_toBottomOf="@id/app_bar"
+                app:layout_constraintTop_toBottomOf="@id/wrap_total_applicant"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <LinearLayout
@@ -229,34 +286,51 @@
                         android:fontFamily="@font/poppins_regular"
                         android:textColor="@color/primary_text" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="("
-                        android:textStyle="bold"
-                        android:includeFontPadding="false"
-                        android:layout_marginStart="@dimen/dimen_8"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primary_text" />
+                        android:orientation="horizontal"
+                        android:layout_marginStart="@dimen/dimen_8">
 
-                    <TextView
-                        android:id="@+id/tv_total_day"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="@string/example_total_day"
-                        android:textStyle="bold"
-                        android:includeFontPadding="false"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primary_text" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="("
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/primary_text" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text=")"
-                        android:textStyle="bold"
-                        android:includeFontPadding="false"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primary_text" />
+                        <TextView
+                            android:id="@+id/tv_total_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="@string/example_total_day"
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/primary_text" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/day"
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/primary_text"
+                            android:layout_marginStart="@dimen/dimen_4"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=")"
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/primary_text" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

@@ -1,35 +1,28 @@
 package com.amikom.carikerja.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.LayoutJobBinding
-import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.models.JobDetails
-import com.amikom.carikerja.ui.bottom_nav.work.WorkFragmentDirections
+import com.amikom.carikerja.ui.bottom_nav.history_work.HistoryPostJobFragment
+import com.amikom.carikerja.ui.bottom_nav.history_work.HistoryPostJobFragmentDirections
 import com.amikom.carikerja.utils.TimeShow
-import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.squareup.picasso.Picasso
-import java.util.*
 
+class PublishedJobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<PublishedJobAdapter.PublishedJobViewHolder>() {
 
-class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<JobAdapter.JobViewHolder>(){
+    inner class PublishedJobViewHolder(val binding: LayoutJobBinding): RecyclerView.ViewHolder(binding.root)
 
-    private val TAG = "JobAdapter"
-
-    inner class JobViewHolder(val binding : LayoutJobBinding): RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublishedJobViewHolder {
         val binding = LayoutJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return JobViewHolder(binding)
+        return PublishedJobViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: JobViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PublishedJobViewHolder, position: Int) {
         val item = dataJob[position]
 
         // Time Ago
@@ -37,8 +30,8 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
         val timeAgo2Detail = TimeShow()
         val myFinalValueDetail: String = timeAgo2Detail.covertTimeToText(timeDetail).toString()
 
-        holder.itemView.setOnClickListener { view ->
-            view.findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToDetailJobFragment(
+        holder.itemView.setOnClickListener{ view ->
+            view.findNavController().navigate(HistoryPostJobFragmentDirections.actionNavigationHistoryPostJobWorkToDetailJobFragment(
                 item.id,
                 item.uid,
                 item.job_title,
@@ -53,7 +46,6 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
                 item.job_address,
                 item.salary,
                 myFinalValueDetail
-
             ))
         }
 
@@ -91,15 +83,15 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
                 .load("${item.image_url}")
                 .error(R.drawable.dummy_avatar)
                 .into(holder.binding.userImage)
-
-
         }
+
     }
 
     override fun getItemCount(): Int = dataJob.size
 
-    fun setJobData(dataList: List<JobDetails>) {
+    fun setPublishedJobData(dataList: List<JobDetails>) {
         this.dataJob = dataList
         notifyDataSetChanged()
     }
+
 }

@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
+import com.amikom.carikerja.adapter.PublishedJobAdapter
 import com.amikom.carikerja.databinding.FragmentHistoryPostJobBinding
 import com.amikom.carikerja.databinding.FragmentProfileBinding
 import com.amikom.carikerja.models.BaseResponse
@@ -24,6 +27,7 @@ class HistoryPostJobFragment : Fragment() {
     private val binding get() = _binding!!
     private var TAG = "HistoryPostJobFragment"
     private val historyJobViewModel: HistoryJobViewModel by viewModels()
+    private lateinit var publishedJobAdapter: PublishedJobAdapter
     private var uid: String? = null
 
     override fun onCreateView(
@@ -44,7 +48,18 @@ class HistoryPostJobFragment : Fragment() {
 
         historyJobViewModel.getJobByUser(uid.toString())
         observe()
+        initiateRv()
 
+    }
+
+    private fun initiateRv() {
+        val recyclerViewPublishedJob: RecyclerView = requireView().findViewById(R.id.rv_published_job)
+        publishedJobAdapter = PublishedJobAdapter(ArrayList())
+        recyclerViewPublishedJob.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = publishedJobAdapter
+        }
     }
 
     private fun observe() {
@@ -52,7 +67,17 @@ class HistoryPostJobFragment : Fragment() {
             when(it){
                 is BaseResponse.Loading -> {}
                 is BaseResponse.Success -> {
-                    Log.d(TAG, "observe: ${it.data}")
+                    when{
+                        it.data.isNullOrEmpty() -> {
+                            binding.wrapEmptyPublishedJob.visibility = View.VISIBLE
+                            binding.wrapRvPublishedJob.visibility = View.GONE
+                        }
+                        else -> {
+                            binding.wrapEmptyPublishedJob.visibility = View.GONE
+                            binding.wrapRvPublishedJob.visibility = View.VISIBLE
+                            publishedJobAdapter.setPublishedJobData(it.data)
+                        }
+                    }
                 }
                 is BaseResponse.Error -> textMessage(it.msg.toString())
             }

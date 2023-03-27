@@ -537,6 +537,38 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/wrap_choose_applicant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_applicant_desc"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_chooose_applicant"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_54"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="@string/submit"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:cornerRadius="@dimen/dimen_10"
+                android:backgroundTint="@color/primary_500"
+                android:textColor="@color/white"
+                android:stateListAnimator="@null"
+                android:layout_marginTop="@dimen/dimen_12"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/wrap_btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

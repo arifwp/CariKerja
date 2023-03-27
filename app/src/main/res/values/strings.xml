@@ -161,6 +161,9 @@
     <string name="job_address">Lokasi Pekerjaan</string>
     <string name="sure_for_applicant">Apakah anda yakin ingin melamar dengan profile yang sudah anda isi?</string>
     <string name="already_applied_this_job">Anda sudah melamar pekerjaan ini</string>
+    <string name="total_applicant">Total Pelamar</string>
+    <string name="list_applicant">List Pelamar</string>
+    <string name="choose_applicant_desc">Apakah anda ingin memilih pekerja ini untuk bekerja di lowongan yang anda publish?</string>
 
     <string-array name="employee_type">
         <item>Magang</item>

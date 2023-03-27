@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_navigation_history_post_job_work_to_add_post_job_fragment"
             app:destination="@id/add_post_job_fragment" />
+        <action
+            android:id="@+id/action_navigation_history_post_job_work_to_detail_job_fragment"
+            app:destination="@id/detail_job_fragment" />
     </fragment>
 
     <fragment
@@ -504,6 +507,20 @@
             app:nullable="true"/>
         <argument
             android:name="post_time"
+            app:argType="string"
+            app:nullable="true"/>
+        <action
+            android:id="@+id/action_detail_job_fragment_to_list_applicant_fragment"
+            app:destination="@id/list_applicant_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/list_applicant_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.history_work.ListApplicantFragment"
+        android:label="@string/list_applicant"
+        tools:layout="@layout/fragment_list_applicant">
+        <argument
+            android:name="id"
             app:argType="string"
             app:nullable="true"/>
     </fragment>

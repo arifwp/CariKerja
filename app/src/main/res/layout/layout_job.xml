@@ -262,31 +262,11 @@
                         android:layout_marginStart="@dimen/dimen_4"
                         android:layout_gravity="center_vertical"/>
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="jam yang lalu"-->
-<!--                        android:textColor="@color/grey_400"-->
-<!--                        android:fontFamily="@font/poppins_medium"-->
-<!--                        android:textSize="12sp"-->
-<!--                        android:includeFontPadding="false"-->
-<!--                        android:layout_marginStart="@dimen/dimen_4"-->
-<!--                        android:layout_gravity="center_vertical"/>-->
-
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/bookmark"
-            android:layout_width="@dimen/dimen_30"
-            android:layout_height="@dimen/dimen_30"
-            android:src="@drawable/ic_bookmark_outlined"
-            android:layout_marginEnd="@dimen/dimen_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

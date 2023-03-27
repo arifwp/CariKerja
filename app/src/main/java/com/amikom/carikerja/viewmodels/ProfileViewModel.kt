@@ -152,7 +152,7 @@ class ProfileViewModel @Inject constructor(
     fun updateRole(uid: String, role: String){
         viewModelScope.launch {
             try {
-                database.getReference().child("Users").child(uid).child("role").setValue(role)
+                database.reference.child("Users").child(uid).child("role").setValue(role)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful){
                             _updateRoleResponse.postValue(BaseResponse.Success("Profil anda berhasil diperbarui"))
@@ -177,7 +177,6 @@ class ProfileViewModel @Inject constructor(
                         if (snapshot.hasChild("role")){
                             val role = snapshot.child("role").getValue(String::class.java).toString()
                             _checkRoleResponse.postValue(BaseResponse.Success(role))
-//                            _checkRoleResponse.postValue(BaseResponse.Success(true))
                         } else {
                             _checkRoleResponse.postValue(BaseResponse.Success(""))
                         }
@@ -219,35 +218,6 @@ class ProfileViewModel @Inject constructor(
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
                 _checkSkillsResponse.postValue(BaseResponse.Error(error[1]))
-            }
-        }
-    }
-
-    fun checkProfileCompleteness(uid: String){
-        viewModelScope.launch {
-            try {
-                val ref = database.reference.child("Users").child(uid)
-                ref.addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.hasChild("imageUrl")){
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("imageUrl_exists"))
-                        } else if (snapshot.hasChild("dob")){
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("dob_exists"))
-                        } else if (snapshot.hasChild("address")){
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("address_exists"))
-                        } else {
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success(""))
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-            } catch (e: java.lang.Exception) {
-                val error = e.toString().split(":").toTypedArray()
-                _checkProfileCompletenessResponse.postValue(BaseResponse.Error(error[1]))
             }
         }
     }
