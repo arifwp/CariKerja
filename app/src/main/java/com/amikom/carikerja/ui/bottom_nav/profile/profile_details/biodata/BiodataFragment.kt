@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -146,7 +145,7 @@ class BiodataFragment : Fragment() {
         val dob = binding.edBod.text.toString().trim()
         val address = binding.edAddress?.text.toString().trim()
 
-        biodataViewModel.editProfile(uid = uid.toString(), selectedImage, name, dob, address)
+        biodataViewModel.editProfile(uid = uid.toString(), selectedImage, name, dob, address, args.name)
         biodataViewModel.editProfileResponse.observe(viewLifecycleOwner){
             it.getContentIfNotHandled().let {
                 when(it){

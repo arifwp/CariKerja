@@ -21,6 +21,7 @@ import com.amikom.carikerja.databinding.FragmentHomeBinding
 import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
     private var name: String? = null
     private var dob: String? = null
     private var address: String? = null
+    private var uid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +56,44 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        initToolbar()
-        checkProfileCompleteness()
+        uid = SharedPreferences.getUid(requireContext())
+        observe()
         listener()
 
+    }
+
+    private fun observe() {
+        val uid = SharedPreferences.getUid(requireContext())
+        profileViewModel.getProfile(uid.toString())
+        profileViewModel.getProfileResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled().let{
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        imageUrl = it.data.imageUrl
+                        name = it.data.name
+                        address = it.data.address
+                        dob = it.data.dob
+                        binding.tvUsername.setText(name)
+                        Picasso.get()
+                            .load("$imageUrl")
+                            .error(R.drawable.dummy_avatar)
+                            .into(binding.imgUser)
+
+                        if (
+                            it.data.imageUrl == "null" ||
+                            it.data.address == "null" ||
+                            it.data.dob == "null"
+                        ) {
+                            showDialogProfileCompleteness()
+                        }
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                    else -> {}
+                }
+            }
+
+        }
     }
 
     private fun listener() {
@@ -74,46 +110,6 @@ class HomeFragment : Fragment() {
         val btnToSettings = binding.icSettings
         btnToSettings.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToSettingsFragment())
-        }
-    }
-
-//    private fun initToolbar() {
-//        val toolbar = binding.toolbar
-//        toolbar.inflateMenu(R.menu.main_menu)
-//        toolbar.setOnMenuItemClickListener {
-//            when(it.itemId){
-//                //                R.id.notifications ->
-//                R.id.settings -> findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToSettingsFragment())
-//            }
-//            true
-//        }
-//    }
-
-    private fun checkProfileCompleteness() {
-        val uid = SharedPreferences.getUid(requireContext())
-        profileViewModel.getProfile(uid.toString())
-        profileViewModel.getProfileResponse.observe(viewLifecycleOwner){
-            it.getContentIfNotHandled().let{
-                when(it){
-                    is BaseResponse.Loading -> {}
-                    is BaseResponse.Success -> {
-                        imageUrl = it.data.imageUrl
-                        name = it.data.name
-                        address = it.data.address
-                        dob = it.data.dob
-                        if (
-                            it.data.imageUrl == "null" ||
-                            it.data.address == "null" ||
-                            it.data.dob == "null"
-                        ) {
-                            showDialogProfileCompleteness()
-                        }
-                    }
-                    is BaseResponse.Error -> textMessage(it.msg.toString())
-                    else -> {}
-                }
-            }
-
         }
     }
 

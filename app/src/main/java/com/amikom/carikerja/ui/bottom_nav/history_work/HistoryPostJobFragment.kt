@@ -73,9 +73,9 @@ class HistoryPostJobFragment : Fragment() {
                             binding.wrapRvPublishedJob.visibility = View.GONE
                         }
                         else -> {
-                            binding.wrapEmptyPublishedJob.visibility = View.GONE
-                            binding.wrapRvPublishedJob.visibility = View.VISIBLE
                             publishedJobAdapter.setPublishedJobData(it.data)
+                            binding.wrapRvPublishedJob.visibility = View.VISIBLE
+                            binding.wrapEmptyPublishedJob.visibility = View.GONE
                         }
                     }
                 }

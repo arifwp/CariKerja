@@ -1,10 +1,14 @@
 package com.amikom.carikerja.ui.bottom_nav.work
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,10 +19,12 @@ import com.amikom.carikerja.R
 import com.amikom.carikerja.adapter.JobAdapter
 import com.amikom.carikerja.databinding.FragmentWorkBinding
 import com.amikom.carikerja.models.BaseResponse
+import com.amikom.carikerja.models.JobDetails
 import com.amikom.carikerja.ui.bottom_nav.work.post_job.JobViewModel
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class WorkFragment : Fragment() {
@@ -33,6 +39,8 @@ class WorkFragment : Fragment() {
     private var userRole: String? = null
     private var nameRecruiter: String? = null
     private var imgUrlRecruiter: String? = null
+    var spinnerItem: String? = null
+    var data_list_job: List<JobDetails>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +57,7 @@ class WorkFragment : Fragment() {
 
         observe()
         initiateRv()
+
         uid = SharedPreferences.getUid(requireContext())
         userRole = SharedPreferences.getRole(requireContext())
         when{
@@ -58,15 +67,72 @@ class WorkFragment : Fragment() {
         }
 
         jobViewModel.getJob(uid.toString())
-
-        binding.searchJob.setIconifiedByDefault(false)
-        binding.searchCity.setIconifiedByDefault(false)
+        profileViewModel.getSkill(uid.toString())
 
         val btnAddWork = binding.fab
         btnAddWork.setOnClickListener {
-            findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment())
+            findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+            ))
         }
 
+    }
+
+    private fun searchByJobCategory(data_spinner: String, dataJob: MutableList<JobDetails>) {
+
+        spinnerItem = data_spinner
+        data_list_job = dataJob
+
+        if (data_spinner != "Semua"){
+            val categoryList: List<JobDetails>? = jobAdapter.filterJobCategory(dataJob, data_spinner)
+            if (categoryList != null){
+                jobAdapter.setJobData(categoryList)
+            }
+        }
+    }
+
+    private fun searchByJobTitle(data: MutableList<JobDetails>) {
+        val searchJobTitle = binding.searchJob
+        searchJobTitle.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val newList: List<JobDetails>? = jobAdapter.filterCars(data, binding.searchJob.text.toString().trim())
+                if (newList != null) {
+                    jobAdapter.setJobData(newList)
+                }
+
+                if (spinnerItem != "Semua"){
+                    val categoryList: List<JobDetails>? = jobAdapter.filterJobCategory(data_list_job, spinnerItem)
+                    if (categoryList != null){
+                        jobAdapter.setJobData(categoryList)
+                    }
+                }
+
+
+            }
+
+        })
     }
 
 
@@ -75,6 +141,54 @@ class WorkFragment : Fragment() {
             when(it){
                 is BaseResponse.Loading -> {}
                 is BaseResponse.Success -> {
+                    searchByJobTitle(it.data)
+
+                    val dataJob = it.data
+
+                    profileViewModel.getSkillResponse.observe(viewLifecycleOwner){
+                        it.getContentIfNotHandled()?.let {
+                            when(it){
+                                is BaseResponse.Loading -> {}
+                                is BaseResponse.Success -> {
+                                    if (it.data != null){
+                                        val response = it.data.map { it.name }
+                                        val adapter = ArrayAdapter<String>(
+                                            requireContext(),
+                                            R.layout.layout_dropdown_item
+                                        )
+
+                                        adapter.add("Semua")
+                                        adapter.addAll(response)
+                                        adapter.setDropDownViewResource(R.layout.layout_dropdown_item)
+                                        binding.edJobCategory.adapter = adapter
+                                        binding.edJobCategory.onItemSelectedListener
+
+                                        binding.edJobCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                                            override fun onItemSelected(
+                                                parent: AdapterView<*>?,
+                                                view: View?,
+                                                position: Int,
+                                                id: Long
+                                            ) {
+                                                val data_spinner = binding.edJobCategory.selectedItem.toString().trim()
+                                                searchByJobCategory(data_spinner, dataJob)
+                                            }
+
+                                            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                                            }
+
+                                        }
+
+
+
+                                    }
+                                }
+                                is BaseResponse.Error -> textMessage(it.msg.toString())
+                            }
+                        }
+                    }
+
                     jobAdapter.setJobData(it.data)
                 }
                 is BaseResponse.Error -> textMessage(it.msg.toString())
@@ -82,18 +196,17 @@ class WorkFragment : Fragment() {
             }
         }
 
+
+
         profileViewModel.getProfileResponse.observe(viewLifecycleOwner){
-            it.getContentIfNotHandled().let {
+            it.getContentIfNotHandled()?.let {
                 when(it){
                     is BaseResponse.Loading -> {}
                     is BaseResponse.Success -> {
-                        Log.d(TAG, "initiateRvName: ${it.data.name}")
-                        Log.d(TAG, "initiateRvImage: ${it.data.imageUrl}")
                         nameRecruiter = it.data.name
                         imgUrlRecruiter = it.data.imageUrl
                     }
                     is BaseResponse.Error -> textMessage(it.msg.toString())
-                    else -> {}
                 }
             }
         }

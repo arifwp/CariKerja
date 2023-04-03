@@ -1,17 +1,18 @@
 package com.amikom.carikerja.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.LayoutSkillsBinding
 import com.amikom.carikerja.models.JobCategory
 import com.amikom.carikerja.models.SkillsDetail
 
-class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerView.Adapter<SkillsAdapter.SkillsViewHolder>() {
+class SkillsAdapter(private val context: Context, private var dataJobCategory: List<JobCategory>) : RecyclerView.Adapter<SkillsAdapter.SkillsViewHolder>() {
 
-//    private lateinit var dataSkills: Array<String>
     var selectedList: ArrayList<SkillsDetail> = ArrayList()
 
     inner class SkillsViewHolder(val binding: LayoutSkillsBinding) : RecyclerView.ViewHolder(binding.root)
@@ -25,6 +26,31 @@ class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerVi
         val item = dataJobCategory[position]
         with(holder.binding){
             skillsItem.text = item.name.toString()
+
+//            skillsItem.setOnCheckedChangeListener { buttonView, isChecked ->
+//                if (isChecked){
+//                    skillsItem.setBackgroundResource(R.drawable.bg_choose_skills_active)
+//                    skillsItem.setTextColor(Color.parseColor("#FFFFFF"))
+//                    Toast.makeText(context, "${isChecked.toString()}", Toast.LENGTH_SHORT).show()
+//                    selectedList.add(
+//                        SkillsDetail(
+//                            id = item.id,
+//                            skill_name = item.name.toString()
+//                        )
+//                    )
+//                } else {
+//                    skillsItem.setBackgroundResource(R.drawable.bg_choose_skills_unactive)
+//                    skillsItem.setTextColor(Color.parseColor("#2A2A2A"))
+//                    selectedList.remove(
+//                        SkillsDetail(
+//                            id = item.id,
+//                            skill_name = item.name.toString()
+//                        )
+//                    )
+//                    Toast.makeText(context,"remove", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+
             skillsItem.setOnCheckedChangeListener{ buttonView, isCheckd ->
                 if (isCheckd){
                     skillsItem.setBackgroundResource(R.drawable.bg_choose_skills_active)
@@ -33,7 +59,6 @@ class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerVi
                         id = item.id,
                         skill_name = item.name.toString()
                     ))
-                    notifyDataSetChanged()
                 } else if (!isCheckd){
                     selectedList.remove(
                         SkillsDetail(
@@ -42,13 +67,13 @@ class SkillsAdapter(private var dataJobCategory: List<JobCategory>) : RecyclerVi
                     )
                     )
                     skillsItem.setTextColor(Color.parseColor("#2A2A2A"))
-                    notifyDataSetChanged()
                     skillsItem.setBackgroundResource(R.drawable.bg_choose_skills_unactive)
                 }
                 listenerChooseSkills?.btnOnClickChooseSkills(selectedList, position)
-                notifyDataSetChanged()
             }
-            skillsItem.setTag(position)
+
+
+            skillsItem.tag = position
         }
     }
 

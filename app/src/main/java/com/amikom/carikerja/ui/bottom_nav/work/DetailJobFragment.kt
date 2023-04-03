@@ -1,12 +1,17 @@
 package com.amikom.carikerja.ui.bottom_nav.work
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,6 +20,7 @@ import com.amikom.carikerja.databinding.FragmentDetailJobBinding
 import com.amikom.carikerja.models.*
 import com.amikom.carikerja.ui.bottom_nav.work.post_job.JobViewModel
 import com.amikom.carikerja.utils.SharedPreferences
+import com.amikom.carikerja.utils.TimeShow
 import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +53,7 @@ class DetailJobFragment : Fragment() {
     private var job_address: String? = null
     private var salary: String? = null
     private var post_time: String? = null
+    private var job_status: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +72,9 @@ class DetailJobFragment : Fragment() {
         userRole = SharedPreferences.getRole(requireContext())
 
 
+        if (args.personWhoPost.isNullOrEmpty()){
+            jobViewModel.getDetailJob(args.id)
+        }
 
         observe()
 
@@ -80,6 +90,7 @@ class DetailJobFragment : Fragment() {
             }
             userRole == "recruiter" -> {
                 jobViewModel.getPublishedJobByRecruiterUid(uid.toString())
+                jobViewModel.getJobStatus(id_job.id_job)
                 binding.wrapBtnApply.visibility = View.GONE
             }
             else -> binding.wrapBtnApply.visibility = View.GONE
@@ -119,12 +130,26 @@ class DetailJobFragment : Fragment() {
             }
         }
 
+        jobViewModel.getJobStatusResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        job_status = it.data
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                }
+            }
+        }
+
         jobViewModel.getPublishedJobByRecruiterUidResponse.observe(viewLifecycleOwner){
             it.getContentIfNotHandled().let {
                 when(it){
                     is BaseResponse.Loading -> {}
                     is BaseResponse.Success -> {
                         if (it.data.map { it.id }.contains(args.id)){
+
+
                             jobViewModel.getTotalApplicant(uid.toString(), args.id.toString())
                             jobViewModel.getTotalApplicantResponse.observe(viewLifecycleOwner){
                                 when(it){
@@ -140,7 +165,39 @@ class DetailJobFragment : Fragment() {
                                     is BaseResponse.Error -> textMessage(it.msg.toString())
                                 }
                             }
+
+                            val icDelete = binding.icDelete
+                            icDelete.visibility = View.VISIBLE
+                            icDelete.setOnClickListener {
+                                showAlertDialog("delete")
+                            }
+
+
+                            val icEdit = binding.icEdit
+                            icEdit.visibility = View.VISIBLE
+                            icEdit.setOnClickListener {
+                                findNavController().navigate(DetailJobFragmentDirections.actionDetailJobFragmentToAddPostJobFragment(
+                                    args.id,
+                                    args.uid,
+                                    args.jobTitle,
+                                    args.personWhoPost,
+                                    args.imageUrl,
+                                    args.dateStart,
+                                    args.dateEnd,
+                                    args.totalDay,
+                                    args.jobDescription,
+                                    args.jobCategory,
+                                    args.employeeType,
+                                    args.jobAddress,
+                                    args.salary,
+                                    args.postTime,
+                                    job_status
+                                ))
+                            }
+
                             binding.wrapTotalApplicant.visibility = View.VISIBLE
+
+
                         } else {
                             binding.wrapTotalApplicant.visibility = View.GONE
                         }
@@ -152,6 +209,63 @@ class DetailJobFragment : Fragment() {
                 }
             }
         }
+
+        jobViewModel.getJobDetailResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        binding.tvJobTitle.text = it.data.job_title
+                        binding.tvUserName.text = it.data.person_who_post
+                        binding.tvSalary.text = it.data.salary
+                        binding.tvEmployeeType.text = it.data.employee_type
+                        binding.tvDateStart.text = it.data.dateStart
+                        binding.tvDateEnd.text = it.data.dateEnd
+                        binding.tvJobCategory.text = it.data.job_category
+                        binding.tvJobAddress.text = it.data.job_address
+                        binding.tvJobDescription.text = it.data.job_description
+                        binding.tvTotalDay.text = it.data.total_day
+
+                        // Time Ago
+                        val timeDetail: String? = it.data.post_time
+                        val timeAgo2Detail = TimeShow()
+                        val myFinalValueDetail: String = timeAgo2Detail.covertTimeToText(timeDetail).toString()
+                        binding.tvTimePost.text = myFinalValueDetail
+
+                        Picasso.get()
+                            .load(it.data.image_url)
+                            .error(R.drawable.dummy_avatar)
+                            .into(binding.userImage)
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                }
+            }
+        }
+    }
+
+    private fun showAlertDialog(action: String) {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_alert)
+        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        val tvTitleAlert = dialog.findViewById<TextView>(R.id.tv_title_alert)
+        val btnExecute = dialog.findViewById<Button>(R.id.btn_execute)
+
+        when(action){
+            "delete" -> {
+                btnExecute.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.red_400)
+                btnExecute.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                btnExecute.text = "Hapus Data"
+                tvTitleAlert.text = "Apakah anda yakin ingin menghapus data pekerjaan ${args.jobTitle} yang sudah anda publish?"
+            }
+        }
+
+        dialog.setCancelable(true)
+        dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
     private fun initiateComponent() {
@@ -202,7 +316,7 @@ class DetailJobFragment : Fragment() {
     }
 
     private fun showBottomSheetDialogFragment() {
-        val bottomSheetFragment = BottomSheetFragment(null)
+        val bottomSheetFragment = BottomSheetFragment(null, args.uid, args.personWhoPost, args.jobTitle)
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 

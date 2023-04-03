@@ -36,7 +36,7 @@
     <string name="lanjutkan">Lanjutkan</string>
     <string name="choose_role">Role</string>
     <string name="complete_profile">Lengkapi Profil</string>
-    <string name="subtitle_complete_profile">Anda harus melengkapi profil anda sebelum melanjutkan ke tahap berikutnya</string>
+    <string name="subtitle_complete_profile">Silahkan mengisi avatar, tanggal lahir, dan alamat sebelum melanjutkan ke tahap berikutnya agar profil anda dapat lebih dipercaya</string>
     <string name="title_profile">Profile</string>
     <string name="total_balance">Total Saldo</string>
     <string name="example_balance">Rp 5.000.000</string>
@@ -154,7 +154,6 @@
     <string name="skills">Skills</string>
     <string name="publish_job">Publish Pekerjaan</string>
     <string name="hint_search_work">Cari nama pekerjaan</string>
-    <string name="hint_search_city">Cari nama kota</string>
     <string name="detail_job">Detail Pekerjaan</string>
     <string name="apply">Lamar</string>
     <string name="example_total_day">90 Hari</string>
@@ -166,6 +165,11 @@
     <string name="choose_applicant_desc">Apakah anda ingin memilih pekerja ini untuk bekerja di lowongan yang anda publish?</string>
     <string name="example_applicant_status">Ditolak</string>
     <string name="cant_add_applicant">Anda sudah memilih pelamar untuk pekerjaan ini</string>
+    <string name="job_category">Kategori Pekerjaan</string>
+    <string name="delete_job">Hapus Pekerjaan</string>
+    <string name="cancel">Batal</string>
+    <string name="published_by">Dipublish oleh</string>
+    <string name="hint_search_job_category">Cari berdasarkan kategori</string>
 
     <string-array name="employee_type">
         <item>Magang</item>

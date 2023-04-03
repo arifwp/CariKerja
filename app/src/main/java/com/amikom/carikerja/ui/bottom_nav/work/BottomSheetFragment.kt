@@ -28,9 +28,12 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
+class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter_name: String?, job_title: String?) : BottomSheetDialogFragment() {
 
     private var uidWorker = uid_worker
+    private var recruiterUid = recruiter_uid
+    private var recruiterUsername = recruiter_name
+    private var jobTitle = job_title
 
     private var _binding: BottomSheetApplicantBinding? = null
     private val binding get() = _binding!!
@@ -47,7 +50,6 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
     private lateinit var educationAdapter: EducationAdapter
     private var applicant: Applicant? = null
     private var historyJob: HistoryJob? = null
-    private var publishedJob: PublishedJob? = null
     private var uid: String? = null
     private var id_jobBtm: String? = null
     private var uidApplicant:String? = null
@@ -130,7 +132,7 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
 
         binding.btnSubmit.setOnClickListener {
             if (applicant != null){
-                jobViewModel.addApplicant(uid.toString(), applicant, historyJob)
+                jobViewModel.addApplicant(uid.toString(), applicant, historyJob, recruiterUid, recruiterUsername, jobTitle)
             }
         }
     }
@@ -358,7 +360,10 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
                         status = null
                     )
                     historyJob = HistoryJob(
-                        id_job = id_jobBtm
+                        id_job = id_jobBtm,
+                        job_title = null,
+                        recruiter_name = null,
+                        status = null
                     )
 
                 }
@@ -367,15 +372,17 @@ class BottomSheetFragment(uid_worker: String?) : BottomSheetDialogFragment() {
         }
 
         jobViewModel.addAppplicantResponse.observe(viewLifecycleOwner){
-            when(it){
-                is BaseResponse.Loading -> {}
-                is BaseResponse.Success -> {
-                    dialog?.dismiss()
-                    textMessage(it.data.toString())
-                }
-                is BaseResponse.Error -> {
-                    dialog?.dismiss()
-                    textMessage(it.msg.toString())
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        dialog?.dismiss()
+                        textMessage(it.data.toString())
+                    }
+                    is BaseResponse.Error -> {
+                        dialog?.dismiss()
+                        textMessage(it.msg.toString())
+                    }
                 }
             }
         }

@@ -29,8 +29,6 @@ class SplashScreenFragment : Fragment() {
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
     private val profileViewModel: ProfileViewModel by viewModels()
-//    private var hasRole: Boolean = false
-//    private var hasSkills: Boolean = false
     private val TAG = "SplashScreenFragment"
 
 
@@ -68,9 +66,7 @@ class SplashScreenFragment : Fragment() {
     }
 
     private suspend fun validateUser(uid: String){
-
         checkHasRoleOrNot(uid)
-
     }
 
     private suspend fun checkHasSkillsOrNot(uid: String){

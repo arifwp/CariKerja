@@ -81,7 +81,7 @@ class ListApplicantFragment : Fragment(), showBottomSheet {
     }
 
     private fun showBottomSheetDialogFragment(uid: String?) {
-        val bottomSheetFragment = BottomSheetFragment(uid)
+        val bottomSheetFragment = BottomSheetFragment(uid, null, null, null)
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 

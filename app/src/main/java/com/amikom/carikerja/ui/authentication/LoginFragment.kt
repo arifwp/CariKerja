@@ -75,29 +75,60 @@ class LoginFragment : Fragment() {
         binding.apply {
             val email = edEmail.text.toString().trim()
             val password = edPassword.text.toString()
-            if (email.isEmpty()){
-                edEmail.error = "Masukkan email anda"
-            }
-            if (password.isEmpty()){
-                tilPassword.isEndIconVisible = false
-                edPassword.error = "Masukkan password anda"
-            }
-            if (email.isNotEmpty() && password.isNotEmpty()){
-                authenticationViewModel.login(email, password)
-                authenticationViewModel.signInStatus.observe(viewLifecycleOwner){
-                    it.getContentIfNotHandled().let {
-                        when(it){
-                            is BaseResponse.Loading -> {}
-                            is BaseResponse.Success -> {
-                                SharedPreferences.saveUid(requireContext(), it.data)
-                                checkHasRoleOrNot(it.data)
+
+            when {
+                email.isEmpty() -> edEmail.error = "Masukkan email anda"
+                password.isEmpty() -> {
+                    tilPassword.isEndIconVisible = false
+                    edPassword.error = "Masukkan password anda"
+                }
+//                password.length <= 6 -> {
+//                    tilPassword.isEndIconVisible = false
+//                    edPassword.error = "Password harus lebih dari 6 karakter"
+//                }
+                else -> {
+                    authenticationViewModel.login(email, password)
+                    authenticationViewModel.signInStatus.observe(viewLifecycleOwner){
+                        it.getContentIfNotHandled().let {
+                            when(it){
+                                is BaseResponse.Loading -> {}
+                                is BaseResponse.Success -> {
+                                    SharedPreferences.saveUid(requireContext(), it.data)
+                                    checkHasRoleOrNot(it.data)
+                                }
+                                is BaseResponse.Error -> textMessage(it.msg.toString())
+                                else -> {}
                             }
-                            is BaseResponse.Error -> textMessage(it.msg.toString())
-                            else -> {}
                         }
                     }
                 }
             }
+
+//            if (email.isEmpty()){
+//                edEmail.error = "Masukkan email anda"
+//            }
+//            if (password.isEmpty()){
+//                tilPassword.isEndIconVisible = false
+//                edPassword.error = "Masukkan password anda"
+//            }
+//            if (email.isNotEmpty() && password.isNotEmpty()){
+//                authenticationViewModel.login(email, password)
+//                authenticationViewModel.signInStatus.observe(viewLifecycleOwner){
+//                    it.getContentIfNotHandled().let {
+//                        when(it){
+//                            is BaseResponse.Loading -> {}
+//                            is BaseResponse.Success -> {
+//                                SharedPreferences.saveUid(requireContext(), it.data)
+//                                checkHasRoleOrNot(it.data)
+//                            }
+//                            is BaseResponse.Error -> textMessage(it.msg.toString())
+//                            else -> {}
+//                        }
+//                    }
+//                }
+//            }
+
+
         }
     }
 
@@ -122,7 +153,6 @@ class LoginFragment : Fragment() {
                                 navView.menu.removeItem(com.amikom.carikerja.R.id.navigation_history_post_job_work)
                             }
                         }
-
                         SharedPreferences.saveRole(requireContext(), it.data.toString())
                         checkHasSkillsOrNot(uid.toString())
                     }

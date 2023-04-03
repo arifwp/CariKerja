@@ -22,22 +22,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
-//    @Singleton
-//    @Provides
-//    fun getOkHttpClient(
-//        interceptor: Interceptor
-//    ): OkHttpClient {
-//        val httpBuilder = OkHttpClient.Builder()
-//            .addInterceptor(interceptor)
-//            .connectTimeout(30, TimeUnit.SECONDS)
-//            .readTimeout(30, TimeUnit.SECONDS)
-//            .writeTimeout(50, TimeUnit.SECONDS)
-//
-//        return httpBuilder
-//            .protocols(mutableListOf(Protocol.HTTP_1_1))
-//            .build()
-//    }
-
     @Singleton
     @Provides
     fun provideOkHttpClient() = run {

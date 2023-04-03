@@ -86,56 +86,88 @@ class RegisterFragment : Fragment() {
         val phone = binding.edPhone.text.toString().trim()
         val password = binding.edPassword.text.toString()
         val confirmPassword = binding.edConfirmPassword.text.toString()
-//        val userId = databaseReference.push().key!!
 
-        if (name.isEmpty()){
-            binding.edFullName.error = "Masukkan nama lengkap"
-        }
-        if (email.isEmpty()){
-            binding.edEmail.error = "Masukkan email"
-        }
-        if (phone.isEmpty()){
-            binding.edPhone.error = "Masukkan nomor whatsapp"
-        }
-        if (password.isEmpty()){
-            binding.edPassword.error = "Masukkan kata sandi"
-        }
-        if (password.length <= 6)
-        if (confirmPassword.isEmpty()){
-            binding.edConfirmPassword.error = "Masukkan konfirmasi kata sandi"
-        }
-        if (password != confirmPassword){
-            binding.edPassword.error = "Kata sandi tidak sama"
-            binding.edConfirmPassword.error = "Kata sandi tidak sama"
-        }
-        if (
-            name.isNotEmpty() ||
-            email.isNotEmpty() ||
-            phone.isNotEmpty() ||
-            password.isNotEmpty() ||
-            confirmPassword.isNotEmpty() ||
-            password.length >= 6 ||
-            password == confirmPassword
-        ) {
-            authenticationViewModel.userDetails.name = name
-            authenticationViewModel.userDetails.email = email
-            authenticationViewModel.userDetails.phone = phone
-            authenticationViewModel.userDetails.password = password
-            authenticationViewModel.register(email, password)
-            authenticationViewModel.registerResponse.observe(viewLifecycleOwner){
-                it.getContentIfNotHandled().let {
-                    when(it){
-                        is BaseResponse.Loading -> {}
-                        is BaseResponse.Success -> {
-                            goToLogin()
-                            textMessage(it.data)
+        when {
+            name.isEmpty() -> binding.edFullName.error = "Masukkan nama lengkap"
+            email.isEmpty() -> binding.edEmail.error = "Masukkan email"
+            phone.isEmpty() -> binding.edPhone.error = "Masukkan nomor whatsapp"
+            password.isEmpty() -> binding.edPassword.error = "Masukkan kata sandi"
+//            password.length <= 6 -> binding.edPassword.error = "Kata sandi harus lebih dari 7 karakter"
+            confirmPassword.isEmpty() -> binding.edConfirmPassword.error = "Masukkan konfirmasi kata sandi"
+            password != confirmPassword -> {
+                binding.edPassword.error = "Kata sandi tidak sama"
+                binding.edConfirmPassword.error = "Kata sandi tidak sama"
+            }
+            else -> {
+                authenticationViewModel.userDetails.name = name
+                authenticationViewModel.userDetails.email = email
+                authenticationViewModel.userDetails.phone = phone
+                authenticationViewModel.userDetails.password = password
+                authenticationViewModel.register(email, password)
+                authenticationViewModel.registerResponse.observe(viewLifecycleOwner){
+                    it.getContentIfNotHandled().let {
+                        when(it){
+                            is BaseResponse.Loading -> {}
+                            is BaseResponse.Success -> {
+                                goToLogin()
+                                textMessage(it.data)
+                            }
+                            is BaseResponse.Error -> textMessage(it.msg.toString())
+                            else -> {}
                         }
-                        is BaseResponse.Error -> textMessage(it.msg.toString())
-                        else -> {}
                     }
                 }
             }
         }
+
+//        if (name.isEmpty()){
+//            binding.edFullName.error = "Masukkan nama lengkap"
+//        }
+//        if (email.isEmpty()){
+//            binding.edEmail.error = "Masukkan email"
+//        }
+//        if (phone.isEmpty()){
+//            binding.edPhone.error = "Masukkan nomor whatsapp"
+//        }
+//        if (password.isEmpty()){
+//            binding.edPassword.error = "Masukkan kata sandi"
+//        }
+//        if (password.length <= 6)
+//        if (confirmPassword.isEmpty()){
+//            binding.edConfirmPassword.error = "Masukkan konfirmasi kata sandi"
+//        }
+//        if (password != confirmPassword){
+//            binding.edPassword.error = "Kata sandi tidak sama"
+//            binding.edConfirmPassword.error = "Kata sandi tidak sama"
+//        }
+//        if (
+//            name.isNotEmpty() ||
+//            email.isNotEmpty() ||
+//            phone.isNotEmpty() ||
+//            password.isNotEmpty() ||
+//            confirmPassword.isNotEmpty() ||
+//            password.length >= 6 ||
+//            password == confirmPassword
+//        ) {
+//            authenticationViewModel.userDetails.name = name
+//            authenticationViewModel.userDetails.email = email
+//            authenticationViewModel.userDetails.phone = phone
+//            authenticationViewModel.userDetails.password = password
+//            authenticationViewModel.register(email, password)
+//            authenticationViewModel.registerResponse.observe(viewLifecycleOwner){
+//                it.getContentIfNotHandled().let {
+//                    when(it){
+//                        is BaseResponse.Loading -> {}
+//                        is BaseResponse.Success -> {
+//                            goToLogin()
+//                            textMessage(it.data)
+//                        }
+//                        is BaseResponse.Error -> textMessage(it.msg.toString())
+//                        else -> {}
+//                    }
+//                }
+//            }
+//        }
 
 //        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
 //            if (it.isSuccessful) {

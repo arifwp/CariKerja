@@ -41,8 +41,8 @@ class ProfileViewModel @Inject constructor(
     private val _insertSkillResponse = MutableLiveData<BaseResponse<String>>()
     val insertSkillResponse: LiveData<BaseResponse<String>> = _insertSkillResponse
 
-    private val _getSkillResponse = MutableLiveData<BaseResponse<MutableList<JobCategory>>>()
-    val getSkillResponse: LiveData<BaseResponse<MutableList<JobCategory>>> = _getSkillResponse
+    private val _getSkillResponse = MutableLiveData<SingleLiveEvent<BaseResponse<MutableList<JobCategory>>>>()
+    val getSkillResponse: LiveData<SingleLiveEvent<BaseResponse<MutableList<JobCategory>>>> = _getSkillResponse
 
     private val _getRoleResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>?>()
     val getRoleResponse: MutableLiveData<SingleLiveEvent<BaseResponse<String>>?> = _getRoleResponse
@@ -106,7 +106,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
 
-                val ref = database.reference.child("Job Category")
+                val ref = database.reference.child("Job Category").orderByChild("name")
                 val jobCategoryList: MutableList<JobCategory> = ArrayList()
                 ref.addValueEventListener(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -116,19 +116,19 @@ class ProfileViewModel @Inject constructor(
                             if (jobCategory != null){
                                 jobCategoryList.add(jobCategory)
                             }
-                            _getSkillResponse.postValue(BaseResponse.Success(jobCategoryList))
+                            _getSkillResponse.postValue(SingleLiveEvent(BaseResponse.Success(jobCategoryList)))
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        _getSkillResponse.postValue(BaseResponse.Error(error.message.toString()))
+                        _getSkillResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
                     }
 
                 })
 
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
-                _getSkillResponse.postValue(BaseResponse.Error(error[1]))
+                _getSkillResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
             }
         }
     }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="@dimen/dimen_10"
+    android:layout_marginBottom="12dp"
+    android:backgroundTint="@color/grey_100"
+    android:elevation="@dimen/dimen_6">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:layout_marginHorizontal="@dimen/dimen_12">
+
+        <TextView
+            android:id="@+id/tv_job_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/example_job_title"
+            android:fontFamily="@font/poppins_medium"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/published_by"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/grey_400"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_recruiter_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/example_name"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/grey_400"
+                android:textSize="12sp"
+                android:layout_marginStart="@dimen/dimen_4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wrap_applicant_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_applicant_status"
+            android:backgroundTint="@color/yellow_100"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dimen_12"
+            android:paddingTop="@dimen/dimen_6"
+            android:paddingEnd="@dimen/dimen_12"
+            android:paddingBottom="@dimen/dimen_6"
+            android:layout_marginTop="@dimen/dimen_24"
+            android:layout_marginBottom="@dimen/dimen_12"
+            app:layout_constraintTop_toBottomOf="@id/wrap_user_info"
+            app:layout_constraintStart_toStartOf="@id/wrap_user_info"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_applicant_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:includeFontPadding="false"
+                tools:text="@string/example_applicant_status"
+                android:textColor="@color/yellow_700"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

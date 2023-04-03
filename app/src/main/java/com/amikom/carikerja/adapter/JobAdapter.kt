@@ -1,19 +1,17 @@
 package com.amikom.carikerja.adapter
 
+import a.a.a.a.a.i
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.LayoutJobBinding
-import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.models.JobDetails
 import com.amikom.carikerja.ui.bottom_nav.work.WorkFragmentDirections
 import com.amikom.carikerja.utils.TimeShow
-import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -97,6 +95,35 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
     }
 
     override fun getItemCount(): Int = dataJob.size
+
+    fun filterCars(cars: List<JobDetails>, searchText: String): List<JobDetails>? {
+        val filteredCars: MutableList<JobDetails> = ArrayList()
+        var c: JobDetails
+        for (i in cars.indices) {
+            c = cars[i]
+            if (c.job_title?.lowercase()
+                    !!.contains(searchText.trim { it <= ' ' }.lowercase(Locale.getDefault()))
+            ) {
+                filteredCars.add(c)
+            }
+        }
+        return filteredCars
+    }
+
+    fun filterJobCategory(cars: List<JobDetails>?, searchText: String?): List<JobDetails>? {
+        val filteredCars: MutableList<JobDetails> = ArrayList()
+        var c: JobDetails
+        if (cars != null) {
+            for (i in cars.indices) {
+                c = cars[i]
+                if (c.job_category!!.contains(searchText.toString())) {
+                    Log.d(TAG, "filterJobCategory: $searchText")
+                    filteredCars.add(c)
+                }
+            }
+        }
+        return filteredCars
+    }
 
     fun setJobData(dataList: List<JobDetails>) {
         this.dataJob = dataList

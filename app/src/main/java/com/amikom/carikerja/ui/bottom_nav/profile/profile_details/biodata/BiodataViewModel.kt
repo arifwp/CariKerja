@@ -4,18 +4,22 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
 import com.amikom.carikerja.models.BaseResponse
+import com.amikom.carikerja.models.HistoryJob
+import com.amikom.carikerja.models.JobDetails
 import com.amikom.carikerja.utils.SingleLiveEvent
-import com.google.firebase.FirebaseError
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.childEvents
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 @HiltViewModel
@@ -41,7 +45,14 @@ class BiodataViewModel @Inject constructor(
         }
     }
 
-    fun editProfile(uid: String, imageUrl: Uri?, name: String, dob: String, address: String){
+    fun editProfile(
+        uid: String,
+        imageUrl: Uri?,
+        name: String,
+        dob: String,
+        address: String,
+        name_before: String?
+    ){
         viewModelScope.launch {
             try {
 
@@ -50,14 +61,68 @@ class BiodataViewModel @Inject constructor(
                     "name" to name
                 )
 
+                val recruiterNameUpdates = hashMapOf<String, Any>(
+                    "recruiter_name" to name
+                )
+
+                val queryHistoryJob = database.reference.child("Users").orderByChild("role").equalTo("worker")
+                val dataJobList: MutableList<HistoryJob> = ArrayList()
+                queryHistoryJob.addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        dataJobList.clear()
+                        if (snapshot.exists()){
+                            for (childSnapshot in snapshot.children){
+
+                                if (childSnapshot.hasChild("history_job")){
+                                    val key = childSnapshot.key
+                                    Log.d(TAG, "child_snapshot_key: $key")
+
+                                    val users = database.reference.child("Users")
+                                    val queryAgain = database.reference.child("Users").child(key.toString()).child("history_job").orderByChild("recruiter_uid").equalTo(uid)
+                                    Log.d(TAG, "query_again_ref: ${queryAgain.ref}")
+
+                                    queryAgain.addListenerForSingleValueEvent(object : ValueEventListener {
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            for (ds in snapshot.children){
+                                                Log.d(TAG, "ds_key: ${ds.key}")
+                                                if (ds.exists()){
+                                                    val asd = users.child(key.toString()).child("history_job").child(ds.key.toString())
+                                                    asd.child("recruiter_name").setValue(name)
+                                                    Log.d(TAG, "asd_ref: ${asd.ref}")
+                                                } else {
+                                                    Log.d(TAG, "onDataChange: tidak ada")
+                                                }
+                                            }
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            _editProfileResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                                        }
+
+                                    })
+
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _editProfileResponse.postValue(SingleLiveEvent(BaseResponse.Error("Gagal mengubah nama")))
+                    }
+
+                })
+
                 val queryUser = database.reference.child("Jobs")
                 queryUser.orderByChild("uid").equalTo(uid).addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
+                        Log.d(TAG, "onDataChange_Jobs: $snapshot")
                         if (snapshot.exists()){
                             for (childSnapshot in snapshot.children){
                                 val key = childSnapshot.key
                                 val names = childSnapshot.child("person_who_post").getValue(String::class.java)
                                 if (key != null) {
+                                    Log.d(TAG, "query_user_ref: ${queryUser.ref}")
+                                    Log.d(TAG, "query_user_key: $key")
                                     queryUser.child(key).child("person_who_post").setValue(name)
                                 }
 
@@ -197,6 +262,8 @@ class BiodataViewModel @Inject constructor(
                     }
 
                 })
+
+
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
                 _editProfileResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
