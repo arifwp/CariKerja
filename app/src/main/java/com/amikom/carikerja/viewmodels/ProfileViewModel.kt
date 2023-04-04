@@ -86,7 +86,6 @@ class ProfileViewModel @Inject constructor(
                 ref.addValueEventListener(object :ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val role = snapshot.child("role").getValue(String::class.java).toString()
-                        Log.d(TAG, "onCreateRole: $role")
                         _getRoleResponse.postValue(SingleLiveEvent(BaseResponse.Success(role)))
                     }
 
@@ -238,6 +237,9 @@ class ProfileViewModel @Inject constructor(
                         val dob = snapshot.child("dob").getValue(String::class.java).toString()
                         val address = snapshot.child("address").getValue(String::class.java).toString()
                         val summary = snapshot.child("summary").getValue(String::class.java).toString()
+                        val bank_name = snapshot.child("bank_name").getValue(String::class.java).toString()
+                        val bank_account = snapshot.child("bank_account").getValue(String::class.java).toString()
+                        val bank_account_name = snapshot.child("bank_account_name").getValue(String::class.java).toString()
                         val workExp = snapshot.child("work_experience").getValue(Exp::class.java)
                         val certificate = snapshot.child("certificate").getValue(CertificateDetails::class.java)
                         val project = snapshot.child("project").getValue(ProjectDetails::class.java)
@@ -252,7 +254,10 @@ class ProfileViewModel @Inject constructor(
                             phone = phone,
                             dob = dob,
                             address = address,
-                            summary = summary
+                            summary = summary,
+                            bank_name = bank_name,
+                            bank_account = bank_account,
+                            bank_account_name = bank_account_name
                         )
 
                         _getProfileResponse.postValue(SingleLiveEvent(BaseResponse.Success(userProfile)))

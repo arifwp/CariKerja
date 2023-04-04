@@ -151,7 +151,7 @@
     <string name="what_is_your_expertise">Apa keahlian anda?</string>
     <string name="subtitle_choose_skills">Pilih keahlian anda (anda bisa memilih lebih dari 1 keahlian)</string>
     <string name="example_skills">Managemen dan Konsultasi</string>
-    <string name="skills">Skills</string>
+    <string name="skills">Keahlian</string>
     <string name="publish_job">Publish Pekerjaan</string>
     <string name="hint_search_work">Cari nama pekerjaan</string>
     <string name="detail_job">Detail Pekerjaan</string>
@@ -170,6 +170,15 @@
     <string name="cancel">Batal</string>
     <string name="published_by">Dipublish oleh</string>
     <string name="hint_search_job_category">Cari berdasarkan kategori</string>
+    <string name="bank_account">Rekening</string>
+    <string name="example_bank_account">664601200212</string>
+    <string name="bank_account_name">Atas Nama</string>
+    <string name="example_bank_name">BRI</string>
+    <string name="bank_name">Nama Bank</string>
+    <string name="confirm_delete">Apakah anda yakin ingin menghapus data yang anda pilih?</string>
+    <string name="add_skills">Tambah Keahlian</string>
+    <string name="edit">Ubah</string>
+    <string name="edit_skills">Ubah Keahlian</string>
 
     <string-array name="employee_type">
         <item>Magang</item>
@@ -185,6 +194,13 @@
         <item>Konstruksi dan Bangunan</item>
         <!--        <item>Retail</item>-->
         <item>Lainnya</item>
+    </string-array>
+
+    <string-array name="list_bank_name">
+        <item>BRI</item>
+        <item>BCA</item>
+        <item>Bank Muamalat</item>
+        <item>Bank Jateng</item>
     </string-array>
 
 </resources>

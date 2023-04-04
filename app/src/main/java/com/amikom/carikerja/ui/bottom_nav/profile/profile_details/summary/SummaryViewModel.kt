@@ -28,7 +28,7 @@ class SummaryViewModel @Inject constructor(
     fun update(uid: String, summary: String) {
         viewModelScope.launch {
             try {
-                Log.d(TAG, "update: $summary")
+
                 val ref = database.reference.child("Users").child(uid)
                 ref.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {

@@ -77,6 +77,7 @@ class DetailJobFragment : Fragment() {
         }
 
         observe()
+        jobViewModel.getTotalApplicant(uid.toString(), args.id.toString())
 
         val btnBack = binding.icBack
         btnBack.setOnClickListener {
@@ -176,23 +177,24 @@ class DetailJobFragment : Fragment() {
                             val icEdit = binding.icEdit
                             icEdit.visibility = View.VISIBLE
                             icEdit.setOnClickListener {
-                                findNavController().navigate(DetailJobFragmentDirections.actionDetailJobFragmentToAddPostJobFragment(
-                                    args.id,
-                                    args.uid,
-                                    args.jobTitle,
-                                    args.personWhoPost,
-                                    args.imageUrl,
-                                    args.dateStart,
-                                    args.dateEnd,
-                                    args.totalDay,
-                                    args.jobDescription,
-                                    args.jobCategory,
-                                    args.employeeType,
-                                    args.jobAddress,
-                                    args.salary,
-                                    args.postTime,
-                                    job_status
-                                ))
+                                showAlertDialog("edit")
+//                                findNavController().navigate(DetailJobFragmentDirections.actionDetailJobFragmentToAddPostJobFragment(
+//                                    args.id,
+//                                    args.uid,
+//                                    args.jobTitle,
+//                                    args.personWhoPost,
+//                                    args.imageUrl,
+//                                    args.dateStart,
+//                                    args.dateEnd,
+//                                    args.totalDay,
+//                                    args.jobDescription,
+//                                    args.jobCategory,
+//                                    args.employeeType,
+//                                    args.jobAddress,
+//                                    args.salary,
+//                                    args.postTime,
+//                                    job_status
+//                                ))
                             }
 
                             binding.wrapTotalApplicant.visibility = View.VISIBLE
@@ -241,6 +243,28 @@ class DetailJobFragment : Fragment() {
                 }
             }
         }
+
+        jobViewModel.getTotalApplicantResponse.observe(viewLifecycleOwner){
+            when(it){
+                is BaseResponse.Loading -> {}
+                is BaseResponse.Success -> {
+                    binding.tvJobApplied.text = it.data.toString()
+                }
+                is BaseResponse.Error -> textMessage(it.msg.toString())
+            }
+        }
+
+        jobViewModel.deleteJobResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        textMessage(it.data)
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
+                }
+            }
+        }
     }
 
     private fun showAlertDialog(action: String) {
@@ -260,6 +284,22 @@ class DetailJobFragment : Fragment() {
                 btnExecute.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 btnExecute.text = "Hapus Data"
                 tvTitleAlert.text = "Apakah anda yakin ingin menghapus data pekerjaan ${args.jobTitle} yang sudah anda publish?"
+                btnExecute.setOnClickListener {
+                    dialog.dismiss()
+                    jobViewModel.deleteJob(uid.toString(), args.id.toString())
+                }
+            }
+
+            "edit" -> {
+                btnExecute.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.yellow_700)
+                btnExecute.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                btnExecute.text = "Ubah Data"
+                tvTitleAlert.text = "Apakah anda yakin ingin mengubah data pekerjaan ${args.jobTitle} yang sudah anda publish?"
+                btnExecute.setOnClickListener {
+
+                    dialog.dismiss()
+                    goToEditDataPage()
+                }
             }
         }
 
@@ -313,6 +353,26 @@ class DetailJobFragment : Fragment() {
             showBottomSheetDialogFragment()
         }
 
+    }
+
+    private fun goToEditDataPage(){
+        findNavController().navigate(DetailJobFragmentDirections.actionDetailJobFragmentToAddPostJobFragment(
+            args.id,
+            args.uid,
+            args.jobTitle,
+            args.personWhoPost,
+            args.imageUrl,
+            args.dateStart,
+            args.dateEnd,
+            args.totalDay,
+            args.jobDescription,
+            args.jobCategory,
+            args.employeeType,
+            args.jobAddress,
+            args.salary,
+            args.postTime,
+            job_status
+        ))
     }
 
     private fun showBottomSheetDialogFragment() {

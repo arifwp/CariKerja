@@ -100,7 +100,13 @@ class MainActivity : AppCompatActivity() {
                 destination.id == R.id.topup_fragment ||
                 destination.id == R.id.transfer_fragment ||
                 destination.id == R.id.choose_role_fragment ||
-                destination.id == R.id.choose_skills_fragment
+                destination.id == R.id.choose_skills_fragment ||
+                destination.id == R.id.bank_account_fragment ||
+                destination.id == R.id.list_skill_profile_fragment ||
+                destination.id == R.id.list_applicant_fragment ||
+                destination.id == R.id.detail_job_fragment ||
+                destination.id == R.id.add_list_skill_profile_fragment  ||
+                destination.id == R.id.add_post_job_fragment
             ) {
                 navView.visibility = View.GONE
             } else {

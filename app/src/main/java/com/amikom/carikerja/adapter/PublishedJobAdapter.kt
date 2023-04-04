@@ -63,7 +63,7 @@ class PublishedJobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.
             timePost.text = myFinalValue
 
             // Applied Counter
-            jobApplied.text = 12.toString()
+//            jobApplied.text = 12.toString()
 
             if (item.salary.isNullOrBlank()){
                 wrapSalary.visibility = View.GONE

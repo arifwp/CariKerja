@@ -47,8 +47,8 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_cancel"
-                    android:layout_width="@dimen/dimen_160"
-                    android:layout_height="@dimen/dimen_54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semi_bold"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
@@ -67,8 +67,8 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_execute"
-                    android:layout_width="@dimen/dimen_160"
-                    android:layout_height="@dimen/dimen_54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semi_bold"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"

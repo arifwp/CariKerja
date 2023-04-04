@@ -215,7 +215,7 @@
                     android:drawablePadding="@dimen/dimen_10"
                     android:paddingVertical="@dimen/dimen_10"
                     android:paddingHorizontal="@dimen/dimen_10"
-                    android:background="@drawable/bg_ed" />
+                    android:background="@drawable/bg_ed"/>
 
             </LinearLayout>
 
