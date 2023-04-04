@@ -515,7 +515,64 @@ class JobViewModel @Inject constructor(
 
                 val ref = database.reference.child("Jobs").child(jobDetails.id.toString())
                 ref.updateChildren(jobUpdate).addOnSuccessListener {
-                    _editJobResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil mengubah data")))
+
+
+                    val queryHistoryJob = database.reference.child("Users").orderByChild("role").equalTo("worker")
+                    val dataJobList: MutableList<HistoryJob> = ArrayList()
+                    queryHistoryJob.addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            dataJobList.clear()
+                            if (snapshot.exists()){
+                                for (childSnapshot in snapshot.children){
+
+                                    if (childSnapshot.hasChild("history_job")){
+                                        val key = childSnapshot.key
+                                        Log.d(TAG, "child_snapshot_key: $key")
+
+                                        val users = database.reference.child("Users")
+                                        val queryAgain = database.reference.child("Users").child(key.toString()).child("history_job").orderByChild("id_job").equalTo(jobDetails.id)
+                                        Log.d(TAG, "query_again_ref: ${queryAgain.ref}")
+
+                                        queryAgain.addListenerForSingleValueEvent(object : ValueEventListener {
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                for (ds in snapshot.children){
+                                                    Log.d(TAG, "ds_key: ${ds.key}")
+                                                    if (ds.exists()){
+                                                        val asd = users.child(key.toString()).child("history_job").child(ds.key.toString())
+                                                        Log.d(TAG, "asd_ref: ${asd.ref}")
+
+
+                                                        asd.child("job_title").setValue(jobDetails.job_title).addOnSuccessListener {
+                                                            _editJobResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil mengubah data")))
+                                                        }.addOnFailureListener {
+                                                            _editJobResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
+                                                        }
+
+                                                    } else {
+                                                        _editJobResponse.postValue(SingleLiveEvent(BaseResponse.Error("path doesnt exists")))
+                                                    }
+                                                }
+                                            }
+
+                                            override fun onCancelled(error: DatabaseError) {
+                                                _editJobResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                                            }
+
+                                        })
+
+                                    }
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            _editJobResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                        }
+
+                    })
+
+
+
                 }.addOnFailureListener {
                     _editJobResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
                 }
