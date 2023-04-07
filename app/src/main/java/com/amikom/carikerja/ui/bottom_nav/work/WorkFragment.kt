@@ -23,10 +23,16 @@ import com.amikom.carikerja.models.JobDetails
 import com.amikom.carikerja.ui.bottom_nav.work.post_job.JobViewModel
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
+import org.json.JSONObject
 
 
 @AndroidEntryPoint
@@ -44,6 +50,14 @@ class WorkFragment : Fragment() {
     private var imgUrlRecruiter: String? = null
     var spinnerItem: String? = null
     var data_list_job: List<JobDetails>? = null
+    private val FCM_API = "https://fcm.googleapis.com/fcm/send"
+    private val serverKey =
+        "key=" + "AAAAK-WQOKE:APA91bEwAvh5BbO6DrATRGN6zy9dF0QFG26Wd_83JpC-0UcYe4RCieRMfWCScXNJnBIRhAOHHCKGH6D358wC3SVVPBxKEMmv35vBGFaRbdqbe7DLNwOBsjW_1Gyh9DWvlsIeoIPmfXkb"
+    private val contentType = "application/json"
+    private val requestQueue: RequestQueue by lazy {
+        Volley.newRequestQueue(requireContext())
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,41 +89,66 @@ class WorkFragment : Fragment() {
         val btnAddWork = binding.fab
         btnAddWork.setOnClickListener {
 
-//            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//                if (!task.isSuccessful) {
-//                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-//                    return@OnCompleteListener
-//                }
-//
-//                // Get new FCM registration token
-//                val token = task.result
-//
-//                // Log and toast
-//                val msg = resources.getString(R.string.msg_token_fmt, token)
-//                Log.d(TAG, msg)
-//                textMessage(msg)
-//            })
+            val regis_id = "d1CCBYaYSCuyOzRhss24mJ:APA91bEnw1UajpsyBwqlBIkbdARXJzmnv2qQjw4UAS0sV_u18MPwwACRBbXc85BELVP4-AgBY3XGwSpW9-f4IN6KU-Imhht_0xHIPXBqV_Zx7r6cB37tLSb3Ld53nf-9w2yjPJ2876HA"
 
-            findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-            ))
+            val notification = JSONObject()
+            val notifcationBody = JSONObject()
+
+            try {
+                notifcationBody.put("title", "Bukber nanti sore!")
+                notifcationBody.put("body", "pesan deskripsi membawa berita bukber")   //Enter your notification message
+                notification.put("to", regis_id)
+                notification.put("data", notifcationBody)
+                Log.e("TAG", "try")
+            } catch (e: JSONException) {
+                Log.e("TAG", "onCreate: " + e.message)
+            }
+
+            sendNotification(notification)
+
+//            findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment(
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//            ))
         }
 
     }
+
+    private fun sendNotification(notification: JSONObject){
+        Log.e("TAG", "sendNotification")
+        val jsonObjectRequest = object : JsonObjectRequest(FCM_API, notification,
+            Response.Listener<JSONObject> { response ->
+                Log.i("TAG", "onResponse: $response")
+//                msg.setText("")
+            },
+            Response.ErrorListener {
+//                Toast.makeText(this@MainActivity, "Request error", Toast.LENGTH_LONG).show()
+                Log.i("TAG", "onErrorResponse: Didn't work")
+            }) {
+
+            override fun getHeaders(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["Authorization"] = serverKey
+                params["Content-Type"] = contentType
+                return params
+            }
+        }
+        requestQueue.add(jsonObjectRequest)
+    }
+
 
     private fun searchByJobCategory(data_spinner: String, dataJob: MutableList<JobDetails>) {
 
