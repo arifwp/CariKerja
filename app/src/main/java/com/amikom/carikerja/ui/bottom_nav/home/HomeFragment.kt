@@ -99,12 +99,24 @@ class HomeFragment : Fragment() {
     private fun listener() {
         val btnTransfer = binding.wrapTransfer
         btnTransfer.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTransferFragment())
+            textMessage("Fitur ini sedang dalam tahap develop")
+//            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTransferFragment())
         }
 
         val btnTopUp = binding.wrapTopUp
         btnTopUp.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTopupFragment())
+            textMessage("Fitur ini sedang dalam tahap develop")
+//            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTopupFragment())
+        }
+
+        val btnSend = binding.wrapSend
+        btnSend.setOnClickListener {
+            textMessage("Fitur ini sedang dalam tahap develop")
+        }
+
+        val btnWithdraw = binding.wrapWithdraw
+        btnWithdraw.setOnClickListener {
+            textMessage("Fitur ini sedang dalam tahap develop")
         }
 
         val btnToSettings = binding.icSettings

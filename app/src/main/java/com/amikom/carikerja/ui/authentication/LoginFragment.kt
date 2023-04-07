@@ -19,7 +19,9 @@ import com.amikom.carikerja.ui.MainActivity
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.AuthenticationViewModel
 import com.amikom.carikerja.viewmodels.ProfileViewModel
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -82,10 +84,6 @@ class LoginFragment : Fragment() {
                     tilPassword.isEndIconVisible = false
                     edPassword.error = "Masukkan password anda"
                 }
-//                password.length <= 6 -> {
-//                    tilPassword.isEndIconVisible = false
-//                    edPassword.error = "Password harus lebih dari 6 karakter"
-//                }
                 else -> {
                     authenticationViewModel.login(email, password)
                     authenticationViewModel.signInStatus.observe(viewLifecycleOwner){
@@ -94,6 +92,7 @@ class LoginFragment : Fragment() {
                                 is BaseResponse.Loading -> {}
                                 is BaseResponse.Success -> {
                                     SharedPreferences.saveUid(requireContext(), it.data)
+                                    saveToken(it.data)
                                     checkHasRoleOrNot(it.data)
                                 }
                                 is BaseResponse.Error -> textMessage(it.msg.toString())
@@ -104,32 +103,24 @@ class LoginFragment : Fragment() {
                 }
             }
 
-//            if (email.isEmpty()){
-//                edEmail.error = "Masukkan email anda"
-//            }
-//            if (password.isEmpty()){
-//                tilPassword.isEndIconVisible = false
-//                edPassword.error = "Masukkan password anda"
-//            }
-//            if (email.isNotEmpty() && password.isNotEmpty()){
-//                authenticationViewModel.login(email, password)
-//                authenticationViewModel.signInStatus.observe(viewLifecycleOwner){
-//                    it.getContentIfNotHandled().let {
-//                        when(it){
-//                            is BaseResponse.Loading -> {}
-//                            is BaseResponse.Success -> {
-//                                SharedPreferences.saveUid(requireContext(), it.data)
-//                                checkHasRoleOrNot(it.data)
-//                            }
-//                            is BaseResponse.Error -> textMessage(it.msg.toString())
-//                            else -> {}
-//                        }
-//                    }
-//                }
-//            }
-
 
         }
+    }
+
+    private fun saveToken(uid: String) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.e(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            val token = task.result
+            // Log and toas
+//            val msg = resources.getString(R.string.msg_token_fmt, token)
+
+            authenticationViewModel.saveNewToken(uid.toString(), token.toString())
+            Log.d(TAG, token)
+        })
     }
 
     private fun checkHasRoleOrNot(uid: String) {

@@ -23,6 +23,9 @@ import com.amikom.carikerja.models.JobDetails
 import com.amikom.carikerja.ui.bottom_nav.work.post_job.JobViewModel
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -71,6 +74,22 @@ class WorkFragment : Fragment() {
 
         val btnAddWork = binding.fab
         btnAddWork.setOnClickListener {
+
+//            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+//                    return@OnCompleteListener
+//                }
+//
+//                // Get new FCM registration token
+//                val token = task.result
+//
+//                // Log and toast
+//                val msg = resources.getString(R.string.msg_token_fmt, token)
+//                Log.d(TAG, msg)
+//                textMessage(msg)
+//            })
+
             findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment(
                 null,
                 null,
@@ -217,7 +236,7 @@ class WorkFragment : Fragment() {
         jobAdapter = JobAdapter(ArrayList())
         recyclerViewCertificate.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
             adapter = jobAdapter
         }
     }

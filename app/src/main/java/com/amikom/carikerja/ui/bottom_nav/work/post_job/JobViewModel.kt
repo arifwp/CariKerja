@@ -3,6 +3,7 @@ package com.amikom.carikerja.ui.bottom_nav.work.post_job
 import android.util.Log
 import androidx.lifecycle.*
 import com.amikom.carikerja.models.*
+import com.amikom.carikerja.ui.notification.MyFirebaseMessagingService
 import com.amikom.carikerja.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -208,6 +209,7 @@ class JobViewModel @Inject constructor(
                 val jobStatus = hashMapOf<String, Any?>(
                     "job_status" to "closed"
                 )
+
 
                 // query update job status
                 val queryJob = database.reference.child("Jobs").child(id_job.toString())

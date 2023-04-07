@@ -179,6 +179,8 @@
     <string name="add_skills">Tambah Keahlian</string>
     <string name="edit">Ubah</string>
     <string name="edit_skills">Ubah Keahlian</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
     <string-array name="employee_type">
         <item>Magang</item>
