@@ -33,7 +33,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("https://api-stg.oyindonesia.com/api/")
+        .baseUrl("https://fcm.googleapis.com")
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()

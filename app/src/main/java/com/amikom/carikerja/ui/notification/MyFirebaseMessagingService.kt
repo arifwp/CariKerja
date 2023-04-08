@@ -29,15 +29,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        Log.d(TAG,"message : $remoteMessage");
+        Log.d(TAG,"message : ${remoteMessage}")
 
         if (remoteMessage.data.size > 0) {
             val title = remoteMessage.data["title"]
             val body = remoteMessage.data["body"]
+            Log.d(TAG,"title : ${title}")
+            Log.d(TAG,"body : ${body}")
             showNotification(applicationContext, title, body)
         } else {
-            val title = remoteMessage.notification!!.title
-            val body = remoteMessage.notification!!.body
+            val title = remoteMessage.notification?.title
+            val body = remoteMessage.notification?.body
             showNotification(applicationContext, title, body)
         }
     }
@@ -66,7 +68,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //Log.e("Notification", "Created in up to orio OS device");
             notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setOngoing(true)
+                .setOngoing(false)
                 .setSmallIcon(getNotificationIcon())
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -92,6 +94,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setAutoCancel(true)
                 .setContentText(message)
                 .setContentIntent(pi)
+                .setOngoing(false)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentTitle(title).build()
             val notificationManager = context.getSystemService(

@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
@@ -21,17 +20,14 @@ import com.amikom.carikerja.databinding.FragmentWorkBinding
 import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.models.JobDetails
 import com.amikom.carikerja.ui.bottom_nav.work.post_job.JobViewModel
+import com.amikom.carikerja.ui.notification.NotificationViewModel
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONException
 import org.json.JSONObject
 
 
@@ -43,6 +39,7 @@ class WorkFragment : Fragment() {
     private lateinit var jobAdapter: JobAdapter
     private val jobViewModel: JobViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
+    private val notificationViewModel: NotificationViewModel by viewModels()
     private var TAG = "WorkFragment"
     private var uid: String? = null
     private var userRole: String? = null
@@ -89,22 +86,41 @@ class WorkFragment : Fragment() {
         val btnAddWork = binding.fab
         btnAddWork.setOnClickListener {
 
-            val regis_id = "d1CCBYaYSCuyOzRhss24mJ:APA91bEnw1UajpsyBwqlBIkbdARXJzmnv2qQjw4UAS0sV_u18MPwwACRBbXc85BELVP4-AgBY3XGwSpW9-f4IN6KU-Imhht_0xHIPXBqV_Zx7r6cB37tLSb3Ld53nf-9w2yjPJ2876HA"
+            val regis_id1 = "d1CCBYaYSCuyOzRhss24mJ:APA91bEnw1UajpsyBwqlBIkbdARXJzmnv2qQjw4UAS0sV_u18MPwwACRBbXc85BELVP4-AgBY3XGwSpW9-f4IN6KU-Imhht_0xHIPXBqV_Zx7r6cB37tLSb3Ld53nf-9w2yjPJ2876HA"
+            val regis_id2 = "APA91bEdxU58gm8hGF1OLfhj0MQrNNymARmgSGNGasvYdJwsmrPddXXBZ0oC4KGzVyZwapsSZpF0EIBwhOljGufzwgQ5u2whiUh9dyewhAgA8jOPELSWLdjpSIT7qcCRcweDThPxYzJF"
 
-            val notification = JSONObject()
-            val notifcationBody = JSONObject()
+            val registration_ids = arrayOf(
+                "eqOnc2b-TCCO323VeYsKbj:APA91bEIPUHkaNChtwWv3BKtWd0rhmDFPOrORiSdDTrEAeVOqwiKoU8Z8hH0u0E2k1iwknzswQhup1WVwx68IJwKNedmf9UrGliAmQibE5TQj2kZFqphrRQo6icRGN1jThoDAH7SaJ--",
+                "fNaT68nlQ56Hx0FrSHOSCZ:APA91bHIgWnrPdUnmeB7T2gmmdQZPL_JTETdQw4RUqJfpOJPQQip_t9IYgXgSuGm_SJpfUXMpEKo3nfiUm9AkS1EwShfQb7_Ti_P5CFd05pWeKpHYPqi-inW-KhykthJZR1YPfuPquxu"
+            )
 
-            try {
-                notifcationBody.put("title", "Bukber nanti sore!")
-                notifcationBody.put("body", "pesan deskripsi membawa berita bukber")   //Enter your notification message
-                notification.put("to", regis_id)
-                notification.put("data", notifcationBody)
-                Log.e("TAG", "try")
-            } catch (e: JSONException) {
-                Log.e("TAG", "onCreate: " + e.message)
+            notificationViewModel.postNotification(registration_ids, "Retrofit Success", "mengirim telah sukses")
+            notificationViewModel.postNotificationResponse.observe(viewLifecycleOwner){
+                it.getContentIfNotHandled()?.let {
+                    when(it){
+                        is BaseResponse.Loading -> {}
+                        is BaseResponse.Success -> {
+                            textMessage(it.data)
+                        }
+                        is BaseResponse.Error -> textMessage(it.msg.toString())
+                    }
+                }
             }
 
-            sendNotification(notification)
+//            val notification = JSONObject()
+//            val notifcationBody = JSONObject()
+//
+//            try {
+//                notifcationBody.put("title", "Bukber nanti sore!")
+//                notifcationBody.put("body", "pesan deskripsi membawa berita bukber")   //Enter your notification message
+//                notification.put("to", regis_id)
+//                notification.put("data", notifcationBody)
+//                Log.e("TAG", "try")
+//            } catch (e: JSONException) {
+//                Log.e("TAG", "onCreate: " + e.message)
+//            }
+//
+//            sendNotification(notification)
 
 //            findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment(
 //                null,

@@ -24,12 +24,12 @@ class HomeViewModel @Inject constructor(
     fun getInvoiceStatus(partner_tx_id: String){
         viewModelScope.launch {
             try {
-                val response = repository.getInvoiceStatus(partner_tx_id)
-                if (response.code() == 200){
-                    _getInvoiceStatusResponse.postValue(BaseResponse.Success(response.body()))
-                } else {
-                    _getInvoiceStatusResponse.postValue(BaseResponse.Error(response.message()))
-                }
+//                val response = repository.getInvoiceStatus(partner_tx_id)
+//                if (response.code() == 200){
+//                    _getInvoiceStatusResponse.postValue(BaseResponse.Success(response.body()))
+//                } else {
+//                    _getInvoiceStatusResponse.postValue(BaseResponse.Error(response.message()))
+//                }
             } catch (e: Exception) {
                 _getInvoiceStatusResponse.postValue(BaseResponse.Error(e.message.toString()))
             }
