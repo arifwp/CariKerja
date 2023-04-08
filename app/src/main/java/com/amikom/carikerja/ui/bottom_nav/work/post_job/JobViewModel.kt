@@ -3,7 +3,7 @@ package com.amikom.carikerja.ui.bottom_nav.work.post_job
 import android.util.Log
 import androidx.lifecycle.*
 import com.amikom.carikerja.models.*
-import com.amikom.carikerja.ui.notification.MyFirebaseMessagingService
+import com.amikom.carikerja.repository.NetworkRepository
 import com.amikom.carikerja.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -19,7 +19,8 @@ import javax.inject.Inject
 class JobViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val storage: FirebaseStorage,
-    private val database: FirebaseDatabase
+    private val database: FirebaseDatabase,
+    private val repository: NetworkRepository
 ) : ViewModel(), LifecycleObserver {
 
     private val TAG = "JobViewModel"
@@ -59,6 +60,9 @@ class JobViewModel @Inject constructor(
 
     private val _deleteJobResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>>()
     val deleteJobResponse: LiveData<SingleLiveEvent<BaseResponse<String>>> = _deleteJobResponse
+
+    private val _postNotificationResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>>()
+    val postNotificationResponse: LiveData<SingleLiveEvent<BaseResponse<String>>> = _postNotificationResponse
 
     fun deleteJob(uidRecruiter: String, idJob: String){
         viewModelScope.launch {
@@ -174,6 +178,8 @@ class JobViewModel @Inject constructor(
         }
     }
 
+
+
     fun getJobStatus(id_job: String?){
         viewModelScope.launch {
             try {
@@ -218,109 +224,123 @@ class JobViewModel @Inject constructor(
 
                     // query update status on_review to rejected
                     val queryApplicant = database.reference.child("Jobs").child(id_job.toString()).child("applicant")
-                    queryApplicant.orderByChild("status").equalTo("on_review").addListenerForSingleValueEvent(object : ValueEventListener{
+
+
+                    // query get registration_id
+                    val dataRegistrationId: MutableList<String> = ArrayList()
+                    queryApplicant.orderByChild("status").equalTo("on_review").addValueEventListener(object : ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
-                            for (childSnapshot in snapshot.children){
-                                queryApplicant.child(childSnapshot.key.toString()).child("status").setValue("rejected").addOnSuccessListener {
+                            Log.d(TAG, "regis_data: $snapshot")
+                            Log.d(TAG, "regis_data_ref: ${snapshot.ref}")
+                            dataRegistrationId.clear()
+                            for (dsChildSnapshot in snapshot.children){
+                                val regis_id = dsChildSnapshot.child("registration_id").getValue(String::class.java)
+                                if (regis_id != null){
+                                    dataRegistrationId.add(regis_id)
+                                }
+
+                                val convData = dataRegistrationId.toTypedArray()
 
 
-                                    // query update status rejected to diterima
-                                    val ref = database.reference.child("Jobs").child(id_job.toString()).child("applicant").child(id_applicant.toString())
-                                    ref.addValueEventListener(object : ValueEventListener{
-                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                            val uid_worker = snapshot.child("uid").getValue(String::class.java).toString()
+                                Log.d(TAG, "dataRegistrationId: $dataRegistrationId")
+                                Log.d(TAG, "convData: $convData")
 
-                                            val queryHistoryJob = database.reference.child("Users").orderByChild("role").equalTo("worker")
-                                            val dataHistoryList: MutableList<HistoryJob> = ArrayList()
-                                            queryHistoryJob.addListenerForSingleValueEvent(object : ValueEventListener{
-                                                override fun onDataChange(snapshot: DataSnapshot) {
-                                                    dataHistoryList.clear()
-                                                    if (snapshot.exists()){
-                                                        for (childSnapshot in snapshot.children){
 
-                                                            if (childSnapshot.hasChild("history_job")){
-                                                                val key = childSnapshot.key
-                                                                Log.d(TAG, "childSnapshot_key: $key")
+                                // query update status on_review to rejected (action)
+                                queryApplicant.orderByChild("status").equalTo("on_review").addListenerForSingleValueEvent(object : ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        for (childSnapshot in snapshot.children){
+                                            queryApplicant.child(childSnapshot.key.toString()).child("status").setValue("rejected").addOnSuccessListener {
 
-                                                                val users = database.reference.child("Users")
-                                                                val queryAgain = database.reference.child("Users").child(key.toString()).child("history_job").orderByChild("id_job").equalTo(id_job)
-                                                                Log.d(TAG, "query_again_ref: ${queryAgain.ref}")
-                                                                queryAgain.addListenerForSingleValueEvent(object : ValueEventListener{
-                                                                    override fun onDataChange(
-                                                                        snapshot: DataSnapshot
-                                                                    ) {
-                                                                        for (ds in snapshot.children){
-                                                                            Log.d(TAG, "onDataChange: ${ds.key}")
-                                                                            if (ds.exists()){
-                                                                                val dataQuery = users.child(key.toString()).child("history_job").child(ds.key.toString())
-                                                                                dataQuery.child("status").setValue("rejected")
-                                                                                Log.d(TAG, "onDataChange: ${dataQuery.ref}")
-                                                                                
-                                                                            } else {
-                                                                                Log.d(
-                                                                                    TAG,
-                                                                                    "onDataChange: tidak ada"
-                                                                                )
-                                                                            }
+                                                postNotification(convData, "Cek status anda sekarang!", "Jangan bersedih anda ditolak")
+
+
+                                                // query update status rejected to diterima
+                                                val ref = database.reference.child("Jobs").child(id_job.toString()).child("applicant").child(id_applicant.toString())
+                                                ref.addValueEventListener(object : ValueEventListener{
+                                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                                        val uid_worker = snapshot.child("uid").getValue(String::class.java).toString()
+
+                                                        val queryHistoryJob = database.reference.child("Users").orderByChild("role").equalTo("worker")
+                                                        val dataHistoryList: MutableList<HistoryJob> = ArrayList()
+                                                        queryHistoryJob.addListenerForSingleValueEvent(object : ValueEventListener{
+                                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                                dataHistoryList.clear()
+                                                                if (snapshot.exists()){
+                                                                    for (childSnapshot in snapshot.children){
+
+                                                                        if (childSnapshot.hasChild("history_job")){
+                                                                            val key = childSnapshot.key
+                                                                            Log.d(TAG, "childSnapshot_key: $key")
+
+                                                                            val users = database.reference.child("Users")
+                                                                            val queryAgain = database.reference.child("Users").child(key.toString()).child("history_job").orderByChild("id_job").equalTo(id_job)
+                                                                            Log.d(TAG, "query_again_ref: ${queryAgain.ref}")
+                                                                            queryAgain.addListenerForSingleValueEvent(object : ValueEventListener{
+                                                                                override fun onDataChange(
+                                                                                    snapshot: DataSnapshot
+                                                                                ) {
+                                                                                    for (ds in snapshot.children){
+                                                                                        Log.d(TAG, "onDataChange: ${ds.key}")
+                                                                                        if (ds.exists()){
+                                                                                            val dataQuery = users.child(key.toString()).child("history_job").child(ds.key.toString())
+                                                                                            dataQuery.child("status")
+
+                                                                                            Log.d(TAG, "onDataChange: ${dataQuery.ref}")
+
+                                                                                        } else {
+                                                                                            Log.d(
+                                                                                                TAG,
+                                                                                                "onDataChange: tidak ada"
+                                                                                            )
+                                                                                        }
+                                                                                    }
+                                                                                }
+
+                                                                                override fun onCancelled(error: DatabaseError) {
+                                                                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                                                                                }
+
+                                                                            })
                                                                         }
-                                                                    }
 
-                                                                    override fun onCancelled(error: DatabaseError) {
-                                                                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
                                                                     }
-
-                                                                })
+                                                                }
                                                             }
 
-                                                        }
+                                                            override fun onCancelled(error: DatabaseError) {
+                                                                _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                                                            }
+
+                                                        })
+
                                                     }
+
+                                                    override fun onCancelled(error: DatabaseError) {
+                                                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                                                    }
+
+                                                })
+                                                ref.updateChildren(statusUpdates).addOnSuccessListener {
+                                                    postNotification(convData, "Cek status anda sekarang!", "Selamat anda telah dipilih")
+                                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil memilih pekerja")))
+                                                }.addOnFailureListener {
+                                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
                                                 }
 
-                                                override fun onCancelled(error: DatabaseError) {
-                                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
-                                                }
 
-                                            })
-
-                                            // query update history job -> status job
-//                                            val queryWorker = database.reference.child("Users").child(uid_worker).child("history_job")
-//                                            queryWorker.orderByChild("id_job").equalTo(id_job).addListenerForSingleValueEvent(object : ValueEventListener{
-//                                                override fun onDataChange(snapshot: DataSnapshot) {
-//                                                    Log.d(TAG, "snapshot_query_worker: $snapshot")
-//                                                    if (snapshot.exists()){
-//                                                        for(childSnapshot in snapshot.children){
-//                                                            val key = childSnapshot.key
-//                                                            if(key != null){
-//                                                                Log.d(TAG, "key: $key")
-//                                                                Log.d(TAG, "ref: ${queryWorker.ref}")
-//                                                                queryWorker.child(key).child("status").setValue("accepted")
-//                                                            }
-//                                                        }
-//                                                    }
-//                                                }
-//
-//                                                override fun onCancelled(error: DatabaseError) {
-//                                                    _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
-//                                                }
-//
-//                                            })
-
-
+                                            }
                                         }
-
-                                        override fun onCancelled(error: DatabaseError) {
-                                            _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
-                                        }
-
-                                    })
-                                    ref.updateChildren(statusUpdates).addOnSuccessListener {
-                                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil memilih pekerja")))
-                                    }.addOnFailureListener {
-                                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
                                     }
 
+                                    override fun onCancelled(error: DatabaseError) {
+                                        _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
+                                    }
 
-                                }
+                                })
+
+
+
                             }
                         }
 
@@ -330,6 +350,7 @@ class JobViewModel @Inject constructor(
 
                     })
 
+
                 }.addOnFailureListener {
                     _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(it.message.toString())))
                 }
@@ -338,6 +359,39 @@ class JobViewModel @Inject constructor(
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
                 _chooseApplicantResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
+            }
+        }
+    }
+
+    fun postNotification(registration_ids: Array<String>, title: String, body: String){
+        viewModelScope.launch {
+            try {
+
+                val notif = Notification(
+                    title = title,
+                    body = body
+                )
+
+                val message = Message (
+                    registration_ids = registration_ids,
+                    data = notif
+                )
+
+                val response = repository.postNotification(message = message)
+                Log.d(TAG, "message: $message")
+                if (response.code() == 200){
+                    Log.d(TAG, "response_code: ${response.code()}")
+                    _postNotificationResponse.postValue(SingleLiveEvent(BaseResponse.Success("Berhasil mengirim pemberitahuan")))
+                } else {
+                    Log.d(TAG, "response_code: ${response.code()}")
+                    Log.d(TAG, "response_message: ${response.message()}")
+                    Log.d(TAG, "errorBody: ${response.errorBody()}")
+                    _postNotificationResponse.postValue(SingleLiveEvent(BaseResponse.Error("Gagal " + response.message().toString())))
+                }
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _postNotificationResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
             }
         }
     }
@@ -386,6 +440,8 @@ class JobViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             try {
+
+                Log.d(TAG, "regis_id: ${applicant?.registration_id}")
 
                 val ref = database.reference.child("Jobs").child(applicant?.id_job.toString()).child("applicant").push()
                 applicant?.id_applicant = ref.key

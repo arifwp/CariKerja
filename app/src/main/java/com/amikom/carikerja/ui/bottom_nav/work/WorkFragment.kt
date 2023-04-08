@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
@@ -86,26 +87,24 @@ class WorkFragment : Fragment() {
         val btnAddWork = binding.fab
         btnAddWork.setOnClickListener {
 
-            val regis_id1 = "d1CCBYaYSCuyOzRhss24mJ:APA91bEnw1UajpsyBwqlBIkbdARXJzmnv2qQjw4UAS0sV_u18MPwwACRBbXc85BELVP4-AgBY3XGwSpW9-f4IN6KU-Imhht_0xHIPXBqV_Zx7r6cB37tLSb3Ld53nf-9w2yjPJ2876HA"
-            val regis_id2 = "APA91bEdxU58gm8hGF1OLfhj0MQrNNymARmgSGNGasvYdJwsmrPddXXBZ0oC4KGzVyZwapsSZpF0EIBwhOljGufzwgQ5u2whiUh9dyewhAgA8jOPELSWLdjpSIT7qcCRcweDThPxYzJF"
 
-            val registration_ids = arrayOf(
-                "eqOnc2b-TCCO323VeYsKbj:APA91bEIPUHkaNChtwWv3BKtWd0rhmDFPOrORiSdDTrEAeVOqwiKoU8Z8hH0u0E2k1iwknzswQhup1WVwx68IJwKNedmf9UrGliAmQibE5TQj2kZFqphrRQo6icRGN1jThoDAH7SaJ--",
-                "fNaT68nlQ56Hx0FrSHOSCZ:APA91bHIgWnrPdUnmeB7T2gmmdQZPL_JTETdQw4RUqJfpOJPQQip_t9IYgXgSuGm_SJpfUXMpEKo3nfiUm9AkS1EwShfQb7_Ti_P5CFd05pWeKpHYPqi-inW-KhykthJZR1YPfuPquxu"
-            )
-
-            notificationViewModel.postNotification(registration_ids, "Retrofit Success", "mengirim telah sukses")
-            notificationViewModel.postNotificationResponse.observe(viewLifecycleOwner){
-                it.getContentIfNotHandled()?.let {
-                    when(it){
-                        is BaseResponse.Loading -> {}
-                        is BaseResponse.Success -> {
-                            textMessage(it.data)
-                        }
-                        is BaseResponse.Error -> textMessage(it.msg.toString())
-                    }
-                }
-            }
+//            val registration_ids = arrayOf(
+//                "eqOnc2b-TCCO323VeYsKbj:APA91bEIPUHkaNChtwWv3BKtWd0rhmDFPOrORiSdDTrEAeVOqwiKoU8Z8hH0u0E2k1iwknzswQhup1WVwx68IJwKNedmf9UrGliAmQibE5TQj2kZFqphrRQo6icRGN1jThoDAH7SaJ--",
+//                "fNaT68nlQ56Hx0FrSHOSCZ:APA91bHIgWnrPdUnmeB7T2gmmdQZPL_JTETdQw4RUqJfpOJPQQip_t9IYgXgSuGm_SJpfUXMpEKo3nfiUm9AkS1EwShfQb7_Ti_P5CFd05pWeKpHYPqi-inW-KhykthJZR1YPfuPquxu"
+//            )
+//
+//            notificationViewModel.postNotification(registration_ids, "Retrofit Success", "mengirim telah sukses")
+//            notificationViewModel.postNotificationResponse.observe(viewLifecycleOwner){
+//                it.getContentIfNotHandled()?.let {
+//                    when(it){
+//                        is BaseResponse.Loading -> {}
+//                        is BaseResponse.Success -> {
+//                            textMessage(it.data)
+//                        }
+//                        is BaseResponse.Error -> textMessage(it.msg.toString())
+//                    }
+//                }
+//            }
 
 //            val notification = JSONObject()
 //            val notifcationBody = JSONObject()
@@ -122,23 +121,23 @@ class WorkFragment : Fragment() {
 //
 //            sendNotification(notification)
 
-//            findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment(
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//            ))
+            findNavController().navigate(WorkFragmentDirections.actionNavigationWorkToAddPostJobFragment(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+            ))
         }
 
     }

@@ -17,5 +17,6 @@ data class Applicant(
     var project: MutableList<ProjectDetails>? = null,
     var education: MutableList<EducationDetails>? = null,
     var skills: MutableList<SkillsDetail>? = null,
-    var status: String? = null
+    var status: String? = null,
+    var registration_id: String? = null
 )

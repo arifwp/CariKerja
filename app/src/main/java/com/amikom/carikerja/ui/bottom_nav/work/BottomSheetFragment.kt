@@ -26,6 +26,7 @@ import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.notification.view.*
 
 @AndroidEntryPoint
 class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter_name: String?, job_title: String?) : BottomSheetDialogFragment() {
@@ -104,7 +105,9 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
                 educationViewModel.getEducation(uid.toString())
                 profileViewModel.getUserSkills(uid.toString())
                 jobViewModel.getUserIdJob(uid.toString())
+                profileViewModel.getRegistrationId(uid.toString())
                 binding.wrapBtnSubmit.visibility = View.VISIBLE
+                binding.wrapChooseApplicant.visibility = View.GONE
                 listenerBtnSubmit()
             }
             else -> {
@@ -114,12 +117,12 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
                 projectViewModel.getProject(uidWorker.toString())
                 educationViewModel.getEducation(uidWorker.toString())
                 profileViewModel.getUserSkills(uidWorker.toString())
+                profileViewModel.getRegistrationId(uidWorker.toString())
                 jobViewModel.getIdApplicant(id_jobBtm.toString(), uidWorker.toString())
                 jobViewModel.getJobStatus(id_jobBtm.toString())
                 historyJobViewModel.getListIdApplicantByPublishedJob(uid.toString(), id_jobBtm.toString())
-
-
-
+                binding.wrapBtnSubmit.visibility = View.GONE
+                binding.wrapChooseApplicant.visibility = View.VISIBLE
             }
         }
 
@@ -140,7 +143,7 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
     private fun listenerBtnChooseApplicant(){
         binding.btnChoooseApplicant.setOnClickListener {
 
-            val n = jobByRecruiter?.size ?: error("Tidak ada pelamar")
+            val n = jobByRecruiter?.size ?: error(it.message.toString())
 
             if (n > 0){
                 jobViewModel.chooseApplicant(id_jobBtm, id_applicant)
@@ -357,7 +360,8 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
                         project = projectApplicant,
                         education = educationApplicant,
                         skills = it.data,
-                        status = null
+                        status = null,
+                        registration_id = null
                     )
                     historyJob = HistoryJob(
                         id_job = id_jobBtm,
@@ -368,6 +372,36 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
 
                 }
                 else -> {}
+            }
+        }
+
+        profileViewModel.getRegistrationIdResponse.observe(viewLifecycleOwner){
+            when(it){
+                is BaseResponse.Loading -> {}
+                is BaseResponse.Success -> {
+                    Log.d(TAG, "registration_id: ${it.data}")
+                    applicant = Applicant(
+                        id_job = id_jobBtm,
+                        uid = uidApplicant,
+                        id_applicant = null,
+                        imageUrl = imageUrlApplicant,
+                        name = nameApplicant,
+                        email = emailApplicant,
+                        role = roleApplicant,
+                        phone = phoneApplicant,
+                        dob = dobApplicant,
+                        address = addressApplicant,
+                        summary = summaryApplicant,
+                        dataWorkExperience = dataWorkExperienceApplicant,
+                        certificate = certificateApplicant,
+                        project = projectApplicant,
+                        education = educationApplicant,
+                        skills = skillsApplicant,
+                        status = null,
+                        registration_id = it.data
+                    )
+                }
+                is BaseResponse.Error -> textMessage(it.msg.toString())
             }
         }
 

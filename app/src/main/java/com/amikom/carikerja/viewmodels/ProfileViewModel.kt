@@ -50,6 +50,34 @@ class ProfileViewModel @Inject constructor(
     private val _getUserSkillsResponse = MutableLiveData<BaseResponse<MutableList<SkillsDetail>>>()
     val getUserSkillsResponse: LiveData<BaseResponse<MutableList<SkillsDetail>>> = _getUserSkillsResponse
 
+    private val _getRegistrationIdResponse = MutableLiveData<BaseResponse<String>>()
+    val getRegistrationIdResponse: LiveData<BaseResponse<String>> = _getRegistrationIdResponse
+
+    fun getRegistrationId(uid: String){
+        viewModelScope.launch {
+            try {
+
+                val ref = database.reference.child("Users").child(uid)
+                ref.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val regis_id = snapshot.child("registration_id").getValue(String::class.java).toString()
+                        _getRegistrationIdResponse.postValue(BaseResponse.Success(regis_id))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getRegistrationIdResponse.postValue(BaseResponse.Error(error.message.toString()))
+                    }
+
+                })
+
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getRegistrationIdResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
+
     fun getUserSkills(uid: String){
         viewModelScope.launch {
             try {
