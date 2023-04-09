@@ -5,5 +5,6 @@ data class HistoryJob (
     var job_title: String? = null,
     var recruiter_uid: String? = null,
     var recruiter_name: String? = null,
-    var status: String? = null
+    var status: String? = null,
+    var id_applicant: String? = null,
 )

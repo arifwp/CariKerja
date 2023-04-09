@@ -143,13 +143,35 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
     private fun listenerBtnChooseApplicant(){
         binding.btnChoooseApplicant.setOnClickListener {
 
-            val n = jobByRecruiter?.size ?: error(it.message.toString())
+            jobViewModel.getDetailJob(id_jobBtm)
+            jobViewModel.getJobDetailResponse.observe(viewLifecycleOwner){ observe ->
+                observe.getContentIfNotHandled()?.let { response ->
+                    when(response){
+                        is BaseResponse.Loading -> {}
+                        is BaseResponse.Success -> {
+                            val judulKerja = response.data.job_title.toString()
+                            val namaRecruiter = response.data.person_who_post.toString()
 
-            if (n > 0){
-                jobViewModel.chooseApplicant(id_jobBtm, id_applicant)
-            } else {
-                textMessage("Tidak ada pelamar yang melamar pekerjaan ini")
+                            val n = jobByRecruiter?.size ?: error(it.message.toString())
+
+                            if (n > 0){
+                                jobViewModel.chooseApplicant(id_jobBtm, id_applicant, judulKerja, namaRecruiter)
+                            } else {
+                                textMessage("Tidak ada pelamar yang melamar pekerjaan ini")
+                            }
+                        }
+                        is BaseResponse.Error -> textMessage(response.msg.toString())
+                    }
+                }
             }
+
+//            val n = jobByRecruiter?.size ?: error(it.message.toString())
+//
+//            if (n > 0){
+//                jobViewModel.chooseApplicant(id_jobBtm, id_applicant, judulKerja, namaRecruiter)
+//            } else {
+//                textMessage("Tidak ada pelamar yang melamar pekerjaan ini")
+//            }
         }
     }
 
