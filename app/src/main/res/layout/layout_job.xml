@@ -194,48 +194,38 @@
 
                 </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/wrap_job_applied"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/bg_tag"-->
-<!--                    android:backgroundTint="@color/green_100"-->
-<!--                    android:paddingEnd="@dimen/dimen_12"-->
-<!--                    android:paddingStart="@dimen/dimen_12"-->
-<!--                    android:paddingTop="@dimen/dimen_6"-->
-<!--                    android:paddingBottom="@dimen/dimen_6"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:visibility="visible"-->
-<!--                    android:layout_marginStart="@dimen/dimen_8">-->
+                <LinearLayout
+                    android:id="@+id/wrap_job_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tag"
+                    android:backgroundTint="@color/red_100"
+                    android:paddingEnd="@dimen/dimen_12"
+                    android:paddingStart="@dimen/dimen_12"
+                    android:paddingTop="@dimen/dimen_6"
+                    android:paddingBottom="@dimen/dimen_6"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/dimen_8">
 
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="horizontal">-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/job_applied"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            tools:text="12"-->
-<!--                            android:includeFontPadding="false"-->
-<!--                            android:fontFamily="@font/poppins_semi_bold"-->
-<!--                            android:textColor="@color/green_700"-->
-<!--                            android:textSize="12sp" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/closed"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/poppins_semi_bold"
+                            android:textColor="@color/red_400"
+                            android:textSize="12sp"
+                            android:layout_marginStart="@dimen/dimen_4"/>
 
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="@string/applied"-->
-<!--                            android:includeFontPadding="false"-->
-<!--                            android:fontFamily="@font/poppins_semi_bold"-->
-<!--                            android:textColor="@color/green_700"-->
-<!--                            android:textSize="12sp"-->
-<!--                            android:layout_marginStart="@dimen/dimen_4"/>-->
+                    </LinearLayout>
 
-<!--                    </LinearLayout>-->
-
-<!--                </LinearLayout>-->
+                </LinearLayout>
 
             </LinearLayout>
 

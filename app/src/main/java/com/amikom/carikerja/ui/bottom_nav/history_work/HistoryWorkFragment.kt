@@ -74,6 +74,7 @@ class HistoryWorkFragment : Fragment(), btnClickHistoryWork {
             null,
             null,
             null,
+            null
         ))
     }
 

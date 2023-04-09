@@ -50,7 +50,8 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
                 item.employee_type,
                 item.job_address,
                 item.salary,
-                myFinalValueDetail
+                myFinalValueDetail,
+                item.job_status
 
             ))
         }
@@ -68,9 +69,6 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
             val myFinalValue: String = timeAgo2.covertTimeToText(time).toString()
             timePost.text = myFinalValue
 
-            // Applied Counter
-//            jobApplied.text = 12.toString()
-
             if (item.salary.isNullOrBlank()){
                 wrapSalary.visibility = View.GONE
             } else {
@@ -83,6 +81,12 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
             } else {
                 wrapJobType.visibility = View.VISIBLE
                 jobType.text = item.employee_type
+            }
+
+            if (item.job_status == "open"){
+                wrapJobStatus.visibility = View.GONE
+            } else if (item.job_status == "closed"){
+                wrapJobStatus.visibility = View.VISIBLE
             }
 
             Picasso.get()

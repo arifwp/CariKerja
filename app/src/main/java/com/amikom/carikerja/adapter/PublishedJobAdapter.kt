@@ -45,7 +45,8 @@ class PublishedJobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.
                 item.employee_type,
                 item.job_address,
                 item.salary,
-                myFinalValueDetail
+                myFinalValueDetail,
+                item.job_status
             ))
         }
 

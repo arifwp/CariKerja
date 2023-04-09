@@ -625,6 +625,10 @@
             android:name="post_time"
             app:argType="string"
             app:nullable="true"/>
+        <argument
+            android:name="job_status"
+            app:argType="string"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_detail_job_fragment_to_list_applicant_fragment"
             app:destination="@id/list_applicant_fragment" />

@@ -552,6 +552,24 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/wrap_job_closed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/job_closed"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/wrap_btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

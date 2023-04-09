@@ -87,7 +87,18 @@ class DetailJobFragment : Fragment() {
         when{
             userRole == "worker" -> {
                 jobViewModel.getUserIdJob(uid.toString())
-                binding.wrapBtnSubmit.visibility = View.VISIBLE
+
+                when {
+                    args.jobStatus == "closed" -> {
+                        binding.wrapJobClosed.visibility = View.VISIBLE
+                        binding.wrapBtnSubmit.visibility = View.GONE
+                    }
+                    args.jobStatus == "open" -> {
+                        binding.wrapJobClosed.visibility = View.GONE
+                        binding.wrapBtnSubmit.visibility = View.VISIBLE
+                    }
+                }
+
             }
             userRole == "recruiter" -> {
                 jobViewModel.getPublishedJobByRecruiterUid(uid.toString())
