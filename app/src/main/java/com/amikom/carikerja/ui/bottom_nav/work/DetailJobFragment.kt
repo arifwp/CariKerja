@@ -259,6 +259,7 @@ class DetailJobFragment : Fragment() {
                 when(it){
                     is BaseResponse.Loading -> {}
                     is BaseResponse.Success -> {
+                        findNavController().popBackStack()
                         textMessage(it.data)
                     }
                     is BaseResponse.Error -> textMessage(it.msg.toString())

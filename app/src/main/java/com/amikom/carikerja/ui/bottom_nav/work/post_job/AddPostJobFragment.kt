@@ -206,7 +206,7 @@ class AddPostJobFragment : Fragment() {
             dateStart.isEmpty() -> binding.edDateStart.error = "Masukkan tanggal dimulainya pekerjaan"
             dateEnd.isEmpty() -> binding.edDateEnd.error = "Masukkan tanggal berakhirnya pekerjaan"
             jobAdress.isEmpty() -> binding.edLocation.error = "Masukkan alamat lokasi pekerjaan"
-            else -> jobViewModel.addJob(uid.toString(), job, publishedJob)
+            else -> jobViewModel.addJob(uid.toString(), job)
         }
 
     }
