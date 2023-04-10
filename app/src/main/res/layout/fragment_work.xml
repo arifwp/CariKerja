@@ -83,16 +83,6 @@
                             android:background="@drawable/bg_ed"
                             app:tint="@color/primary_500"/>
 
-
-<!--                        <androidx.appcompat.widget.SearchView-->
-<!--                            android:id="@+id/search_job"-->
-<!--                            style="@style/AppSearchView"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:iconifiedByDefault="false"-->
-<!--                            app:searchIcon="@drawable/ic_search"-->
-<!--                            app:queryHint="@string/hint_search_work"/>-->
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -123,33 +113,6 @@
                                 android:layout_height="match_parent" />
 
                         </LinearLayout>
-
-<!--                        <EditText-->
-<!--                            android:id="@+id/search_job_category"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="@dimen/dimen_54"-->
-<!--                            android:layout_weight="0.98"-->
-<!--                            android:fontFamily="@font/poppins_regular"-->
-<!--                            android:includeFontPadding="false"-->
-<!--                            android:textSize="14sp"-->
-<!--                            android:hint="@string/hint_search_job_category"-->
-<!--                            android:textColor="@color/text_primary_300"-->
-<!--                            android:drawableStart="@drawable/ic_books"-->
-<!--                            android:drawableTint="@color/primary_500"-->
-<!--                            android:drawablePadding="@dimen/dimen_6"-->
-<!--                            android:paddingVertical="@dimen/dimen_10"-->
-<!--                            android:paddingHorizontal="@dimen/dimen_10"-->
-<!--                            android:background="@drawable/bg_ed"-->
-<!--                            app:tint="@color/primary_500"/>-->
-
-<!--                        <androidx.appcompat.widget.SearchView-->
-<!--                            android:id="@+id/search_job_category"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            style="@style/AppSearchView"-->
-<!--                            android:iconifiedByDefault="false"-->
-<!--                            app:searchIcon="@drawable/ic_books"-->
-<!--                            app:queryHint="@string/hint_search_city"/>-->
 
                     </LinearLayout>
 
@@ -182,6 +145,7 @@
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:background="@drawable/bg_work"
+                android:backgroundTint="@color/light_gray"
                 android:layout_marginTop="@dimen/dimen_2">
 
                 <androidx.recyclerview.widget.RecyclerView

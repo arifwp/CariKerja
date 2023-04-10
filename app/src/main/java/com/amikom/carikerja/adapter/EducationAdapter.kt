@@ -1,13 +1,14 @@
 package com.amikom.carikerja.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.databinding.LayoutEducationBinding
 import com.amikom.carikerja.models.EducationDetails
 import com.amikom.carikerja.models.Exp
 
-class EducationAdapter(private var dataEdu: List<EducationDetails>) : RecyclerView.Adapter<EducationAdapter.EducationViewHolder>(){
+class EducationAdapter(private val page: String, private var dataEdu: List<EducationDetails>) : RecyclerView.Adapter<EducationAdapter.EducationViewHolder>(){
 
     inner class EducationViewHolder(val binding: LayoutEducationBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -18,17 +19,41 @@ class EducationAdapter(private var dataEdu: List<EducationDetails>) : RecyclerVi
 
     override fun onBindViewHolder(holder: EducationViewHolder, position: Int) {
         val item = dataEdu[position]
-        with(holder.binding){
-            institution.text = item.institution
-            degree.text = item.degree
-            fieldOfStudy.text = item.field_of_study
-            dateStart.text = item.dateStart
-            dateEnd.text = item.dateEnd
-            jobDescription.text = item.description
-            btnEdit.setOnClickListener {
-                listenerEducationEdit?.btnOnClickEducation(item)
+
+        when {
+            page == "EducationFragment" -> {
+                with(holder.binding){
+                    institution.text = item.institution
+                    degree.text = item.degree
+                    fieldOfStudy.text = item.field_of_study
+                    dateStart.text = item.dateStart
+                    dateEnd.text = item.dateEnd
+                    jobDescription.text = item.description
+                    jobDescription.setOnClickListener {
+                        jobDescription.toggle()
+                    }
+                    btnEdit.setOnClickListener {
+                        listenerEducationEdit?.btnOnClickEducation(item)
+                    }
+                }
+            }
+
+            page == "BottomSheetFragment" -> {
+                with(holder.binding){
+                    institution.text = item.institution
+                    degree.text = item.degree
+                    fieldOfStudy.text = item.field_of_study
+                    dateStart.text = item.dateStart
+                    dateEnd.text = item.dateEnd
+                    jobDescription.text = item.description
+                    jobDescription.setOnClickListener {
+                        jobDescription.toggle()
+                    }
+                    btnEdit.visibility = View.GONE
+                }
             }
         }
+
     }
 
     var listenerEducationEdit: btnEducationEdit? = null

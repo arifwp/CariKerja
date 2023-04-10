@@ -6,7 +6,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="splash_screen">Splash Screen</string>
     <string name="title_login">Selamat Datang!</string>
-    <string name="subtitle_login">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</string>
+    <string name="subtitle_login">Masuk dengan email dan password untuk mengakses akun anda</string>
     <string name="email">Email</string>
     <string name="example_email">contoh@gmail.com</string>
     <string name="login">Login</string>
@@ -183,6 +183,19 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="closed">Closed</string>
     <string name="job_closed">Lowongan pekerjaan ini sudah ditutup</string>
+    <string name="resizable_text_read_more">Lebih banyak</string>
+    <string name="resizable_text_read_less">Lebih sedikit</string>
+    <string name="lorem_ipsum_long">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="more_read">Lebih banyak</string>
+    <string name="less_read">Lebih sedikit</string>
+    <string name="see_url">Lihat URL</string>
+    <string name="subtitle_choose_role">Sesuaikan kebutuhan anda dan mulai mencari atau mempublish lowongan kerja</string>
+    <string name="title_choose_role">Pilih Role Anda</string>
+    <string name="subtitle_register">Cari atau publish lowongan pekerjaan dengan mendaftarkan akun</string>
+    <string name="update_password">Ubah Kata Sandi</string>
+    <string name="old_password">Kata sandi sebelumnya</string>
+    <string name="new_password">Kata sandi baru</string>
+    <string name="confirm_new_password">Konfirmasi kata sandi baru</string>
 
     <string-array name="employee_type">
         <item>Magang</item>

@@ -96,6 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_settings"
+                    android:foreground="?android:attr/actionBarItemBackground"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     app:tint="@color/white" />

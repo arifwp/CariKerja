@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/primary_500">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -24,7 +26,7 @@
                 android:id="@+id/toolbar_homepage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/primary_500"
                 android:minHeight="?attr/actionBarSize">
 
                 <RelativeLayout
@@ -33,10 +35,11 @@
 
                     <ImageView
                         android:id="@+id/ic_back"
-                        android:layout_width="@dimen/dimen_50"
-                        android:layout_height="@dimen/dimen_30"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_20"
                         android:src="@drawable/ic_back_button"
                         android:foreground="?android:attr/actionBarItemBackground"
+                        app:tint="@color/white"
                         android:layout_centerVertical="true"
                         android:layout_alignParentStart="true"/>
 
@@ -46,29 +49,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/project"
                         android:fontFamily="@font/poppins_semi_bold"
-                        android:textColor="@color/primary_text"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         android:includeFontPadding="false"
                         android:layout_toEndOf="@+id/ic_back"
                         android:layout_marginStart="@dimen/dimen_10"
                         android:layout_centerVertical="true" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_submit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semi_bold"
-                        android:text="@string/save"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:cornerRadius="@dimen/dimen_10"
-                        android:padding="@dimen/dimen_0"
-                        android:includeFontPadding="false"
-                        android:stateListAnimator="@null"
-                        android:layout_marginTop="@dimen/dimen_24"
-                        android:layout_marginHorizontal="@dimen/dimen_24"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"/>
 
                 </RelativeLayout>
 
@@ -77,201 +63,227 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/wrap_bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            android:layout_marginTop="@dimen/dimen_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:text="@string/project_name"
-                android:textColor="@color/primary_text" />
-
-            <EditText
-                android:id="@+id/ed_project_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_54"
-                android:layout_weight="0.98"
-                android:fontFamily="@font/poppins_regular"
-                android:includeFontPadding="false"
-                android:textSize="14sp"
-                android:hint="@string/example_project_name"
-                android:textColor="@color/primary_text"
-                android:drawableStart="@drawable/ic_turned_in"
-                android:drawableTint="@color/primary_500"
-                android:inputType="text"
-                android:drawablePadding="@dimen/dimen_6"
-                android:paddingVertical="@dimen/dimen_10"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:background="@drawable/bg_ed" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            android:layout_marginTop="@dimen/dimen_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:text="@string/choose_role"
-                android:textColor="@color/primary_text" />
-
-            <EditText
-                android:id="@+id/ed_role"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_54"
-                android:layout_weight="0.98"
-                android:fontFamily="@font/poppins_regular"
-                android:includeFontPadding="false"
-                android:textSize="14sp"
-                android:hint="@string/example_role"
-                android:textColor="@color/primary_text"
-                android:drawableStart="@drawable/ic_assignment_ind"
-                android:drawableTint="@color/primary_500"
-                android:inputType="text"
-                android:drawablePadding="@dimen/dimen_6"
-                android:paddingVertical="@dimen/dimen_10"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:background="@drawable/bg_ed" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            android:layout_marginTop="@dimen/dimen_24"
-            android:orientation="horizontal">
+            android:background="@drawable/bg_bottom"
+            android:backgroundTint="@color/light_gray">
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                tools:layout_editor_absoluteX="35dp">
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="@dimen/dimen_24">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semi_bold"
-                    android:text="@string/date_start"
+                    android:text="@string/project_name"
                     android:textColor="@color/primary_text" />
 
                 <EditText
-                    android:id="@+id/ed_date_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_54"
-                    android:background="@drawable/bg_ed"
-                    android:drawableStart="@drawable/ic_date"
-                    android:drawablePadding="@dimen/dimen_6"
-                    android:drawableTint="@color/primary_500"
-                    android:focusable="false"
-                    android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/example_date"
-                    android:includeFontPadding="false"
-                    android:inputType="date"
-                    android:paddingHorizontal="@dimen/dimen_10"
-                    android:paddingVertical="@dimen/dimen_10"
-                    android:textColor="@color/primary_text"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/dimen_24">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semi_bold"
-                    android:text="@string/date_end"
-                    android:textColor="@color/primary_text" />
-
-                <EditText
-                    android:id="@+id/ed_date_end"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/ed_project_name"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_54"
                     android:layout_weight="0.98"
-                    android:background="@drawable/bg_ed"
-                    android:drawableStart="@drawable/ic_date"
-                    android:drawablePadding="@dimen/dimen_6"
-                    android:drawableTint="@color/primary_500"
-                    android:focusable="false"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/example_date"
                     android:includeFontPadding="false"
-                    android:inputType="date"
-                    android:paddingHorizontal="@dimen/dimen_10"
-                    android:paddingVertical="@dimen/dimen_10"
+                    android:textSize="14sp"
+                    android:hint="@string/example_project_name"
                     android:textColor="@color/primary_text"
-                    android:textSize="14sp" />
+                    android:drawableStart="@drawable/ic_turned_in"
+                    android:drawableTint="@color/primary_500"
+                    android:inputType="text"
+                    android:drawablePadding="@dimen/dimen_6"
+                    android:paddingVertical="@dimen/dimen_10"
+                    android:paddingHorizontal="@dimen/dimen_10"
+                    android:background="@drawable/bg_ed" />
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            android:layout_marginTop="@dimen/dimen_24"
-            android:layout_marginBottom="@dimen/dimen_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:text="@string/description"
-                android:textColor="@color/primary_text" />
-
-            <EditText
-                android:id="@+id/ed_job_description"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_32"
-                android:fontFamily="@font/poppins_regular"
-                android:includeFontPadding="false"
-                android:textSize="14sp"
-                android:gravity="top|start"
-                android:hint="@string/lorem_ipsum"
-                android:maxLength="200"
-                android:textColor="@color/primary_text"
-                android:drawableStart="@drawable/ic_description"
-                android:drawableTint="@color/primary_500"
-                android:inputType="textMultiLine"
-                android:drawablePadding="@dimen/dimen_10"
-                android:paddingVertical="@dimen/dimen_10"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:background="@drawable/bg_ed" />
+                android:orientation="vertical"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="@dimen/dimen_24">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:text="@string/choose_role"
+                    android:textColor="@color/primary_text" />
+
+                <EditText
+                    android:id="@+id/ed_role"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_54"
+                    android:layout_weight="0.98"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:textSize="14sp"
+                    android:hint="@string/example_role"
+                    android:textColor="@color/primary_text"
+                    android:drawableStart="@drawable/ic_assignment_ind"
+                    android:drawableTint="@color/primary_500"
+                    android:inputType="text"
+                    android:drawablePadding="@dimen/dimen_6"
+                    android:paddingVertical="@dimen/dimen_10"
+                    android:paddingHorizontal="@dimen/dimen_10"
+                    android:background="@drawable/bg_ed" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:layout_editor_absoluteX="35dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="@string/date_start"
+                        android:textColor="@color/primary_text" />
+
+                    <EditText
+                        android:id="@+id/ed_date_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_54"
+                        android:background="@drawable/bg_ed"
+                        android:drawableStart="@drawable/ic_date"
+                        android:drawablePadding="@dimen/dimen_6"
+                        android:drawableTint="@color/primary_500"
+                        android:focusable="false"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="@string/example_date"
+                        android:includeFontPadding="false"
+                        android:inputType="date"
+                        android:paddingHorizontal="@dimen/dimen_10"
+                        android:paddingVertical="@dimen/dimen_10"
+                        android:textColor="@color/primary_text"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/dimen_24">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="@string/date_end"
+                        android:textColor="@color/primary_text" />
+
+                    <EditText
+                        android:id="@+id/ed_date_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_54"
+                        android:layout_weight="0.98"
+                        android:background="@drawable/bg_ed"
+                        android:drawableStart="@drawable/ic_date"
+                        android:drawablePadding="@dimen/dimen_6"
+                        android:drawableTint="@color/primary_500"
+                        android:focusable="false"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="@string/example_date"
+                        android:includeFontPadding="false"
+                        android:inputType="date"
+                        android:paddingHorizontal="@dimen/dimen_10"
+                        android:paddingVertical="@dimen/dimen_10"
+                        android:textColor="@color/primary_text"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:layout_marginBottom="@dimen/dimen_24">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:text="@string/description"
+                    android:textColor="@color/primary_text" />
+
+                <EditText
+                    android:id="@+id/ed_job_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_32"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:textSize="14sp"
+                    android:gravity="top|start"
+                    android:hint="@string/lorem_ipsum"
+                    android:maxLength="200"
+                    android:textColor="@color/primary_text"
+                    android:drawableStart="@drawable/ic_description"
+                    android:drawableTint="@color/primary_500"
+                    android:inputType="textMultiLine"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:paddingVertical="@dimen/dimen_10"
+                    android:paddingHorizontal="@dimen/dimen_10"
+                    android:background="@drawable/bg_ed" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_54"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="@string/login"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:cornerRadius="@dimen/dimen_10"
+                android:stateListAnimator="@null"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginBottom="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/delete_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_this_data"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/red_400"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginBottom="@dimen/dimen_24" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/delete_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_this_data"
-            android:fontFamily="@font/poppins_semi_bold"
-            android:textColor="@color/red_400"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:visibility="gone"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginBottom="@dimen/dimen_24" />
 
     </LinearLayout>
 </ScrollView>

@@ -107,6 +107,10 @@ dependencies {
     // kill the app
     implementation 'com.jakewharton:process-phoenix:2.1.2'
 
+    // read more library
+    implementation 'io.github.glailton.expandabletextview:expandabletextview:1.0.3'
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
+
 
 
 

@@ -99,7 +99,7 @@ class WorkExperienceFragment : Fragment(), btnWorkExpClickClickListener {
 
     private fun initiateRv(){
         val recyclerViewWorkExp: RecyclerView = requireView().findViewById(R.id.rv_work_experience)
-        workExperienceAdapter = WorkExperienceAdapter(ArrayList())
+        workExperienceAdapter = WorkExperienceAdapter("WorkExperienceFragment", ArrayList())
         workExperienceAdapter.listenerWorkExp = this
         recyclerViewWorkExp.apply {
             setHasFixedSize(true)

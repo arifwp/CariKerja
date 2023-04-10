@@ -89,6 +89,7 @@ class CertificateViewModel @Inject constructor(
                             database.reference.child("Users").child(uid).child("certificate").child(id).updateChildren(childUpdates).addOnSuccessListener {
                                 _editCertificateResponse.postValue(BaseResponse.Success("Berhasil memperbarui data"))
                             }.addOnFailureListener {
+                                Log.d(TAG, "image != null: ${it.message.toString()}")
                                 _editCertificateResponse.postValue(BaseResponse.Error(it.message.toString()))
                             }
                         }
@@ -101,16 +102,18 @@ class CertificateViewModel @Inject constructor(
                         "expiration_date" to expiration_date,
                         "credential_id" to credential_id,
                         "credential_url" to credential_url,
-                        "image" to "null"
+                        "image" to imageUrl
                     )
                     database.reference.child("Users").child(uid).child("certificate").child(id).updateChildren(childUpdates).addOnSuccessListener {
                         _editCertificateResponse.postValue(BaseResponse.Success("Berhhasil mengubah data"))
                     }.addOnFailureListener {
+                        Log.d(TAG, "else: ${it.message.toString()}")
                         _editCertificateResponse.postValue(BaseResponse.Error(it.message.toString()))
                     }
                 }
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
+                Log.d(TAG, "error_catch: ${error[1]}")
                 _editCertificateResponse.postValue(BaseResponse.Error(error[1]))
             }
         }

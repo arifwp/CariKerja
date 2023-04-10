@@ -68,20 +68,9 @@
                             android:foreground="?android:attr/actionBarItemBackground"
                             app:tint="@color/yellow_700"
                             android:visibility="gone"
-                            app:layout_constraintEnd_toStartOf="@id/ic_share"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/ic_share"
-                            android:layout_width="@dimen/dimen_40"
-                            android:layout_height="@dimen/dimen_20"
-                            android:src="@drawable/ic_share"
-                            android:foreground="?android:attr/actionBarItemBackground"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:tint="@color/primary_500" />
+                            app:layout_constraintBottom_toBottomOf="parent" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

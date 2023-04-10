@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/primary_500"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -19,7 +20,7 @@
             android:id="@+id/toolbar_homepage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/primary_500"
             android:minHeight="?attr/actionBarSize">
 
             <RelativeLayout
@@ -28,10 +29,11 @@
 
                 <ImageView
                     android:id="@+id/ic_back"
-                    android:layout_width="@dimen/dimen_50"
-                    android:layout_height="@dimen/dimen_30"
+                    android:layout_width="@dimen/dimen_40"
+                    android:layout_height="@dimen/dimen_20"
                     android:src="@drawable/ic_back_button"
                     android:foreground="?android:attr/actionBarItemBackground"
+                    app:tint="@color/white"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"/>
 
@@ -41,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/project"
                     android:fontFamily="@font/poppins_semi_bold"
-                    android:textColor="@color/primary_text"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:includeFontPadding="false"
                     android:layout_toEndOf="@+id/ic_back"
@@ -50,19 +52,20 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_submit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_80"
+                    android:layout_height="@dimen/dimen_32"
                     android:fontFamily="@font/poppins_semi_bold"
                     android:text="@string/add"
+                    android:textColor="@color/primary_500"
+                    android:textSize="12sp"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    app:cornerRadius="@dimen/dimen_10"
+                    app:cornerRadius="@dimen/dimen_30"
                     android:padding="@dimen/dimen_0"
+                    android:backgroundTint="@color/white"
                     android:includeFontPadding="false"
                     android:stateListAnimator="@null"
-                    android:layout_marginTop="@dimen/dimen_24"
                     android:layout_marginHorizontal="@dimen/dimen_24"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"/>
 
             </RelativeLayout>
@@ -71,12 +74,23 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_project"
+    <LinearLayout
+        android:id="@+id/wrap_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/layout_project"
-        android:layout_marginHorizontal="@dimen/dimen_24"
-        android:layout_marginTop="@dimen/dimen_24" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_bottom"
+        android:orientation="vertical"
+        android:backgroundTint="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_project"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/layout_project"
+            android:layout_marginHorizontal="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_24" />
+
+    </LinearLayout>
 
 </LinearLayout>

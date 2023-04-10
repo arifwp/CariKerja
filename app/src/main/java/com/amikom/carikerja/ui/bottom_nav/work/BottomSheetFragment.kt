@@ -1,5 +1,7 @@
 package com.amikom.carikerja.ui.bottom_nav.work
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
-import com.amikom.carikerja.adapter.EducationAdapter
-import com.amikom.carikerja.adapter.SkillBottomSheetAdapter
-import com.amikom.carikerja.adapter.WorkExperienceAdapter
+import com.amikom.carikerja.adapter.*
 import com.amikom.carikerja.databinding.BottomSheetApplicantBinding
 import com.amikom.carikerja.models.*
 import com.amikom.carikerja.ui.bottom_nav.history_work.HistoryJobViewModel
@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.notification.view.*
 
 @AndroidEntryPoint
-class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter_name: String?, job_title: String?) : BottomSheetDialogFragment() {
+class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter_name: String?, job_title: String?) : BottomSheetDialogFragment(), btnClickClickListener {
 
     private var uidWorker = uid_worker
     private var recruiterUid = recruiter_uid
@@ -49,6 +49,8 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
     private lateinit var skillBottomSheetAdapter: SkillBottomSheetAdapter
     private lateinit var workExperienceAdapter: WorkExperienceAdapter
     private lateinit var educationAdapter: EducationAdapter
+    private lateinit var projectAdapter: ProjectAdapter
+    private lateinit var certificateAdapter: CertificateAdapter
     private var applicant: Applicant? = null
     private var historyJob: HistoryJob? = null
     private var uid: String? = null
@@ -95,17 +97,19 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
         initiateRvSkill()
         initiateRvWorkExp()
         initiateRvEducation()
+        initiateRvProject()
+        initiateRvCertificate()
 
         when{
             uidWorker.isNullOrEmpty() -> {
                 profileViewModel.getProfile(uid.toString())
                 workExperienceViewModel.getWorkExp(uid.toString())
                 certificateViewModel.getCertificate(uid.toString())
-                projectViewModel.getProject(uid.toString())
                 educationViewModel.getEducation(uid.toString())
                 profileViewModel.getUserSkills(uid.toString())
                 jobViewModel.getUserIdJob(uid.toString())
                 profileViewModel.getRegistrationId(uid.toString())
+                projectViewModel.getProject(uid.toString())
                 binding.wrapBtnSubmit.visibility = View.VISIBLE
                 binding.wrapChooseApplicant.visibility = View.GONE
                 listenerBtnSubmit()
@@ -165,13 +169,6 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
                 }
             }
 
-//            val n = jobByRecruiter?.size ?: error(it.message.toString())
-//
-//            if (n > 0){
-//                jobViewModel.chooseApplicant(id_jobBtm, id_applicant, judulKerja, namaRecruiter)
-//            } else {
-//                textMessage("Tidak ada pelamar yang melamar pekerjaan ini")
-//            }
         }
     }
 
@@ -273,6 +270,7 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
                 is BaseResponse.Loading -> {}
                 is BaseResponse.Success -> {
                     certificateApplicant = it.data
+                    certificateAdapter.setCertificateData(it.data)
                     applicant = Applicant(
                         id_job = id_jobBtm,
                         uid = uidApplicant,
@@ -302,6 +300,7 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
                 is BaseResponse.Loading -> {}
                 is BaseResponse.Success -> {
                     projectApplicant = it.data
+                    projectAdapter.setProjectData(it.data)
                     applicant = Applicant(
                         id_job = id_jobBtm,
                         uid = uidApplicant,
@@ -551,7 +550,7 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
 
     private fun initiateRvWorkExp(){
         val recyclerViewWorkExp: RecyclerView = requireView().findViewById(R.id.rv_work_exp)
-        workExperienceAdapter = WorkExperienceAdapter(ArrayList())
+        workExperienceAdapter = WorkExperienceAdapter("BottomSheetFragment", ArrayList())
         recyclerViewWorkExp.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -561,7 +560,7 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
 
     private fun initiateRvEducation() {
         val recyclerViewEducation: RecyclerView = requireView().findViewById(R.id.rv_education_bottom_sheet)
-        educationAdapter = EducationAdapter(ArrayList())
+        educationAdapter = EducationAdapter("BottomSheetFragment", ArrayList())
         recyclerViewEducation.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -569,9 +568,46 @@ class BottomSheetFragment(uid_worker: String?, recruiter_uid: String?, recruiter
         }
     }
 
+    private fun initiateRvProject() {
+        val recyclerViewEducation: RecyclerView = requireView().findViewById(R.id.rv_project_bottom_sheet)
+        projectAdapter = ProjectAdapter("BottomSheetFragment", ArrayList())
+        recyclerViewEducation.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = projectAdapter
+        }
+    }
+
+    private fun initiateRvCertificate() {
+        val recyclerViewEducation: RecyclerView = requireView().findViewById(R.id.rv_certificate_bottom_sheet)
+        certificateAdapter = CertificateAdapter("BottomSheetFragment", ArrayList())
+        certificateAdapter.listener = this
+        recyclerViewEducation.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = certificateAdapter
+        }
+    }
+
 
     private fun textMessage(message: String) {
         Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun btnOnClick(data: CertificateDetailString) {
+        //
+    }
+
+    override fun btnSeeUrl(url: String) {
+        if (!url.startsWith("http://") && !url.startsWith("https://")){
+            val data = "http://" + url;
+            val uri: Uri = Uri.parse(data) // missing 'http://' will cause crashed
+
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        } else {
+            textMessage("Tidak bisa membuka link url")
+        }
     }
 
 }

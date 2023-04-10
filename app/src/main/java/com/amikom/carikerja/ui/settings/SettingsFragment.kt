@@ -1,4 +1,4 @@
-package com.amikom.carikerja.ui
+package com.amikom.carikerja.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,12 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.amikom.carikerja.R
 import com.amikom.carikerja.databinding.FragmentSettingsBinding
 import com.amikom.carikerja.models.BaseResponse
+import com.amikom.carikerja.ui.MainActivity
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.AuthenticationViewModel
 import com.amikom.carikerja.viewmodels.ProfileViewModel
-import com.jakewharton.processphoenix.ProcessPhoenix
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.system.exitProcess
 
 
 @AndroidEntryPoint
@@ -41,9 +40,23 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val btnBack = binding.icBack
+        btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         val logout = binding.wrapLogout
         logout.setOnClickListener {
             doLogout()
+        }
+
+        listener()
+    }
+
+    private fun listener() {
+        val btnChangePassword = binding.wrapChangePassword
+        btnChangePassword.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToUpdatePasswordFragment())
         }
     }
 

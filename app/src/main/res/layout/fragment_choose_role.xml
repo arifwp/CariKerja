@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_register"
+            android:text="@string/title_choose_role"
             android:fontFamily="@font/poppins_semi_bold"
             android:textColor="@color/primary_text"
             android:textSize="20sp"
@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/subtitle_login"
+            android:text="@string/subtitle_choose_role"
             android:fontFamily="@font/poppins_regular"
             android:textColor="@color/secondary_text"
             android:textAlignment="center"

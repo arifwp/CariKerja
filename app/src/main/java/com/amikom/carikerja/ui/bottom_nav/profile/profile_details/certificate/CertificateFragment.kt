@@ -1,24 +1,26 @@
 package com.amikom.carikerja.ui.bottom_nav.profile.profile_details.certificate
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.adapter.CertificateAdapter
-import com.amikom.carikerja.adapter.EducationAdapter
 import com.amikom.carikerja.adapter.btnClickClickListener
 import com.amikom.carikerja.databinding.FragmentCertificateBinding
 import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.models.CertificateDetailString
 import com.amikom.carikerja.utils.SharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class CertificateFragment : Fragment(), btnClickClickListener {
@@ -86,6 +88,18 @@ class CertificateFragment : Fragment(), btnClickClickListener {
                 ))
     }
 
+    override fun btnSeeUrl(url: String) {
+        if (!url.startsWith("http://") && !url.startsWith("https://")){
+            val data = "http://" + url;
+            val uri: Uri = Uri.parse(data) // missing 'http://' will cause crashed
+
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        } else {
+            textMessage("Tidak bisa membuka link url")
+        }
+    }
+
     private fun observe() {
         certificateViewModel.getCertificateResponse.observe(viewLifecycleOwner){
             when(it){
@@ -100,7 +114,7 @@ class CertificateFragment : Fragment(), btnClickClickListener {
 
     private fun initiateRv() {
         val recyclerViewCertificate: RecyclerView = requireView().findViewById(R.id.rv_certificate)
-        certificateAdapter = CertificateAdapter(ArrayList())
+        certificateAdapter = CertificateAdapter("CertificateFragment", ArrayList())
         certificateAdapter.listener = this
         recyclerViewCertificate.apply {
             setHasFixedSize(true)

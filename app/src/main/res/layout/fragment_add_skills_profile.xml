@@ -80,10 +80,11 @@
                     android:id="@+id/rv_add_skill"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:itemCount="1"
+                    tools:itemCount="10"
                     tools:listitem="@layout/layout_skills"
                     android:layout_marginTop="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_24" />
+                    android:layout_marginHorizontal="@dimen/dimen_24"
+                    android:layout_marginBottom="@dimen/dimen_24"/>
 
 
             </LinearLayout>

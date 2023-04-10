@@ -2,157 +2,175 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dimen_24"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/dimen_12">
 
-    <ImageView
-        android:id="@+id/btn_edit"
-        android:layout_width="@dimen/dimen_30"
-        android:layout_height="@dimen/dimen_30"
-        android:src="@drawable/ic_edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/img_job_location"
-        android:layout_width="@dimen/dimen_50"
-        android:layout_height="@dimen/dimen_50"
-        android:src="@drawable/ic_building"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/wrap_job_info"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/dimen_12"
-        app:layout_constraintTop_toTopOf="@id/img_job_location"
-        app:layout_constraintStart_toEndOf="@id/img_job_location">
+        android:elevation="@dimen/dimen_10"
+        app:cardCornerRadius="@dimen/dimen_10"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/job_title_we"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/example_job_title"
-            android:textSize="16sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/primary_text"
-            android:includeFontPadding="false" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/company_we"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/example_company"
-                android:fontFamily="@font/poppins_regular"
-                android:includeFontPadding="false"
-                android:textColor="@color/primary_text"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="\u2022"
-                android:fontFamily="@font/poppins_regular"
-                android:includeFontPadding="false"
-                android:textColor="@color/primary_text"
-                android:layout_marginStart="@dimen/dimen_6" />
-
-            <TextView
-                android:id="@+id/employee_type_we"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/example_employee_type"
-                android:fontFamily="@font/poppins_regular"
-                android:includeFontPadding="false"
-                android:textColor="@color/primary_text"
-                android:layout_marginStart="@dimen/dimen_6" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/date_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/example_date_start"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="12sp"
-                android:includeFontPadding="false"
-                android:textColor="@color/secondary_text" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:fontFamily="@font/poppins_regular"
-                android:includeFontPadding="false"
-                android:textColor="@color/secondary_text"
-                android:layout_marginStart="@dimen/dimen_6"/>
-
-            <TextView
-                android:id="@+id/date_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/example_date_start"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="12sp"
-                android:includeFontPadding="false"
-                android:textColor="@color/secondary_text"
-                android:layout_marginStart="@dimen/dimen_6"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/job_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/example_job_address"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:includeFontPadding="false"
-            android:textColor="@color/secondary_text"
-            android:layout_marginTop="@dimen/dimen_4" />
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="@dimen/dimen_12">
+
+            <ImageView
+                android:id="@+id/btn_edit"
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:src="@drawable/ic_edit"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/dimen_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/job_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/lorem_ipsum"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="12sp"
-                android:includeFontPadding="false"
-                android:textColor="@color/secondary_text"
-                android:maxLines="3"/>
-            
-            <Button
-                android:id="@+id/btn_read_more"
+                android:id="@+id/job_title_we"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/show_more"
-                android:textAllCaps="false"
+                android:text="@string/example_job_title"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/primary_text"
+                android:includeFontPadding="false"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0"
+                android:layout_marginEnd="@dimen/dimen_6"
+                android:layout_marginTop="@dimen/dimen_12"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit"/>
+
+            <LinearLayout
+                android:id="@+id/wrap_status_employee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/job_title_we"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/company_we"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_company"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/primary_text"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u2022"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+                <TextView
+                    android:id="@+id/employee_type_we"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_employee_type"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginStart="@dimen/dimen_6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrap_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintTop_toBottomOf="@id/wrap_status_employee"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/date_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_date_start"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400"
+                    android:layout_marginStart="@dimen/dimen_6"/>
+
+                <TextView
+                    android:id="@+id/date_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_date_start"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400"
+                    android:layout_marginStart="@dimen/dimen_6"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/job_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/example_job_address"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="12sp"
                 android:includeFontPadding="false"
-                android:textColor="@android:color/darker_gray"
-                android:background="@android:color/transparent"/>
+                android:textColor="@color/grey_400"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintTop_toBottomOf="@id/wrap_date"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-        </LinearLayout>
+            <io.github.glailton.expandabletextview.ExpandableTextView
+                android:id="@+id/job_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/lorem_ipsum"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="12sp"
+                android:justificationMode="inter_word"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:readMoreText="@string/more_read"
+                app:readLessText="@string/less_read"
+                app:collapsedLines="3"
+                app:animDuration="500"
+                app:textMode="length"
+                app:isExpanded="false"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0.0"
+                android:includeFontPadding="false"
+                android:textColor="@color/grey_400"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dimen_24"
+                android:layout_marginTop="@dimen/dimen_8"
+                android:layout_marginBottom="@dimen/dimen_12"
+                app:layout_constraintTop_toBottomOf="@id/job_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

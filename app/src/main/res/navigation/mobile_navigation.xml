@@ -238,7 +238,7 @@
 
     <fragment
         android:id="@+id/settings_fragment"
-        android:name="com.amikom.carikerja.ui.SettingsFragment"
+        android:name="com.amikom.carikerja.ui.settings.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -246,6 +246,9 @@
             app:destination="@id/login_fragment"
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_settings_fragment_to_update_password_fragment"
+            app:destination="@id/update_password_fragment" />
     </fragment>
 
     <fragment
@@ -647,6 +650,12 @@
             app:argType="string"
             app:nullable="true"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/update_password_fragment"
+        android:name="com.amikom.carikerja.ui.settings.UpdatePasswordFragment"
+        android:label="@string/update_password"
+        tools:layout="@layout/fragment_update_password" />
 
 
 
