@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +7,15 @@
     tools:context=".ui.bottom_nav.work.DetailJobFragment">
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@+id/wrap_btn_apply"
+        android:layout_marginBottom="@dimen/dimen_12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -495,7 +502,7 @@
                     android:id="@+id/tv_job_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="@string/lorem_ipsum"
+                    tools:text="@string/lorem_ipsum_long"
                     android:inputType="textMultiLine"
                     android:fontFamily="@font/poppins_regular"
                     android:includeFontPadding="false"
@@ -513,6 +520,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -528,7 +536,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/white"
-            android:visibility="gone"
+            android:visibility="visible"
             android:padding="@dimen/dimen_24">
 
             <TextView
@@ -583,4 +591,4 @@
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

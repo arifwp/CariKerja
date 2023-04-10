@@ -65,23 +65,23 @@ class BiodataFragment : Fragment() {
         val btnUploadImage = binding.userImage
         btnUploadImage?.setOnClickListener {
 
-            val dialog = BottomSheetDialog(requireContext())
-
-            val bottomSheet = layoutInflater.inflate(R.layout.bottom_sheet_media, null)
-            val btnGallery = bottomSheet.findViewById<LinearLayout>(R.id.wrap_gallery)
-
-            btnGallery.setOnClickListener{
-                dialog.dismiss()
+//            val dialog = BottomSheetDialog(requireContext())
+//
+//            val bottomSheet = layoutInflater.inflate(R.layout.bottom_sheet_media, null)
+//            val btnGallery = bottomSheet.findViewById<LinearLayout>(R.id.wrap_gallery)
+//
+//            btnGallery.setOnClickListener{
+//                dialog.dismiss()
                 val intent = Intent()
                 intent.action = Intent.ACTION_GET_CONTENT
                 intent.type = "image/*"
                 startActivityForResult(intent, 1)
-            }
-
-            dialog.setCancelable(true)
-            dialog.setContentView(bottomSheet)
-
-            dialog.show()
+//            }
+//
+//            dialog.setCancelable(true)
+//            dialog.setContentView(bottomSheet)
+//
+//            dialog.show()
         }
 
         val btnSubmit = binding.btnSubmit
