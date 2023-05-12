@@ -211,7 +211,9 @@
             app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_choose_role_fragment_to_choose_skills_fragment"
-            app:destination="@id/choose_skills_fragment" />
+            app:destination="@id/choose_skills_fragment"
+            app:popUpTo="@id/choose_role_fragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

@@ -87,11 +87,11 @@ class DetailJobFragment : Fragment() {
         when{
             userRole == "worker" -> {
                 jobViewModel.getUserIdJob(uid.toString())
-
                 when {
                     args.jobStatus == "closed" -> {
-                        binding.wrapJobClosed.visibility = View.VISIBLE
                         binding.wrapBtnSubmit.visibility = View.GONE
+                        binding.wrapTextApplied.visibility = View.GONE
+                        binding.wrapJobClosed.visibility = View.VISIBLE
                     }
                     args.jobStatus == "open" -> {
                         binding.wrapJobClosed.visibility = View.GONE
@@ -121,16 +121,37 @@ class DetailJobFragment : Fragment() {
                     is BaseResponse.Success -> {
                         when{
                             it.data.isNullOrEmpty() -> {
-                                binding.wrapBtnSubmit.visibility = View.VISIBLE
-                                binding.wrapTextApplied.visibility = View.GONE
+                                when(args.jobStatus){
+                                    "closed" -> {
+                                        binding.wrapBtnSubmit.visibility = View.GONE
+                                    }
+                                    else -> {
+                                        binding.wrapBtnSubmit.visibility = View.VISIBLE
+                                        binding.wrapTextApplied.visibility = View.GONE
+                                    }
+                                }
                             }
                             it.data.contains(id_job.id_job) -> {
-                                binding.wrapBtnSubmit.visibility = View.GONE
-                                binding.wrapTextApplied.visibility = View.VISIBLE
+                                when(args.jobStatus){
+                                    "closed" -> {
+                                        binding.wrapBtnSubmit.visibility = View.GONE
+                                    }
+                                    else -> {
+                                        binding.wrapBtnSubmit.visibility = View.GONE
+                                        binding.wrapTextApplied.visibility = View.VISIBLE
+                                    }
+                                }
                             }
                             else -> {
-                                binding.wrapBtnSubmit.visibility = View.VISIBLE
-                                binding.wrapTextApplied.visibility = View.GONE
+                                when(args.jobStatus){
+                                    "closed" -> {
+                                        binding.wrapBtnSubmit.visibility = View.GONE
+                                    }
+                                    else -> {
+                                        binding.wrapBtnSubmit.visibility = View.VISIBLE
+                                        binding.wrapTextApplied.visibility = View.GONE
+                                    }
+                                }
                             }
                         }
                     }

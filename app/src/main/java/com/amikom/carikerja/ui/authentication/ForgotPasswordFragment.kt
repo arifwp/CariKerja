@@ -1,6 +1,7 @@
 package com.amikom.carikerja.ui.authentication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,14 +37,25 @@ class ForgotPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val email = binding.edEmail.text.toString().trim()
-
 
         val btnSubmit = binding.btnSubmit
         btnSubmit.setOnClickListener {
-            if (email.isEmpty()){
+
+            validateData()
+
+        }
+
+    }
+
+    private fun validateData() {
+        val email = binding.edEmail.text.toString()
+        Log.d(TAG, "onViewCreated: $email")
+
+        when {
+            email.isNullOrEmpty() -> {
                 binding.edEmail.error = "Masukkan Email"
-            } else {
+            }
+            else -> {
                 authenticationViewModel.forgotPassword(email)
                 authenticationViewModel.forgotPasswordResponse.observe(viewLifecycleOwner){
                     it.getContentIfNotHandled().let {
@@ -61,6 +73,7 @@ class ForgotPasswordFragment : Fragment() {
             }
         }
     }
+
 
     fun goToLoginPage(){
         if (findNavController().currentDestination?.id == R.id.forgot_password_fragment){

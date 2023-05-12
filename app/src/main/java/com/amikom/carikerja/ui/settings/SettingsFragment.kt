@@ -83,6 +83,9 @@ class SettingsFragment : Fragment() {
 
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.putExtra("USER_LOGOUT", "1")
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
 //        ProcessPhoenix.triggerRebirth(context, intent)
     }

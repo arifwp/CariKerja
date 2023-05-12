@@ -536,7 +536,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/white"
-            android:visibility="visible"
+            android:visibility="gone"
             android:padding="@dimen/dimen_24">
 
             <TextView
