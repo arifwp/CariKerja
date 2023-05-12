@@ -56,13 +56,14 @@ class ChooseListSkillsFragment : Fragment(), chooseSkillsListener {
     private fun observe() {
 
         profileViewModel.getSkillResponse.observe(viewLifecycleOwner){
-            when(it){
-                is BaseResponse.Loading -> {}
-                is BaseResponse.Success -> {
-                    skillsAdapter.setDataSkills(it.data)
+            it.getContentIfNotHandled()?.let {
+                when(it){
+                    is BaseResponse.Loading -> {}
+                    is BaseResponse.Success -> {
+                        skillsAdapter.setDataSkills(it.data)
+                    }
+                    is BaseResponse.Error -> textMessage(it.msg.toString())
                 }
-                is BaseResponse.Error -> textMessage(it.msg.toString())
-                else -> {}
             }
         }
 
@@ -106,7 +107,6 @@ class ChooseListSkillsFragment : Fragment(), chooseSkillsListener {
                 is BaseResponse.Success -> {
                     textMessage("Berhasil masuk")
                     if (it.data.isNotEmpty()){
-                        Log.d(TAG, "checkHasRoleOrNot: ${it.data}")
                         val userRole = it.data
                         val navView = requireActivity().findViewById<BottomNavigationView>(com.amikom.carikerja.R.id.nav_view)
                         when{
@@ -129,7 +129,7 @@ class ChooseListSkillsFragment : Fragment(), chooseSkillsListener {
 
     private fun initiateRv(){
         val recyclerViewProject: RecyclerView = requireView().findViewById(R.id.rv_skills)
-        skillsAdapter = SkillsAdapter(ArrayList())
+        skillsAdapter = SkillsAdapter(requireContext(), ArrayList())
         skillsAdapter.listenerChooseSkills = this
         recyclerViewProject.apply {
             setHasFixedSize(true)

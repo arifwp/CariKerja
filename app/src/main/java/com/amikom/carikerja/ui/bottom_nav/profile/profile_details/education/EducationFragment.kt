@@ -69,7 +69,6 @@ class EducationFragment : Fragment(), btnEducationEdit {
     }
 
     override fun btnOnClickEducation(data: EducationDetails) {
-        Log.d(TAG, "btnOnClickEducation: ${data.id}")
         findNavController().navigate(EducationFragmentDirections.actionEducationFragmentToAddEducationFragment(
             data.id,
             data.institution,
@@ -97,7 +96,7 @@ class EducationFragment : Fragment(), btnEducationEdit {
 
     private fun initiateRv() {
         val recyclerViewEducation: RecyclerView = requireView().findViewById(R.id.rv_education)
-        educationAdapter = EducationAdapter(ArrayList())
+        educationAdapter = EducationAdapter("EducationFragment", ArrayList())
         educationAdapter.listenerEducationEdit = this
         recyclerViewEducation.apply {
             setHasFixedSize(true)

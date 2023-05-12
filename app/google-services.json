@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "188535027873",
+    "firebase_url": "https://carikerja-53ab8-default-rtdb.firebaseio.com",
     "project_id": "carikerja-53ab8",
     "storage_bucket": "carikerja-53ab8.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "188535027873-q9kjgv1k6e3018bbacfmgej34gvf5t78.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amikom.carikerja",
+            "certificate_hash": "15e169908c4d45ec0cb89676bdd24b77c9debb3e"
+          }
+        },
         {
           "client_id": "188535027873-l90pfp0gvbil7amen3j2n4ejh83p2jlo.apps.googleusercontent.com",
           "client_type": 3

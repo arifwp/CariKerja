@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/dimen_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -163,7 +164,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
-                android:id="@+id/wrap_contact_information"
+                android:id="@+id/wrap_bank_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_14"
@@ -172,6 +173,51 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:layout_marginTop="@dimen/dimen_24"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_user_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_bank_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bank_account"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_contact_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_12"
                 android:layout_marginHorizontal="@dimen/dimen_24"
                 app:layout_constraintTop_toBottomOf="@id/wrap_user_profile"
                 app:layout_constraintStart_toStartOf="parent"
@@ -403,6 +449,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/certification_and_license"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:textColor="@color/primary_text"
+                    android:includeFontPadding="false"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_icon_add"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20"
+                        android:layout_height="@dimen/dimen_20"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary_200" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wrap_skills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_14"
+                android:background="@drawable/bg_profile_desc"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@id/wrap_project"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skills"
                     android:fontFamily="@font/poppins_semi_bold"
                     android:textColor="@color/primary_text"
                     android:includeFontPadding="false"

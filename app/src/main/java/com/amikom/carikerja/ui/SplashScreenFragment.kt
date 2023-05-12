@@ -1,6 +1,5 @@
 package com.amikom.carikerja.ui
 
-import android.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,12 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.amikom.carikerja.R as CariKerjaR
 import com.amikom.carikerja.databinding.FragmentSplashScreenBinding
 import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.utils.SharedPreferences
+import com.amikom.carikerja.viewmodels.AuthenticationViewModel
 import com.amikom.carikerja.viewmodels.ProfileViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -29,8 +29,7 @@ class SplashScreenFragment : Fragment() {
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
     private val profileViewModel: ProfileViewModel by viewModels()
-//    private var hasRole: Boolean = false
-//    private var hasSkills: Boolean = false
+    private val authenticationViewModel: AuthenticationViewModel by viewModels()
     private val TAG = "SplashScreenFragment"
 
 
@@ -53,6 +52,7 @@ class SplashScreenFragment : Fragment() {
 
         lifecycleScope.launchWhenCreated {
             doCheck()
+
         }
 
     }
@@ -61,16 +61,31 @@ class SplashScreenFragment : Fragment() {
         val uid = SharedPreferences.getUid(requireContext())
 
         if (!uid.isNullOrEmpty()){
+            saveToken(uid.toString())
             validateUser(uid)
         } else if (uid.isNullOrEmpty()){
             goToLoginPage()
         }
     }
 
+    private fun saveToken(uid: String) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.e(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            val token = task.result
+            // Log and toas
+//            val msg = resources.getString(R.string.msg_token_fmt, token)
+
+            authenticationViewModel.saveNewToken(uid.toString(), token.toString())
+            Log.d(TAG, token)
+        })
+    }
+
     private suspend fun validateUser(uid: String){
-
         checkHasRoleOrNot(uid)
-
     }
 
     private suspend fun checkHasSkillsOrNot(uid: String){

@@ -34,10 +34,14 @@
             app:destination="@id/settings_fragment" />
         <action
             android:id="@+id/action_navigation_work_to_add_post_job_fragment"
-            app:destination="@id/add_post_job_fragment" />
+            app:destination="@id/add_post_job_fragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"/>
         <action
             android:id="@+id/action_navigation_work_to_detail_job_fragment"
-            app:destination="@id/detail_job_fragment" />
+            app:destination="@id/detail_job_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"/>
     </fragment>
 
     <fragment
@@ -48,6 +52,9 @@
         <action
             android:id="@+id/action_navigation_history_work_to_navigation_work"
             app:destination="@id/navigation_work" />
+        <action
+            android:id="@+id/action_navigation_history_work_to_detail_job_fragment"
+            app:destination="@id/detail_job_fragment" />
     </fragment>
 
     <fragment
@@ -58,6 +65,9 @@
         <action
             android:id="@+id/action_navigation_history_post_job_work_to_add_post_job_fragment"
             app:destination="@id/add_post_job_fragment" />
+        <action
+            android:id="@+id/action_navigation_history_post_job_work_to_detail_job_fragment"
+            app:destination="@id/detail_job_fragment" />
     </fragment>
 
     <fragment
@@ -89,6 +99,12 @@
         <action
             android:id="@+id/action_navigation_profile_to_certificate_fragment"
             app:destination="@id/certificate_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_bank_account_fragment"
+            app:destination="@id/bank_account_fragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_list_skill_profile_fragment"
+            app:destination="@id/list_skill_profile_fragment" />
     </fragment>
 
     <fragment
@@ -158,6 +174,8 @@
             app:destination="@id/login_fragment" />
     </fragment>
 
+
+
     <fragment
         android:id="@+id/biodata_fragment"
         android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.biodata.BiodataFragment"
@@ -193,7 +211,9 @@
             app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_choose_role_fragment_to_choose_skills_fragment"
-            app:destination="@id/choose_skills_fragment" />
+            app:destination="@id/choose_skills_fragment"
+            app:popUpTo="@id/choose_role_fragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -220,7 +240,7 @@
 
     <fragment
         android:id="@+id/settings_fragment"
-        android:name="com.amikom.carikerja.ui.SettingsFragment"
+        android:name="com.amikom.carikerja.ui.settings.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -228,6 +248,9 @@
             app:destination="@id/login_fragment"
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_settings_fragment_to_update_password_fragment"
+            app:destination="@id/update_password_fragment" />
     </fragment>
 
     <fragment
@@ -389,6 +412,41 @@
     </fragment>
 
     <fragment
+        android:id="@+id/bank_account_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.bank_account.BankAccountFragment"
+        android:label="@string/bank_account"
+        tools:layout="@layout/fragment_bank_account">
+        <argument
+            android:name="bank_name"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="bank_account"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="bank_account_name"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/list_skill_profile_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.skill.ListSkillProfileFragment"
+        android:label="@string/skills"
+        tools:layout="@layout/fragment_list_skill_profile" >
+        <action
+            android:id="@+id/action_list_skill_profile_fragment_to_add_list_skill_profile_fragment"
+            app:destination="@id/add_list_skill_profile_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_list_skill_profile_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.skill.AddSkillsProfileFragment"
+        android:label="@string/add_skills"
+        tools:layout="@layout/fragment_add_skills_profile" />
+
+    <fragment
         android:id="@+id/add_certificate_fragment"
         android:name="com.amikom.carikerja.ui.bottom_nav.profile.profile_details.certificate.AddCertificateFragment"
         android:label="@string/add_certificate"
@@ -443,7 +501,73 @@
         android:id="@+id/add_post_job_fragment"
         android:name="com.amikom.carikerja.ui.bottom_nav.work.post_job.AddPostJobFragment"
         android:label="@string/add_post_job"
-        tools:layout="@layout/fragment_add_post_job" />
+        tools:layout="@layout/fragment_add_post_job">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="uid"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_title"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="person_who_post"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="image_url"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateStart"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="dateEnd"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="total_day"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_description"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_category"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="employee_type"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_address"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="salary"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="post_time"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="job_status"
+            app:argType="string"
+            app:nullable="true"/>
+        <action
+            android:id="@+id/action_add_post_job_fragment_to_navigation_work"
+            app:destination="@id/navigation_work"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="false"/>
+    </fragment>
 
     <fragment
         android:id="@+id/detail_job_fragment"
@@ -506,6 +630,36 @@
             android:name="post_time"
             app:argType="string"
             app:nullable="true"/>
+        <argument
+            android:name="job_status"
+            app:argType="string"
+            app:nullable="true"/>
+        <action
+            android:id="@+id/action_detail_job_fragment_to_list_applicant_fragment"
+            app:destination="@id/list_applicant_fragment" />
+        <action
+            android:id="@+id/action_detail_job_fragment_to_add_post_job_fragment"
+            app:destination="@id/add_post_job_fragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/list_applicant_fragment"
+        android:name="com.amikom.carikerja.ui.bottom_nav.history_work.ListApplicantFragment"
+        android:label="@string/list_applicant"
+        tools:layout="@layout/fragment_list_applicant">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/update_password_fragment"
+        android:name="com.amikom.carikerja.ui.settings.UpdatePasswordFragment"
+        android:label="@string/update_password"
+        tools:layout="@layout/fragment_update_password" />
+
+
+
 
 </navigation>

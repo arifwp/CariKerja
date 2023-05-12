@@ -50,7 +50,6 @@ class AddEducationFragment : Fragment() {
         uid = SharedPreferences.getUid(requireContext())
         id = args.id
 
-        Log.d(TAG, "onViewCreated: $id")
         if (id != null){
             observeDataEdit()
         } else {

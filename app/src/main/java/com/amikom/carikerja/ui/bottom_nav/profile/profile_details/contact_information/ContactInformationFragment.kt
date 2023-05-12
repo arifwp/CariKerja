@@ -53,7 +53,17 @@ class ContactInformationFragment : Fragment() {
         btnSubmit.setOnClickListener {
             val phone = binding.edPhone.text.toString().trim()
             val email = binding.edEmail.text.toString().trim()
-            contactInformationViewModel.update(uid.toString(), phone, email)
+            when {
+                phone.isNullOrEmpty() -> {
+                    binding.edPhone.error = "Masukkan nomor"
+                }
+                email.isNullOrEmpty() -> {
+                    binding.edEmail.error = "Masukkan email"
+                }
+                else -> {
+                    contactInformationViewModel.update(uid.toString(), phone, email)
+                }
+            }
         }
     }
 

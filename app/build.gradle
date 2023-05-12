@@ -4,7 +4,9 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.firebase.firebase-perf'
 }
 
 android {
@@ -15,15 +17,20 @@ android {
         applicationId "com.amikom.carikerja"
         minSdk 21
         targetSdk 33
-        versionCode 1
+        versionCode 4
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            debuggable true
+        }
+        release {
+            minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -54,6 +61,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
     implementation 'androidx.test:core-ktx:1.4.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.1.2'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.1'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.google.firebase:firebase-perf-ktx:20.3.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -80,7 +92,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     // Encrypted Shared Preferences
-    implementation "androidx.security:security-crypto:1.1.0-alpha04"
+    implementation "androidx.security:security-crypto:1.1.0-alpha05"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -96,6 +108,10 @@ dependencies {
 
     // kill the app
     implementation 'com.jakewharton:process-phoenix:2.1.2'
+
+    // read more library
+    implementation 'io.github.glailton.expandabletextview:expandabletextview:1.0.3'
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
 
 
 

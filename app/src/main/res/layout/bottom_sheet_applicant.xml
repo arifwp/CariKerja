@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/btm_sheet"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/wrap_btn"
+        android:layout_marginBottom="@dimen/dimen_12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/wrap_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_12">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_user"
+                android:layout_width="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_60"
+                tools:src="@drawable/dummy_avatar"
+                android:layout_marginTop="@dimen/dimen_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/wrap_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/dimen_10"
+                app:layout_constraintTop_toTopOf="@+id/img_user"
+                app:layout_constraintBottom_toBottomOf="@+id/img_user"
+                app:layout_constraintStart_toEndOf="@+id/img_user">
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/example_name"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text"/>
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/example_job_address"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginTop="@dimen/dimen_2"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrap_contact_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_btm_sheet_up"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:padding="@dimen/dimen_16"
+                app:layout_constraintTop_toBottomOf="@+id/img_user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:src="@drawable/ic_person_filled"
+                        app:tint="@color/primary_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_information"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_6" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:background="@color/grey_300"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/dimen_12">
+
+                    <LinearLayout
+                        android:id="@+id/wrap_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_18"
+                            android:layout_height="@dimen/dimen_18"
+                            android:src="@drawable/ic_email"
+                            app:tint="@color/primary_500"
+                            android:layout_gravity="center_vertical"/>
+
+                        <TextView
+                            android:id="@+id/tv_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="@string/example_email"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/primary_text"
+                            android:layout_marginStart="@dimen/dimen_12"
+                            android:layout_gravity="center_vertical"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/wrap_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dimen_6">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_18"
+                            android:layout_height="@dimen/dimen_18"
+                            android:src="@drawable/ic_phone"
+                            app:tint="@color/primary_500"
+                            android:layout_gravity="center_vertical"/>
+
+                        <TextView
+                            android:id="@+id/tv_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="@string/example_phone"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/primary_text"
+                            android:layout_marginStart="@dimen/dimen_12"
+                            android:layout_gravity="center_vertical"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrap_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_btm_sheet_up"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:padding="@dimen/dimen_16"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_contact_information"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:src="@drawable/ic_assignment_ind"
+                        app:tint="@color/primary_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/summary"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_6" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:background="@color/grey_300"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+                <TextView
+                    android:id="@+id/tv_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/lorem_ipsum"
+                    android:justificationMode="inter_word"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginTop="@dimen/dimen_12"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/wrap_skills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_btm_sheet_up"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:padding="@dimen/dimen_16"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_summary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:src="@drawable/ic_check_circle"
+                        app:tint="@color/primary_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/skills"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_6" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:background="@color/grey_300"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_skills_bottom_sheet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/layout_rv_skills"
+                        tools:itemCount="3"
+                        android:visibility="visible"
+                        android:layout_marginTop="@dimen/dimen_12" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/wrap_work_exp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_btm_sheet_up"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:padding="@dimen/dimen_16"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_skills"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:src="@drawable/ic_work_filled"
+                        app:tint="@color/primary_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work_experience"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_6" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:background="@color/grey_300"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_work_exp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/layout_work_experience"
+                    tools:itemCount="1"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/wrap_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_btm_sheet_up"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:padding="@dimen/dimen_16"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_work_exp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:src="@drawable/ic_menu_book"
+                        app:tint="@color/primary_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/education"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_6" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:background="@color/grey_300"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_education_bottom_sheet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/layout_education"
+                    tools:itemCount="1"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrap_project"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_btm_sheet_up"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:padding="@dimen/dimen_16"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_education"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:src="@drawable/ic_turned_in"
+                        app:tint="@color/primary_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/project"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_6" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:background="@color/grey_300"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_project_bottom_sheet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/layout_project"
+                    tools:itemCount="1"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrap_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_btm_sheet_up"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:padding="@dimen/dimen_16"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_project"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:src="@drawable/ic_books"
+                        app:tint="@color/primary_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/certification_and_license"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_6" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1"
+                    android:background="@color/grey_300"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_certificate_bottom_sheet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/layout_certificate"
+                    tools:itemCount="1"
+                    android:layout_marginTop="@dimen/dimen_12" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+    <LinearLayout
+        android:id="@+id/wrap_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1"
+            android:background="@color/grey_300" />
+
+        <LinearLayout
+            android:id="@+id/wrap_text_applied"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/already_applied_this_job"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wrap_choose_applicant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_applicant_desc"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_chooose_applicant"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_54"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="@string/submit"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:cornerRadius="@dimen/dimen_10"
+                android:backgroundTint="@color/primary_500"
+                android:textColor="@color/white"
+                android:stateListAnimator="@null"
+                android:layout_marginTop="@dimen/dimen_12"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wrap_btn_job_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cant_add_applicant"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wrap_btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="visible"
+            android:padding="@dimen/dimen_24">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sure_for_applicant"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_54"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="@string/submit"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:cornerRadius="@dimen/dimen_10"
+                android:backgroundTint="@color/primary_500"
+                android:textColor="@color/white"
+                android:stateListAnimator="@null"
+                android:layout_marginTop="@dimen/dimen_12"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -21,6 +21,7 @@ import com.amikom.carikerja.databinding.FragmentHomeBinding
 import com.amikom.carikerja.models.BaseResponse
 import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
     private var name: String? = null
     private var dob: String? = null
     private var address: String? = null
+    private var uid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,42 +56,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        initToolbar()
-        checkProfileCompleteness()
+        uid = SharedPreferences.getUid(requireContext())
+        observe()
         listener()
 
     }
 
-    private fun listener() {
-        val btnTransfer = binding.wrapTransfer
-        btnTransfer.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTransferFragment())
-        }
-
-        val btnTopUp = binding.wrapTopUp
-        btnTopUp.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTopupFragment())
-        }
-
-        val btnToSettings = binding.icSettings
-        btnToSettings.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToSettingsFragment())
-        }
-    }
-
-//    private fun initToolbar() {
-//        val toolbar = binding.toolbar
-//        toolbar.inflateMenu(R.menu.main_menu)
-//        toolbar.setOnMenuItemClickListener {
-//            when(it.itemId){
-//                //                R.id.notifications ->
-//                R.id.settings -> findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToSettingsFragment())
-//            }
-//            true
-//        }
-//    }
-
-    private fun checkProfileCompleteness() {
+    private fun observe() {
         val uid = SharedPreferences.getUid(requireContext())
         profileViewModel.getProfile(uid.toString())
         profileViewModel.getProfileResponse.observe(viewLifecycleOwner){
@@ -101,6 +74,12 @@ class HomeFragment : Fragment() {
                         name = it.data.name
                         address = it.data.address
                         dob = it.data.dob
+                        binding.tvUsername.setText(name)
+                        Picasso.get()
+                            .load("$imageUrl")
+                            .error(R.drawable.dummy_avatar)
+                            .into(binding.imgUser)
+
                         if (
                             it.data.imageUrl == "null" ||
                             it.data.address == "null" ||
@@ -114,6 +93,35 @@ class HomeFragment : Fragment() {
                 }
             }
 
+        }
+    }
+
+    private fun listener() {
+        val btnTransfer = binding.wrapTransfer
+        btnTransfer.setOnClickListener {
+            textMessage("Fitur ini sedang dalam tahap develop")
+//            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTransferFragment())
+        }
+
+        val btnTopUp = binding.wrapTopUp
+        btnTopUp.setOnClickListener {
+            textMessage("Fitur ini sedang dalam tahap develop")
+//            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTopupFragment())
+        }
+
+        val btnSend = binding.wrapSend
+        btnSend.setOnClickListener {
+            textMessage("Fitur ini sedang dalam tahap develop")
+        }
+
+        val btnWithdraw = binding.wrapWithdraw
+        btnWithdraw.setOnClickListener {
+            textMessage("Fitur ini sedang dalam tahap develop")
+        }
+
+        val btnToSettings = binding.icSettings
+        btnToSettings.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToSettingsFragment())
         }
     }
 

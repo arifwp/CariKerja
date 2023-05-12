@@ -59,9 +59,10 @@
                             android:includeFontPadding="false"/>
 
                         <TextView
+                            android:id="@+id/tv_username"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/example_name"
+                            tools:text="@string/example_name"
                             android:textSize="16sp"
                             android:fontFamily="@font/poppins_semi_bold"
                             android:textColor="@color/white"
@@ -80,21 +81,22 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/ic_notifications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_notifications"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/ic_settings"
-                    android:layout_marginEnd="@dimen/dimen_12"
-                    app:tint="@color/white" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/ic_notifications"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_notifications"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_toStartOf="@+id/ic_settings"-->
+<!--                    android:layout_marginEnd="@dimen/dimen_12"-->
+<!--                    app:tint="@color/white" />-->
 
                 <ImageView
                     android:id="@+id/ic_settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_settings"
+                    android:foreground="?android:attr/actionBarItemBackground"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     app:tint="@color/white" />

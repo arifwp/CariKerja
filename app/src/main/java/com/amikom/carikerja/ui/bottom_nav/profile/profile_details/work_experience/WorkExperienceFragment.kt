@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amikom.carikerja.R
 import com.amikom.carikerja.adapter.WorkExperienceAdapter
-import com.amikom.carikerja.adapter.btnClickClickListener
 import com.amikom.carikerja.adapter.btnWorkExpClickClickListener
 import com.amikom.carikerja.databinding.FragmentWorkExperienceBinding
 import com.amikom.carikerja.models.BaseResponse
@@ -100,7 +99,7 @@ class WorkExperienceFragment : Fragment(), btnWorkExpClickClickListener {
 
     private fun initiateRv(){
         val recyclerViewWorkExp: RecyclerView = requireView().findViewById(R.id.rv_work_experience)
-        workExperienceAdapter = WorkExperienceAdapter(ArrayList())
+        workExperienceAdapter = WorkExperienceAdapter("WorkExperienceFragment", ArrayList())
         workExperienceAdapter.listenerWorkExp = this
         recyclerViewWorkExp.apply {
             setHasFixedSize(true)

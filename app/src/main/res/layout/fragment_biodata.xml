@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,26 +57,6 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_submit"
-                        android:layout_width="@dimen/dimen_80"
-                        android:layout_height="@dimen/dimen_32"
-                        android:fontFamily="@font/poppins_semi_bold"
-                        android:text="@string/save"
-                        android:textColor="@color/primary_500"
-                        android:textSize="12sp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        app:cornerRadius="@dimen/dimen_30"
-                        android:padding="@dimen/dimen_0"
-                        android:backgroundTint="@color/white"
-                        android:includeFontPadding="false"
-                        android:stateListAnimator="@null"
-                        android:layout_marginHorizontal="@dimen/dimen_24"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
@@ -87,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_bottom"
+            android:backgroundTint="@color/light_gray"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
@@ -215,9 +197,25 @@
                     android:drawablePadding="@dimen/dimen_10"
                     android:paddingVertical="@dimen/dimen_10"
                     android:paddingHorizontal="@dimen/dimen_10"
-                    android:background="@drawable/bg_ed" />
+                    android:background="@drawable/bg_ed"/>
 
             </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_54"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="@string/submit"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:cornerRadius="@dimen/dimen_10"
+                android:stateListAnimator="@null"
+                android:layout_marginHorizontal="@dimen/dimen_24"
+                android:layout_marginTop="@dimen/dimen_24"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </LinearLayout>
 

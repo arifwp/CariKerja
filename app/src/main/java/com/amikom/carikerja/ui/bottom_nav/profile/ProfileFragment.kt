@@ -27,6 +27,9 @@ class ProfileFragment : Fragment() {
     private var name: String? = null
     private var dob: String? = null
     private var address: String? = null
+    private var bank_name: String? = null
+    private var bank_account: String? = null
+    private var bank_account_name: String? = null
     private var TAG = "ProfileFragment"
 
     override fun onCreateView(
@@ -56,9 +59,11 @@ class ProfileFragment : Fragment() {
                         name = it.data.name
                         dob = it.data.dob
                         address = it.data.address
+                        bank_name = it.data.bank_name
+                        bank_account = it.data.bank_account
+                        bank_account_name = it.data.bank_account_name
                         binding.tvUserRole?.text = it.data.role
                         setProfile(it.data)
-                        Log.d(TAG, "onViewCreated: ${it.data}")
                     }
                     is BaseResponse.Error -> textMessage(it.msg.toString())
                     else -> {}
@@ -78,6 +83,16 @@ class ProfileFragment : Fragment() {
                 name,
                 dob,
                 address
+            ))
+        }
+
+        val bankAccount = binding.wrapBankAccount
+        bankAccount?.setOnClickListener {
+            findNavController().navigate(
+                ProfileFragmentDirections.actionNavigationProfileToBankAccountFragment(
+                bank_name,
+                bank_account,
+                bank_account_name
             ))
         }
 
@@ -109,6 +124,11 @@ class ProfileFragment : Fragment() {
         val certificate = binding.wrapCertification
         certificate.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToCertificateFragment())
+        }
+
+        val skillProfile = binding.wrapSkills
+        skillProfile.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToListSkillProfileFragment())
         }
     }
 

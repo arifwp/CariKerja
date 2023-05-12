@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,6 +14,14 @@
         android:backgroundTint="@color/secondary_200"
         android:src="@drawable/ic_add"
         app:borderWidth="0dp"
+        android:text="@string/publish_job"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:fontFamily="@font/poppins_medium"
+        android:textStyle="bold"
+        android:includeFontPadding="false"
+        app:icon="@drawable/ic_add_circle"
+        app:iconTint="@color/white"
         app:elevation="6dp"
         app:fabSize="normal"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
@@ -22,7 +30,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,14 +64,25 @@
                         android:orientation="vertical"
                         android:background="@drawable/bg_wrap_search">
 
-                        <androidx.appcompat.widget.SearchView
+
+                        <EditText
                             android:id="@+id/search_job"
-                            style="@style/AppSearchView"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:iconifiedByDefault="false"
-                            app:searchIcon="@drawable/ic_search"
-                            app:queryHint="@string/hint_search_work"/>
+                            android:layout_height="@dimen/dimen_54"
+                            android:layout_weight="0.98"
+                            android:fontFamily="@font/poppins_regular"
+                            android:includeFontPadding="false"
+                            android:textSize="14sp"
+                            android:hint="@string/hint_search_work"
+                            android:textColor="@color/text_primary_300"
+                            android:drawableStart="@drawable/ic_search"
+                            android:drawableTint="@color/primary_500"
+                            android:inputType="textPersonName"
+                            android:drawablePadding="@dimen/dimen_6"
+                            android:paddingVertical="@dimen/dimen_10"
+                            android:paddingHorizontal="@dimen/dimen_10"
+                            android:background="@drawable/bg_ed"
+                            app:tint="@color/primary_500"/>
 
                     </LinearLayout>
 
@@ -73,14 +93,27 @@
                         android:background="@drawable/bg_wrap_search"
                         android:layout_marginTop="@dimen/dimen_16">
 
-                        <androidx.appcompat.widget.SearchView
-                            android:id="@+id/search_city"
+                        <LinearLayout
+                            android:id="@+id/wrap_job_category"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/AppSearchView"
-                            android:iconifiedByDefault="false"
-                            app:searchIcon="@drawable/ic_location"
-                            app:queryHint="@string/hint_search_city"/>
+                            android:layout_height="@dimen/dimen_48"
+                            android:background="@drawable/bg_ed"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_work_filled"
+                                app:tint="@color/primary_500"
+                                android:layout_gravity="center_vertical"
+                                android:padding="@dimen/dimen_6"/>
+
+                            <Spinner
+                                android:id="@+id/ed_job_category"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -89,10 +122,31 @@
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
+                android:id="@+id/wrap_result_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_result_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    tools:listitem="@layout/layout_job" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/wrap_rv_job"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible"
                 android:background="@drawable/bg_work"
+                android:backgroundTint="@color/light_gray"
                 android:layout_marginTop="@dimen/dimen_2">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -101,6 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_12"
                     android:layout_marginTop="@dimen/dimen_24"
+                    tools:itemCount="1"
                     tools:listitem="@layout/layout_job" />
 
             </LinearLayout>

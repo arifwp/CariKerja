@@ -41,14 +41,42 @@ class ProfileViewModel @Inject constructor(
     private val _insertSkillResponse = MutableLiveData<BaseResponse<String>>()
     val insertSkillResponse: LiveData<BaseResponse<String>> = _insertSkillResponse
 
-    private val _getSkillResponse = MutableLiveData<BaseResponse<MutableList<JobCategory>>>()
-    val getSkillResponse: LiveData<BaseResponse<MutableList<JobCategory>>> = _getSkillResponse
+    private val _getSkillResponse = MutableLiveData<SingleLiveEvent<BaseResponse<MutableList<JobCategory>>>>()
+    val getSkillResponse: LiveData<SingleLiveEvent<BaseResponse<MutableList<JobCategory>>>> = _getSkillResponse
 
     private val _getRoleResponse = MutableLiveData<SingleLiveEvent<BaseResponse<String>>?>()
     val getRoleResponse: MutableLiveData<SingleLiveEvent<BaseResponse<String>>?> = _getRoleResponse
 
     private val _getUserSkillsResponse = MutableLiveData<BaseResponse<MutableList<SkillsDetail>>>()
     val getUserSkillsResponse: LiveData<BaseResponse<MutableList<SkillsDetail>>> = _getUserSkillsResponse
+
+    private val _getRegistrationIdResponse = MutableLiveData<BaseResponse<String>>()
+    val getRegistrationIdResponse: LiveData<BaseResponse<String>> = _getRegistrationIdResponse
+
+    fun getRegistrationId(uid: String){
+        viewModelScope.launch {
+            try {
+
+                val ref = database.reference.child("Users").child(uid)
+                ref.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val regis_id = snapshot.child("registration_id").getValue(String::class.java).toString()
+                        _getRegistrationIdResponse.postValue(BaseResponse.Success(regis_id))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _getRegistrationIdResponse.postValue(BaseResponse.Error(error.message.toString()))
+                    }
+
+                })
+
+
+            } catch (e: java.lang.Exception) {
+                val error = e.toString().split(":").toTypedArray()
+                _getRegistrationIdResponse.postValue(BaseResponse.Error(error[1]))
+            }
+        }
+    }
 
     fun getUserSkills(uid: String){
         viewModelScope.launch {
@@ -86,7 +114,6 @@ class ProfileViewModel @Inject constructor(
                 ref.addValueEventListener(object :ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val role = snapshot.child("role").getValue(String::class.java).toString()
-                        Log.d(TAG, "onCreateRole: $role")
                         _getRoleResponse.postValue(SingleLiveEvent(BaseResponse.Success(role)))
                     }
 
@@ -106,7 +133,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
 
-                val ref = database.reference.child("Job Category")
+                val ref = database.reference.child("Job Category").orderByChild("name")
                 val jobCategoryList: MutableList<JobCategory> = ArrayList()
                 ref.addValueEventListener(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -116,19 +143,19 @@ class ProfileViewModel @Inject constructor(
                             if (jobCategory != null){
                                 jobCategoryList.add(jobCategory)
                             }
-                            _getSkillResponse.postValue(BaseResponse.Success(jobCategoryList))
+                            _getSkillResponse.postValue(SingleLiveEvent(BaseResponse.Success(jobCategoryList)))
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        _getSkillResponse.postValue(BaseResponse.Error(error.message.toString()))
+                        _getSkillResponse.postValue(SingleLiveEvent(BaseResponse.Error(error.message.toString())))
                     }
 
                 })
 
             } catch (e: java.lang.Exception) {
                 val error = e.toString().split(":").toTypedArray()
-                _getSkillResponse.postValue(BaseResponse.Error(error[1]))
+                _getSkillResponse.postValue(SingleLiveEvent(BaseResponse.Error(error[1])))
             }
         }
     }
@@ -152,7 +179,7 @@ class ProfileViewModel @Inject constructor(
     fun updateRole(uid: String, role: String){
         viewModelScope.launch {
             try {
-                database.getReference().child("Users").child(uid).child("role").setValue(role)
+                database.reference.child("Users").child(uid).child("role").setValue(role)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful){
                             _updateRoleResponse.postValue(BaseResponse.Success("Profil anda berhasil diperbarui"))
@@ -177,7 +204,6 @@ class ProfileViewModel @Inject constructor(
                         if (snapshot.hasChild("role")){
                             val role = snapshot.child("role").getValue(String::class.java).toString()
                             _checkRoleResponse.postValue(BaseResponse.Success(role))
-//                            _checkRoleResponse.postValue(BaseResponse.Success(true))
                         } else {
                             _checkRoleResponse.postValue(BaseResponse.Success(""))
                         }
@@ -223,35 +249,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun checkProfileCompleteness(uid: String){
-        viewModelScope.launch {
-            try {
-                val ref = database.reference.child("Users").child(uid)
-                ref.addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.hasChild("imageUrl")){
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("imageUrl_exists"))
-                        } else if (snapshot.hasChild("dob")){
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("dob_exists"))
-                        } else if (snapshot.hasChild("address")){
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success("address_exists"))
-                        } else {
-                            _checkProfileCompletenessResponse.postValue(BaseResponse.Success(""))
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-            } catch (e: java.lang.Exception) {
-                val error = e.toString().split(":").toTypedArray()
-                _checkProfileCompletenessResponse.postValue(BaseResponse.Error(error[1]))
-            }
-        }
-    }
-
     fun getProfile(uid: String){
         viewModelScope.launch {
             try {
@@ -268,6 +265,9 @@ class ProfileViewModel @Inject constructor(
                         val dob = snapshot.child("dob").getValue(String::class.java).toString()
                         val address = snapshot.child("address").getValue(String::class.java).toString()
                         val summary = snapshot.child("summary").getValue(String::class.java).toString()
+                        val bank_name = snapshot.child("bank_name").getValue(String::class.java).toString()
+                        val bank_account = snapshot.child("bank_account").getValue(String::class.java).toString()
+                        val bank_account_name = snapshot.child("bank_account_name").getValue(String::class.java).toString()
                         val workExp = snapshot.child("work_experience").getValue(Exp::class.java)
                         val certificate = snapshot.child("certificate").getValue(CertificateDetails::class.java)
                         val project = snapshot.child("project").getValue(ProjectDetails::class.java)
@@ -282,7 +282,10 @@ class ProfileViewModel @Inject constructor(
                             phone = phone,
                             dob = dob,
                             address = address,
-                            summary = summary
+                            summary = summary,
+                            bank_name = bank_name,
+                            bank_account = bank_account,
+                            bank_account_name = bank_account_name
                         )
 
                         _getProfileResponse.postValue(SingleLiveEvent(BaseResponse.Success(userProfile)))

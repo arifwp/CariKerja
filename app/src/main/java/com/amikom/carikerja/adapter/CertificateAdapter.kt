@@ -11,7 +11,7 @@ import com.amikom.carikerja.models.CertificateDetails
 import com.amikom.carikerja.models.EducationDetails
 import com.squareup.picasso.Picasso
 
-class CertificateAdapter(private var dataCertificate: List<CertificateDetailString>) : RecyclerView.Adapter<CertificateAdapter.CertificateViewHolder>() {
+class CertificateAdapter(private val page: String, private var dataCertificate: List<CertificateDetailString>) : RecyclerView.Adapter<CertificateAdapter.CertificateViewHolder>() {
 
     inner class CertificateViewHolder(val binding: LayoutCertificateBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -22,33 +22,92 @@ class CertificateAdapter(private var dataCertificate: List<CertificateDetailStri
 
     override fun onBindViewHolder(holder: CertificateViewHolder, position: Int) {
         val item = dataCertificate[position]
-        with(holder.binding){
-            certificateName.text = item.title
-            publishingOrganization.text = item.publishing_organization
-            dateStart.text = item.dateStart
-            dateEnd.text = item.expiration_date
-            btnEdit.setOnClickListener {
-                listener?.btnOnClick(item)
-            }
-            if (item.credential_id != ""){
-                certificateId.text = item.credential_id
-                wrapCredentialId.visibility = View.VISIBLE
-            } else {
-                wrapCredentialId.visibility = View.GONE
+
+        when {
+
+            page == "CertificateFragment" -> {
+                with(holder.binding){
+                    certificateName.text = item.title
+                    publishingOrganization.text = item.publishing_organization
+                    dateStart.text = item.dateStart
+                    dateEnd.text = item.expiration_date
+                    btnEdit.setOnClickListener {
+                        listener?.btnOnClick(item)
+                    }
+                    if (item.credential_id != ""){
+                        certificateId.text = item.credential_id
+                        wrapCredentialId.visibility = View.VISIBLE
+                    } else {
+                        wrapCredentialId.visibility = View.GONE
+                    }
+
+                    when {
+                        item.credential_url != "" -> {
+                            btnUrl.visibility = View.VISIBLE
+                            btnUrl.setOnClickListener {
+                                listener?.btnSeeUrl(item.credential_url.toString())
+                            }
+                        }
+                        else -> {
+                            btnUrl.visibility = View.GONE
+                        }
+                    }
+
+                    if (item.image.toString() == "null"){
+                        wrapImg.visibility = View.GONE
+                    } else if (item.image == null) {
+                        wrapImg.visibility = View.GONE
+                    } else {
+                        Picasso.get()
+                            .load("${item.image}")
+                            .error(R.drawable.dummy_avatar)
+                            .into(holder.binding.imgCertificate)
+                        wrapImg.visibility = View.VISIBLE
+                    }
+                }
             }
 
-            if (item.image.toString() == "null"){
-                wrapImg.visibility = View.GONE
-            } else if (item.image == null) {
-                wrapImg.visibility = View.GONE
-            } else {
-                Picasso.get()
-                    .load("${item.image}")
-                    .error(R.drawable.dummy_avatar)
-                    .into(holder.binding.imgCertificate)
-                wrapImg.visibility = View.VISIBLE
+            page == "BottomSheetFragment" -> {
+                with(holder.binding){
+                    certificateName.text = item.title
+                    publishingOrganization.text = item.publishing_organization
+                    dateStart.text = item.dateStart
+                    dateEnd.text = item.expiration_date
+                    btnEdit.visibility = View.GONE
+                    if (item.credential_id != ""){
+                        certificateId.text = item.credential_id
+                        wrapCredentialId.visibility = View.VISIBLE
+                    } else {
+                        wrapCredentialId.visibility = View.GONE
+                    }
+
+                    when {
+                        item.credential_url != "" -> {
+                            btnUrl.visibility = View.VISIBLE
+                            btnUrl.setOnClickListener {
+                                listener?.btnSeeUrl(item.credential_url.toString())
+                            }
+                        }
+                        else -> {
+                            btnUrl.visibility = View.GONE
+                        }
+                    }
+
+                    if (item.image.toString() == "null"){
+                        wrapImg.visibility = View.GONE
+                    } else if (item.image == null) {
+                        wrapImg.visibility = View.GONE
+                    } else {
+                        Picasso.get()
+                            .load("${item.image}")
+                            .error(R.drawable.dummy_avatar)
+                            .into(holder.binding.imgCertificate)
+                        wrapImg.visibility = View.VISIBLE
+                    }
+                }
             }
         }
+
     }
 
     var listener: btnClickClickListener? = null
@@ -63,4 +122,5 @@ class CertificateAdapter(private var dataCertificate: List<CertificateDetailStri
 
 interface btnClickClickListener {
     fun btnOnClick(data: CertificateDetailString)
+    fun btnSeeUrl(data: String)
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SettingsFragment">
+    tools:context=".ui.settings.SettingsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,9 +76,11 @@
                 android:textColor="@color/secondary_text" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/wrap_change_password"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_14"
+                android:foreground="?android:attr/actionBarItemBackground"
                 android:layout_marginTop="@dimen/dimen_6"
                 android:orientation="horizontal">
 
@@ -101,31 +103,32 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_14"
-                android:layout_marginTop="@dimen/dimen_6"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="@dimen/dimen_14"-->
+<!--                android:foreground="?android:attr/actionBarItemBackground"-->
+<!--                android:layout_marginTop="@dimen/dimen_6"-->
+<!--                android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_delete"
-                    android:layout_gravity="center_vertical"
-                    app:tint="@color/primary_500" />
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_delete"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    app:tint="@color/primary_500" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/deactivate_my_account"
-                    android:includeFontPadding="false"
-                    android:fontFamily="@font/poppins_semi_bold"
-                    android:textColor="@color/primary_text"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/dimen_6" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/deactivate_my_account"-->
+<!--                    android:includeFontPadding="false"-->
+<!--                    android:fontFamily="@font/poppins_semi_bold"-->
+<!--                    android:textColor="@color/primary_text"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="@dimen/dimen_6" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -137,36 +140,38 @@
                 android:fontFamily="@font/poppins_semi_bold"
                 android:textColor="@color/secondary_text" />
 
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="@dimen/dimen_14"-->
+<!--                android:foreground="?android:attr/actionBarItemBackground"-->
+<!--                android:layout_marginTop="@dimen/dimen_6"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_notifications"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    app:tint="@color/primary_500" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/title_notifications"-->
+<!--                    android:includeFontPadding="false"-->
+<!--                    android:fontFamily="@font/poppins_semi_bold"-->
+<!--                    android:textColor="@color/primary_text"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="@dimen/dimen_6" />-->
+
+<!--            </LinearLayout>-->
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_14"
-                android:layout_marginTop="@dimen/dimen_6"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_notifications"
-                    android:layout_gravity="center_vertical"
-                    app:tint="@color/primary_500" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_notifications"
-                    android:includeFontPadding="false"
-                    android:fontFamily="@font/poppins_semi_bold"
-                    android:textColor="@color/primary_text"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/dimen_6" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_14"
+                android:foreground="?android:attr/actionBarItemBackground"
                 android:layout_marginTop="@dimen/dimen_6"
                 android:orientation="horizontal">
 
@@ -190,9 +195,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_14"
+                android:foreground="?android:attr/actionBarItemBackground"
                 android:layout_marginTop="@dimen/dimen_6"
                 android:orientation="horizontal">
 
@@ -215,36 +221,37 @@
 
             </LinearLayout>
 
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="@dimen/dimen_14"-->
+<!--                android:layout_marginTop="@dimen/dimen_6"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_priority"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    app:tint="@color/primary_500" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/terms_and_condition"-->
+<!--                    android:includeFontPadding="false"-->
+<!--                    android:fontFamily="@font/poppins_semi_bold"-->
+<!--                    android:textColor="@color/primary_text"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginStart="@dimen/dimen_6" />-->
+
+<!--            </LinearLayout>-->
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_14"
-                android:layout_marginTop="@dimen/dimen_6"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_priority"
-                    android:layout_gravity="center_vertical"
-                    app:tint="@color/primary_500" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/terms_and_condition"
-                    android:includeFontPadding="false"
-                    android:fontFamily="@font/poppins_semi_bold"
-                    android:textColor="@color/primary_text"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/dimen_6" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_14"
+                android:foreground="?android:attr/actionBarItemBackground"
                 android:layout_marginTop="@dimen/dimen_6"
                 android:orientation="horizontal">
 
@@ -279,9 +286,10 @@
 
             <LinearLayout
                 android:id="@+id/wrap_logout"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_14"
+                android:foreground="?android:attr/actionBarItemBackground"
                 android:layout_marginTop="@dimen/dimen_6"
                 android:orientation="horizontal">
 

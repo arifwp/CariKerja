@@ -1,5 +1,6 @@
 package com.amikom.carikerja.adapter
 
+import a.a.a.a.a.i
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,9 @@ import com.squareup.picasso.Picasso
 import java.util.*
 
 
-class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
+class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<JobAdapter.JobViewHolder>(){
+
+    private val TAG = "JobAdapter"
 
     inner class JobViewHolder(val binding : LayoutJobBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -47,10 +50,12 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
                 item.employee_type,
                 item.job_address,
                 item.salary,
-                myFinalValueDetail
+                myFinalValueDetail,
+                item.job_status
 
             ))
         }
+
         with(holder.binding){
             jobTitle.text = item.job_title
             userName.text = item.person_who_post
@@ -63,9 +68,6 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
             val timeAgo2 = TimeShow()
             val myFinalValue: String = timeAgo2.covertTimeToText(time).toString()
             timePost.text = myFinalValue
-
-            // Applied Counter
-            jobApplied.text = 12.toString()
 
             if (item.salary.isNullOrBlank()){
                 wrapSalary.visibility = View.GONE
@@ -81,6 +83,12 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
                 jobType.text = item.employee_type
             }
 
+            if (item.job_status == "open"){
+                wrapJobStatus.visibility = View.GONE
+            } else if (item.job_status == "closed"){
+                wrapJobStatus.visibility = View.VISIBLE
+            }
+
             Picasso.get()
                 .load("${item.image_url}")
                 .error(R.drawable.dummy_avatar)
@@ -92,10 +100,37 @@ class JobAdapter(private var dataJob: List<JobDetails>) : RecyclerView.Adapter<J
 
     override fun getItemCount(): Int = dataJob.size
 
+    fun filterCars(cars: List<JobDetails>, searchText: String): List<JobDetails>? {
+        val filteredCars: MutableList<JobDetails> = ArrayList()
+        var c: JobDetails
+        for (i in cars.indices) {
+            c = cars[i]
+            if (c.job_title?.lowercase()
+                    !!.contains(searchText.trim { it <= ' ' }.lowercase(Locale.getDefault()))
+            ) {
+                filteredCars.add(c)
+            }
+        }
+        return filteredCars
+    }
+
+    fun filterJobCategory(cars: List<JobDetails>?, searchText: String?): List<JobDetails>? {
+        val filteredCars: MutableList<JobDetails> = ArrayList()
+        var c: JobDetails
+        if (cars != null) {
+            for (i in cars.indices) {
+                c = cars[i]
+                if (c.job_category!!.contains(searchText.toString())) {
+                    Log.d(TAG, "filterJobCategory: $searchText")
+                    filteredCars.add(c)
+                }
+            }
+        }
+        return filteredCars
+    }
+
     fun setJobData(dataList: List<JobDetails>) {
         this.dataJob = dataList
         notifyDataSetChanged()
     }
-
-
 }

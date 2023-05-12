@@ -1,5 +1,6 @@
 package com.amikom.carikerja.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,7 +15,7 @@ import com.amikom.carikerja.utils.SharedPreferences
 import com.amikom.carikerja.viewmodels.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.system.exitProcess
+import java.io.File
 
 
 @AndroidEntryPoint
@@ -40,11 +41,11 @@ class MainActivity : AppCompatActivity() {
         if (userLogout != null){
             if(android.os.Build.VERSION.SDK_INT >= 21)
             {
-                finishAndRemoveTask();
+                finishAndRemoveTask()
             }
             else
             {
-                finish();
+                this.finishAffinity()
             }
         }
 
@@ -100,7 +101,15 @@ class MainActivity : AppCompatActivity() {
                 destination.id == R.id.topup_fragment ||
                 destination.id == R.id.transfer_fragment ||
                 destination.id == R.id.choose_role_fragment ||
-                destination.id == R.id.choose_skills_fragment
+                destination.id == R.id.choose_skills_fragment ||
+                destination.id == R.id.bank_account_fragment ||
+                destination.id == R.id.list_skill_profile_fragment ||
+                destination.id == R.id.list_applicant_fragment ||
+                destination.id == R.id.detail_job_fragment ||
+                destination.id == R.id.add_list_skill_profile_fragment  ||
+                destination.id == R.id.add_post_job_fragment ||
+                destination.id == R.id.update_password_fragment ||
+                destination.id == R.id.forgot_password_fragment
             ) {
                 navView.visibility = View.GONE
             } else {
@@ -108,6 +117,40 @@ class MainActivity : AppCompatActivity() {
             }
         }
         navView.setupWithNavController(navController)
+    }
+
+//    Fires after the OnStop() state
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            trimCache(this)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun trimCache(context: Context) {
+        try {
+            val dir: File = context.cacheDir
+            deleteDir(dir)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun deleteDir(dir: File?): Boolean {
+        return if (dir != null && dir.isDirectory) {
+            val children: Array<String> = dir.list()
+            for (i in children.indices) {
+                val success = deleteDir(File(dir, children[i]))
+                if (!success) {
+                    return false
+                }
+            }
+            dir.delete()
+        } else {
+            false
+        }
     }
 
 }

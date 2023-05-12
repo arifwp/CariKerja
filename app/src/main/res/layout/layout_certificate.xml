@@ -4,142 +4,184 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingBottom="@dimen/dimen_24">
-
-    <ImageView
-        android:id="@+id/btn_edit"
-        android:layout_width="@dimen/dimen_30"
-        android:layout_height="@dimen/dimen_30"
-        android:src="@drawable/ic_edit"
+    android:paddingBottom="@dimen/dimen_12">
+    
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dimen_10"
+        app:cardCornerRadius="@dimen/dimen_10"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/certificate_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lorem_ipsum"
-        android:textSize="16sp"
-        android:maxEms="12"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/primary_text"
-        android:includeFontPadding="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+        
 
-    <TextView
-        android:id="@+id/publishing_organization"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/example_role"
-        android:textSize="14sp"
-        android:maxEms="12"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:fontFamily="@font/poppins_semi_bold"
-        android:textColor="@color/secondary_text"
-        android:includeFontPadding="false"
-        app:layout_constraintTop_toBottomOf="@id/certificate_name"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <LinearLayout
-        android:id="@+id/wrap_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        app:layout_constraintTop_toBottomOf="@id/publishing_organization"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/date_start"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout 
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/example_date_start"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:includeFontPadding="false"
-            android:textColor="@color/secondary_text" />
+            android:layout_marginTop="@dimen/dimen_12"
+            android:layout_marginHorizontal="@dimen/dimen_12"
+            android:layout_marginBottom="@dimen/dimen_12">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-"
-            android:fontFamily="@font/poppins_regular"
-            android:includeFontPadding="false"
-            android:textColor="@color/secondary_text"
-            android:layout_marginStart="@dimen/dimen_6"/>
+            <ImageView
+                android:id="@+id/btn_edit"
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:src="@drawable/ic_edit"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/date_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/example_date_start"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:includeFontPadding="false"
-            android:textColor="@color/secondary_text"
-            android:layout_marginStart="@dimen/dimen_6"/>
+            <TextView
+                android:id="@+id/certificate_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/example_company"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/primary_text"
+                android:includeFontPadding="false"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHorizontal_bias="0"
+                android:layout_marginEnd="@dimen/dimen_6"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/publishing_organization"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/example_role"
+                android:textSize="14sp"
+                android:maxEms="12"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/primary_text"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@id/certificate_name"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/wrap_credential_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/wrap_date"
-        app:layout_constraintStart_toStartOf="parent">
+            <LinearLayout
+                android:id="@+id/wrap_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintTop_toBottomOf="@id/publishing_organization"
+                app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/certificate_id"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:includeFontPadding="false"
-            android:textColor="@color/secondary_text"
-            app:layout_constraintTop_toBottomOf="@id/wrap_date"
-            app:layout_constraintStart_toStartOf="parent"/>
+                <TextView
+                    android:id="@+id/date_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_date_start"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400" />
 
-        <TextView
-            android:id="@+id/certificate_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/example_certificate_id"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:maxEms="12"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:textColor="@color/secondary_text"
-            android:layout_marginStart="@dimen/dimen_6"
-            app:layout_constraintTop_toBottomOf="@id/wrap_date"
-            app:layout_constraintStart_toStartOf="parent"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400"
+                    android:layout_marginStart="@dimen/dimen_6"/>
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/date_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_date_start"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400"
+                    android:layout_marginStart="@dimen/dimen_6"/>
 
-    <LinearLayout
-        android:id="@+id/wrap_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="visible"
-        android:layout_marginTop="@dimen/dimen_12"
-        app:layout_constraintTop_toBottomOf="@id/wrap_credential_id"
-        app:layout_constraintStart_toStartOf="parent">
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_certificate"
-            android:layout_width="@dimen/dimen_200"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_gravity="center_vertical"
-            tools:src="@drawable/illustration_forgot_password" />
+            <LinearLayout
+                android:id="@+id/wrap_credential_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_date"
+                app:layout_constraintStart_toStartOf="parent">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/certificate_id"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400"
+                    app:layout_constraintTop_toBottomOf="@id/wrap_date"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
+                <TextView
+                    android:id="@+id/certificate_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_certificate_id"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:maxEms="12"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/grey_400"
+                    android:layout_marginStart="@dimen/dimen_6"
+                    app:layout_constraintTop_toBottomOf="@id/wrap_date"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:text="@string/see_url"
+                app:cornerRadius="@dimen/dimen_10"
+                android:drawableEnd="@drawable/ic_arrow_outward"
+                android:drawableTint="@color/primary_500"
+                app:strokeColor="@color/primary_500"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintTop_toBottomOf="@+id/wrap_credential_id"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <LinearLayout
+                android:id="@+id/wrap_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/dimen_12"
+                app:layout_constraintTop_toBottomOf="@id/btn_url"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_certificate"
+                    android:layout_width="@dimen/dimen_200"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_gravity="center_vertical"
+                    tools:src="@drawable/illustration_forgot_password" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
+    </androidx.cardview.widget.CardView>
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

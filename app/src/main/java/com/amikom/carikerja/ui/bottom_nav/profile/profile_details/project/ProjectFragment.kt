@@ -79,7 +79,7 @@ class ProjectFragment : Fragment(), btnEditProjectListener {
 
     private fun initiateRv(){
         val recyclerViewProject: RecyclerView = requireView().findViewById(R.id.rv_project)
-        projectAdapter = ProjectAdapter(ArrayList())
+        projectAdapter = ProjectAdapter("ProjectFragment", ArrayList())
         projectAdapter.listenerEditProject = this
         recyclerViewProject.apply {
             setHasFixedSize(true)

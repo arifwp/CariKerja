@@ -21,6 +21,7 @@ import com.amikom.carikerja.utils.SharedPreferences
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.selects.select
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -221,42 +222,45 @@ class AddCertificateFragment : Fragment() {
             image = selectedImage
         )
 
-        if (certificateName.isEmpty()){
-            binding.edCertificateName.error = "Masukkan nama sertifikat"
+        when {
+            certificateName.isEmpty() -> {
+                binding.edCertificateName.error = "Masukkan nama sertifikat"
+            }
+            issueDate.isEmpty() -> {
+                binding.edDateStart.error = "Masukkan tanggal publikasi sertifikat"
+            }
+            expirationDate.isEmpty() -> {
+                binding.edDateEnd.error = "Masukkan tanggal jatuh tempo sertifikat"
+            }
+            binding.imgPreview.visibility == View.GONE -> {
+                textMessage("Masukkan foto sertifikat")
+            }
+            else -> {
+                certificateViewModel.addCertificate(uid.toString(), certificateDetails)
+            }
         }
 
-        if (issueDate.isEmpty()){
-            binding.edDateStart.error = "Masukkan tanggal publikasi sertifikat"
-        }
-
-        if (expirationDate.isEmpty()){
-            binding.edDateEnd.error = "Masukkan tanggal jatuh tempo sertifikat"
-        }
-
-        if (certificateName.isNotEmpty() || issueDate.isNotEmpty() || expirationDate.isNotEmpty()){
-            certificateViewModel.addCertificate(uid.toString(), certificateDetails)
-        }
 
     }
 
     private fun showDialog() {
-        val dialog = BottomSheetDialog(requireContext())
-
-        val bottomSheet = layoutInflater.inflate(R.layout.bottom_sheet_media, null)
-        val btnGallery = bottomSheet.findViewById<LinearLayout>(R.id.wrap_gallery)
-
-        btnGallery.setOnClickListener{
-            dialog.dismiss()
+//        val dialog = BottomSheetDialog(requireContext())
+//
+//        val bottomSheet = layoutInflater.inflate(R.layout.bottom_sheet_media, null)
+//        val btnGallery = bottomSheet.findViewById<LinearLayout>(R.id.wrap_gallery)
+//
+//        btnGallery.setOnClickListener{
+//            dialog.dismiss()
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
             intent.type = "image/*"
             startActivityForResult(intent, 1)
-        }
-
-        dialog.setCancelable(true)
-        dialog.setContentView(bottomSheet)
-
-        dialog.show()
+//        }
+//
+//        dialog.setCancelable(true)
+//        dialog.setContentView(bottomSheet)
+//
+//        dialog.show()
     }
 
     private fun initiateComponent() {

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/wrap_btn_submit">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/primary_500">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_homepage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_500"
+                    android:minHeight="?attr/actionBarSize">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ic_back"
+                            android:layout_width="@dimen/dimen_40"
+                            android:layout_height="@dimen/dimen_20"
+                            android:src="@drawable/ic_back_button"
+                            android:foreground="?android:attr/actionBarItemBackground"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:id="@+id/title_toolbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/skills"
+                            android:fontFamily="@font/poppins_semi_bold"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:includeFontPadding="false"
+                            app:layout_constraintStart_toEndOf="@id/ic_back"
+                            android:layout_marginStart="@dimen/dimen_4"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_edit"
+                            android:layout_width="@dimen/dimen_80"
+                            android:layout_height="@dimen/dimen_32"
+                            android:fontFamily="@font/poppins_semi_bold"
+                            android:text="@string/edit"
+                            android:textColor="@color/primary_500"
+                            android:textSize="12sp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            app:cornerRadius="@dimen/dimen_30"
+                            android:padding="@dimen/dimen_0"
+                            android:backgroundTint="@color/white"
+                            android:includeFontPadding="false"
+                            android:stateListAnimator="@null"
+                            android:layout_marginHorizontal="@dimen/dimen_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <LinearLayout
+                android:id="@+id/wrap_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_bottom"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/app_bar">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_skill_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/layout_skills"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:layout_marginHorizontal="@dimen/dimen_24" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/wrap_btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/dimen_24">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm_delete"
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_regular" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_54"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="@string/submit"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="@dimen/dimen_10"
+            android:backgroundTint="@color/red_400"
+            android:textColor="@color/white"
+            android:stateListAnimator="@null"
+            android:layout_marginTop="@dimen/dimen_12"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

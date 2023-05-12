@@ -91,7 +91,6 @@ class ChooseRoleFragment : Fragment() {
     }
 
     private fun validateRole() {
-        val btnContinue = binding.btnSubmit
         if (role.isNullOrEmpty()){
             textMessage("Pilih profil yang sesuai dengan anda")
         } else {
@@ -103,7 +102,6 @@ class ChooseRoleFragment : Fragment() {
                     is BaseResponse.Success -> {
                         textMessage(it.data.toString())
                         goToChooseSkillsPage()
-//                        goToHomePage()
                     }
                     is BaseResponse.Error -> {
                         textMessage(it.msg.toString())
