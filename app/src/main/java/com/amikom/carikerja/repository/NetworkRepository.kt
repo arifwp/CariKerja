@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class NetworkRepository @Inject constructor(private val apiService: ApiService) {
 
-//    suspend fun getInvoiceStatus(partner_tx_id: String): Response<InvoiceStatusResponse> = apiService.getInvoiceStatus(partner_tx_id)
     suspend fun postNotification(message: Message): Response<ResponseBody> = apiService.postNotification(message)
 
 }

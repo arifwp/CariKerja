@@ -120,37 +120,37 @@ class MainActivity : AppCompatActivity() {
     }
 
 //    Fires after the OnStop() state
-    override fun onDestroy() {
-        super.onDestroy()
-        try {
-            trimCache(this)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    fun trimCache(context: Context) {
-        try {
-            val dir: File = context.cacheDir
-            deleteDir(dir)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    fun deleteDir(dir: File?): Boolean {
-        return if (dir != null && dir.isDirectory) {
-            val children: Array<String> = dir.list()
-            for (i in children.indices) {
-                val success = deleteDir(File(dir, children[i]))
-                if (!success) {
-                    return false
-                }
-            }
-            dir.delete()
-        } else {
-            false
-        }
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        try {
+//            trimCache(this)
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//    }
+//
+//    fun trimCache(context: Context) {
+//        try {
+//            val dir: File = context.cacheDir
+//            deleteDir(dir)
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//    }
+//
+//    fun deleteDir(dir: File?): Boolean {
+//        return if (dir != null && dir.isDirectory) {
+//            val children: Array<String> = dir.list()
+//            for (i in children.indices) {
+//                val success = deleteDir(File(dir, children[i]))
+//                if (!success) {
+//                    return false
+//                }
+//            }
+//            dir.delete()
+//        } else {
+//            false
+//        }
+//    }
 
 }
